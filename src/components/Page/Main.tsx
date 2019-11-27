@@ -6,7 +6,7 @@ import './Main.scss';
 
 const LINKS = {
     Back: 'https://github.com/Artyom-Ganev/artyom-ganev-server',
-    Front: 'https://github.com/Artyom-Ganev/artyom-ganev-src',
+    Front: 'https://github.com/Artyom-Ganev/artyom-ganev-site',
     Rybinsk: 'https://en.wikipedia.org/wiki/Rybinsk'
 };
 

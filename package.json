@@ -1,16 +1,16 @@
 {
-  "name": "artyom-ganev.github.io",
+  "name": "artyom-ganev-site",
   "version": "1.0.0",
   "private": true,
   "author": "Artyom Ganev",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/Artyom-Ganev/artyom-ganev.github.io/issues"
+    "url": "https://github.com/Artyom-Ganev/artyom-ganev-site/issues"
   },
-  "homepage": "https://artyom-ganev.github.io",
+  "homepage": "http://artyom-ganev.github.io",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Artyom-Ganev/artyom-ganev.github.io.git"
+    "url": "git+https://github.com/Artyom-Ganev/artyom-ganev-site.git"
   },
   "dependencies": {
     "axios": "0.19.0",
@@ -20,7 +20,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -b master -d build",
+    "deploy": "gh-pages -o production -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

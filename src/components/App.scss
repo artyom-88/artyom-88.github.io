@@ -1,0 +1,21 @@
+.components-app {
+  &__background {
+    background-image: url("../resources/rybinsk.jpg");
+    background-size: cover;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+  }
+
+  &__content {
+    padding-top: 4em;
+  }
+
+  &__rights {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    font-size: 0.8em;
+  }
+}

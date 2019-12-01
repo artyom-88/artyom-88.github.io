@@ -1,7 +1,8 @@
 import React from 'react';
+import LoadingIndicator from '../Navigation/LoadingIndicator';
 import BlogSource from '../Source/Blog';
 import IBlog from '../Source/IBlog';
-import {BLANK, REL} from "../Utils/Const";
+import {BLANK, REL} from '../Utils/Const';
 import DateUtil from '../Utils/Date';
 import './Blog.scss';
 import Container from './Container';
@@ -18,15 +19,19 @@ const DATE_COMPARATOR = (item1: IBlog, item2: IBlog): number => {
  */
 export default class Blog extends React.Component {
     public state: { items: IBlog[] } = {items: []};
+    private loaded: boolean = false;
 
     public componentDidMount() {
         BlogSource.getList().then((items: IBlog[]) => {
+            this.loaded = true;
             this.setState({items});
         });
     }
 
     public render() {
-        const content = <div className='flexBox flexColumn'>{this.getItems()}</div>;
+        const content = this.loaded
+            ? <div className='flexBox flexColumn'>{this.getItems()}</div>
+            : <LoadingIndicator/>;
         return <Container title='Blog' content={content}/>;
     }
 

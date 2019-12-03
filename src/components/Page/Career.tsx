@@ -19,9 +19,11 @@ const BASE_URL = `https://shielded-brushlands-46595.herokuapp.com/career/`;
  */
 const prepareDates = (start: Date, end: Date): string => {
     if (start) {
-        const string1 = start.toLocaleDateString('en-US', DATE_FORMAT);
+        const startDate = new Date(start);
+        const string1 = startDate.toLocaleDateString('en-US', DATE_FORMAT);
         if (end) {
-            return `${string1} - ${end.toLocaleDateString('en-US', DATE_FORMAT)}`;
+            const endDate = new Date(end);
+            return `${string1} - ${endDate.toLocaleDateString('en-US', DATE_FORMAT)}`;
         }
         return `Since ${string1}`;
     }

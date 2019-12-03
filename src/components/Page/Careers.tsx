@@ -44,7 +44,7 @@ const prepareTitle = (site: string | undefined, title: string | undefined) => {
 };
 
 /**
- * Careers items markup
+ * Career items markup
  */
 const items = careers.data.map((item) => {
     return (
@@ -66,7 +66,7 @@ const items = careers.data.map((item) => {
 const content = <div className='flexBox flexColumn'>{items}</div>;
 
 /**
- * Careers page
+ * Career page
  */
 export default () => {
     return <Container title='Careers' content={content}/>;

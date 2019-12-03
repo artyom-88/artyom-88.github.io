@@ -1,11 +1,10 @@
 import React from 'react';
 import IBlog from '../Model/IBlog';
 import Source from '../Model/Source';
-import LoadingIndicator from '../Navigation/LoadingIndicator';
 import { BLANK, REL } from '../Utils/Const';
 import DateUtil from '../Utils/Date';
 import './Blog.scss';
-import Container from './Container';
+import AbstractPage from './AbstractPage';
 
 const DATE_COMPARATOR = (item1: IBlog, item2: IBlog): number => {
    // TODO: Migrate to normal Date format https://github.com/Artyom-Ganev/artyom-ganev-src/issues/83
@@ -14,29 +13,16 @@ const DATE_COMPARATOR = (item1: IBlog, item2: IBlog): number => {
    return date1 < date2 ? 1 : -1;
 };
 
-const PAGE_NAME = 'careers';
-const BASE_URL = `https://shielded-brushlands-46595.herokuapp.com/career/`;
-const source = new Source<IBlog>(PAGE_NAME, BASE_URL);
+const PAGE_NAME = 'blog';
+const BASE_URL = `https://shielded-brushlands-46595.herokuapp.com/blog/`;
 
 /**
  * Blog page
  */
-export default class Blog extends React.Component {
-   public state: { items: IBlog[] } = { items: [] };
-   private loaded: boolean = false;
+export default class Blog extends AbstractPage<IBlog> {
 
-   public componentDidMount() {
-      source.getList().then((items: IBlog[]) => {
-         this.loaded = true;
-         this.setState({ items });
-      });
-   }
-
-   public render() {
-      const content = this.loaded
-         ? <div className='flexBox flexColumn'>{this.getItems()}</div>
-         : <LoadingIndicator/>;
-      return <Container title='Blog' content={content}/>;
+   protected getContent() {
+      return <div className='flexBox flexColumn'>{this.getItems()}</div>;
    }
 
    /**

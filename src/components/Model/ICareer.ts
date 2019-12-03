@@ -2,9 +2,14 @@
  * Base interface of Career record
  */
 export default interface ICareer {
-   id: string;
-   title: string;
-   date: Date;
-   link: string;
-   linkCaption: string;
+    description: string;
+    endDate: Date;
+    id: string;
+    link: string;
+    linkCaption: string;
+    post: string;
+    site: string;
+    startDate: Date;
+    title: string;
+    tools: string;
 }

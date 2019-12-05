@@ -25,7 +25,7 @@ const PAGE_CONTENT = (
             about me on this site.
         </div>
         <div className={CONTENT_BLOCK}>
-            You can contact me if you have some ideas for it's improvement or have found bugs, typos etc. I'm
+            You can contact me if you have some ideas for it's improvement or if you find some bugs, typos etc. I'm
             still working on it.
         </div>
         <div className={CONTENT_BLOCK}>

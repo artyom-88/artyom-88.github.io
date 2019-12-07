@@ -1,9 +1,9 @@
 /**
- * Bio page
+ * About page
  */
 import React from 'react';
 import bio from '../../resources/bio.json';
-import './Bio.scss';
+import './About.scss';
 import Container from './Container';
 
 const items = bio.data.map((value: string, key: number) => {
@@ -13,5 +13,5 @@ const items = bio.data.map((value: string, key: number) => {
 });
 
 export default () => {
-    return <Container title='About me' content={items}/>;
+    return <Container title='Artyom Ganev' content={items}/>;
 }

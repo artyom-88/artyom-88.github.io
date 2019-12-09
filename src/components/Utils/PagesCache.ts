@@ -41,8 +41,7 @@ export default class PagesCache {
      * Get value from cache
      * @param key
      */
-    public get<T>(key: string): T | void {
-        const cached = this.cache.get(key);
-        return cached ? (cached.value as T) : undefined;
+    public get<T>(key: string): T {
+        return this.cache.get(key)?.value as T;
     }
 }

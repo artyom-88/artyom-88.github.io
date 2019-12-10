@@ -1,40 +1,32 @@
-import axios, { AxiosResponse } from 'axios';
-import React, { ReactNode } from 'react';
-import LoadingIndicator from '../Navigation/LoadingIndicator';
+import React from 'react';
+import gallery from '../../resources/gallery.json';
+import {BLANK, REL} from '../Utils/Const';
 import Container from './Container';
+import './Gallery.scss';
 
-
-export default class Gallery extends React.Component {
-   public state: { items: any[] } = { items: [] };
-   private loaded: boolean = false;
-
-   public componentDidMount(): void {
-      this.getList().then((items: any[]) => {
-         this.loaded = true;
-         this.setState({ items });
-      });
-   }
-
-   public render(): ReactNode {
-      const content = this.loaded ? this.getContent() : <LoadingIndicator/>;
-      return <Container title="Gallery" content={content}/>;
-   }
-
-   private getList(): Promise<any> {
-      return new Promise((resolve) => {
-         axios.get<any>('https://photoslibrary.googleapis.com/v1/albums', {
-            params: {
-               key: ''
-            }
-         })
-            .then(({ data }: AxiosResponse<any>) => {
-               resolve(data);
-            })
-            .catch(() => resolve([]));
-      });
-   }
-
-   private getContent(): ReactNode {
-      return <div className='flexBox flexColumn'>{this.state.items}</div>;
-   }
+interface IAlbum {
+    id: string;
+    title?: string;
+    productUrl: string;
+    mediaItemsCount: string;
+    coverPhotoBaseUrl: string;
+    coverPhotoMediaItemId: string;
 }
+
+const items = gallery.sharedAlbums.map(({id, productUrl, coverPhotoBaseUrl, title}: IAlbum) => {
+    return (
+        <a className="flexBox flexGrow-1 flexShrink-1 page-contacts__link" key={id}
+           href={productUrl} target={BLANK} rel={REL}>
+            <img className="page-contacts__item" src={coverPhotoBaseUrl} alt={title}/>
+        </a>
+    );
+});
+
+const content = (
+    <div className="flexBox flexColumn alignItemsCenter">
+        {items}
+    </div>
+);
+
+export default () => <Container title='Gallery' content={content}/>;
+

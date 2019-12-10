@@ -6,6 +6,7 @@ import About from './Page/About';
 import Blog from './Page/Blog';
 import Career from './Page/Career';
 import Contacts from './Page/Contacts';
+import Gallery from './Page/Gallery';
 import Main from './Page/Main';
 
 /**
@@ -22,6 +23,7 @@ export default () => {
                 <Route path='/blog' component={Blog}/>
                 <Route path='/career' component={Career}/>
                 <Route path='/contacts' component={Contacts}/>
+                <Route path='/gallery' component={Gallery}/>
             </div>
             <div className='components-app__rights'>© 2019 All rights reserved</div>
         </HashRouter>

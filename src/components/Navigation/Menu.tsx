@@ -13,6 +13,7 @@ export default () => {
             <Link className="nav-menu__item" to="/blog">Blog</Link>
             <Link className="nav-menu__item" to="/career">Career</Link>
             <Link className="nav-menu__item" to="/contacts">Contacts</Link>
+            <Link className="nav-menu__item" to="/gallery">Gallery</Link>
         </div>
     );
 }

@@ -36,15 +36,13 @@ export default class Blog extends AbstractPage<IBlog> {
      * Blog items markup
      */
     private getItems() {
-        return this.state.items.sort(DATE_COMPARATOR).map((item: IBlog) => {
-            return (
-                <div key={item.id} className='page-blog__itemContainer'>
-                    <div
-                        className='page-blog__title'>{DateUtil.format(`${item.year}-${item.month}-${item.day}`)}</div>
-                    <div className='page-blog__item'>{item.title}</div>
-                    <a href={item.link} target={BLANK} rel={REL}>{item.linkCaption}</a>
-                </div>
-            );
-        });
+        return this.state.items.sort(DATE_COMPARATOR).map((item: IBlog) => (
+            <div key={item.id} className='page-blog__itemContainer'>
+                <div
+                    className='page-blog__title'>{DateUtil.format(`${item.year}-${item.month}-${item.day}`)}</div>
+                <div className='page-blog__item'>{item.title}</div>
+                <a href={item.link} target={BLANK} rel={REL}>{item.linkCaption}</a>
+            </div>
+        ));
     }
 }

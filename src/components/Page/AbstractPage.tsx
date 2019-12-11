@@ -11,7 +11,6 @@ export default abstract class AbstractPage<TPage> extends React.Component {
     public state: { items: TPage[] } = {items: []};
     private loaded: boolean = false;
     private readonly source: Source<TPage> = new Source<TPage>(this.getPageName(), this.getBaseUrl());
-    private readonly title: string = this.getTitle();
 
     public componentDidMount(): void {
         this.source.getList().then((items: TPage[]) => {

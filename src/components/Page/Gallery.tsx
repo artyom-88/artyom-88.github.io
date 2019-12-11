@@ -15,9 +15,13 @@ interface IAlbum {
 
 const items = gallery.sharedAlbums.map(({id, productUrl, coverPhotoBaseUrl, title}: IAlbum) => {
     return (
-        <a className="flexBox flexGrow-1 flexShrink-1 page-contacts__link" key={id}
+        <a className="flexBox flexGrow-1 flexShrink-1 page-gallery__link"
+           key={id}
            href={productUrl} target={BLANK} rel={REL}>
-            <img className="page-contacts__item" src={coverPhotoBaseUrl} alt={title}/>
+            <div className="flexBox flexColumn alignItemsCenter">
+                <img className="page-gallery__item" src={coverPhotoBaseUrl} alt={title}/>
+                <div>{title}</div>
+            </div>
         </a>
     );
 });
@@ -28,5 +32,5 @@ const content = (
     </div>
 );
 
-export default () => <Container title='Gallery' content={content}/>;
+export default () => <Container title='Gallery' className="alignItemsCenter" content={content}/>;
 

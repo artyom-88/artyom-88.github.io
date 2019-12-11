@@ -7,6 +7,7 @@ import './Container.scss';
 interface IProperties {
     title?: string;
     content: ReactNode;
+    className?: string;
 }
 
 const isNarrow = () => window.innerWidth <= 800;
@@ -26,7 +27,9 @@ export default class Container extends React.Component<IProperties> {
     }
 
     public render() {
-        const contentClass = `flexBox flexColumn page-container__root${this.state.narrow ? '--narrow' : ''}`;
+        let className = this.props.className;
+        className = className ? ` ${className} ` : ' ';
+        const contentClass = `flexBox flexColumn${className}page-container__root${this.state.narrow ? '--narrow' : ''}`;
         return (
             <div className={contentClass}>
                 {this.props.title && <h2>{this.props.title}</h2>}

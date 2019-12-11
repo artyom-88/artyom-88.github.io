@@ -12,20 +12,18 @@ import Main from './Page/Main';
 /**
  * Main application
  */
-export default () => {
-    return (
-        <HashRouter>
-            <Menu/>
-            <div className='components-app__background'/>
-            <div className='flexBox flexColumn components-app__content'>
-                <Route exact={true} path='/' component={Main}/>
-                <Route path='/about' component={About}/>
-                <Route path='/blog' component={Blog}/>
-                <Route path='/career' component={Career}/>
-                <Route path='/contacts' component={Contacts}/>
-                <Route path='/gallery' component={Gallery}/>
-            </div>
-            <div className='components-app__rights'>© 2019 All rights reserved</div>
-        </HashRouter>
-    );
-}
+export default () => (
+    <HashRouter>
+        <Menu/>
+        <div className='components-app__background'/>
+        <div className='flexBox flexColumn components-app__content'>
+            <Route exact={true} path='/' component={Main}/>
+            <Route path='/about' component={About}/>
+            <Route path='/blog' component={Blog}/>
+            <Route path='/career' component={Career}/>
+            <Route path='/contacts' component={Contacts}/>
+            <Route path='/gallery' component={Gallery}/>
+        </div>
+        <div className='components-app__rights'>© 2019 All rights reserved</div>
+    </HashRouter>
+);

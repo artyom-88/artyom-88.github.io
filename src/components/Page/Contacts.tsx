@@ -17,20 +17,18 @@ interface IContact {
 /**
  * Contacts titles markup
  */
-const titles = contacts.data.map((item: IContact) => {
-    return <div key={item.key}>{item.value}:&nbsp;</div>;
-});
+const titles = contacts.data.map((item: IContact) => (
+    <div key={item.key}>{item.value}:&nbsp;</div>
+));
 
 /**
  * Contacts items markup
  */
-const items = contacts.data.map((item: IContact) => {
-    return (
-        <div key={item.key}>
-            <a href={item.link} target={BLANK} rel={REL}>{item.title}</a>
-        </div>
-    );
-});
+const items = contacts.data.map((item: IContact) => (
+    <div key={item.key}>
+        <a href={item.link} target={BLANK} rel={REL}>{item.title}</a>
+    </div>
+));
 
 /**
  * Page content
@@ -45,6 +43,4 @@ const content = (
 /**
  * Contacts page
  */
-export default () => {
-    return <Container title='Contacts and Social' content={content}/>;
-}
+export default () => <Container title='Contacts and Social' content={content}/>;

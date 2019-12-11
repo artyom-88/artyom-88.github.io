@@ -64,19 +64,17 @@ export default class Career extends AbstractPage<ICareer> {
         /**
          * Career items markup
          */
-        const items = this.state.items.map((item: ICareer) => {
-            return (
-                <div key={item.id} className='page-career__item'>
-                    {prepareTitle(item.site, item.title)}
-                    <div className='page-career__dates'>{prepareDates(item.startDate, item.endDate)}</div>
-                    <div className=''>Post:&nbsp;{item.post}</div>
-                    <div className=''>{item.description}</div>
-                    <div className='flexBox flexColumn'>
-                        <div className=''>Tools:&nbsp;{item.tools}</div>
-                    </div>
+        const items = this.state.items.map((item: ICareer) => (
+            <div key={item.id} className='page-career__item'>
+                {prepareTitle(item.site, item.title)}
+                <div className='page-career__dates'>{prepareDates(item.startDate, item.endDate)}</div>
+                <div className=''>Post:&nbsp;{item.post}</div>
+                <div className=''>{item.description}</div>
+                <div className='flexBox flexColumn'>
+                    <div className=''>Tools:&nbsp;{item.tools}</div>
                 </div>
-            );
-        });
+            </div>
+        ));
         return <div className='flexBox flexColumn'>{items}</div>;
     }
 }

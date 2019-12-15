@@ -30,10 +30,11 @@ export default class Container extends React.Component<IProperties> {
         let className = this.props.className;
         className = className ? ` ${className} ` : ' ';
         const contentClass = `flexBox flexColumn${className}page-container__root${this.state.narrow ? '--narrow' : ''}`;
+        const {title, content} = this.props;
         return (
             <div className={contentClass}>
-                {this.props.title && <h2>{this.props.title}</h2>}
-                <div>{this.props.content}</div>
+                {title && <h2>{title}</h2>}
+                <div>{content}</div>
             </div>
         );
     }

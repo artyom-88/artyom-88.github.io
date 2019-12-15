@@ -36,14 +36,8 @@ const prepareDates = (start: Date, end: Date): string => {
  * @param title - company name
  */
 const prepareTitle = (site: string | undefined, title: string | undefined) => {
-    if (site) {
-        return (
-            <a href={site} target={BLANK} rel={REL}>
-                <h3 className='page-career__title'>{title}</h3>
-            </a>
-        );
-    }
-    return <h3 className='page-career__title'>{title}</h3>;
+    const header = <h3 className='page-career__title'>{title}</h3>;
+    return site ? <a href={site} target={BLANK} rel={REL}>{header}</a> : title;
 };
 
 /**
@@ -64,14 +58,14 @@ export default class Career extends AbstractPage<ICareer> {
         /**
          * Career items markup
          */
-        const items = this.state.items.map((item: ICareer) => (
-            <div key={item.id} className='page-career__item'>
-                {prepareTitle(item.site, item.title)}
-                <div className='page-career__dates'>{prepareDates(item.startDate, item.endDate)}</div>
-                <div className=''>Post:&nbsp;{item.post}</div>
-                <div className=''>{item.description}</div>
+        const items = this.state.items.map(({id, site, title, startDate, endDate, post, description, tools}: ICareer) => (
+            <div key={id} className='page-career__item'>
+                {prepareTitle(site, title)}
+                <div className='page-career__dates'>{prepareDates(startDate, endDate)}</div>
+                <div className=''>Post:&nbsp;{post}</div>
+                <div className=''>{description}</div>
                 <div className='flexBox flexColumn'>
-                    <div className=''>Tools:&nbsp;{item.tools}</div>
+                    <div className=''>Tools:&nbsp;{tools}</div>
                 </div>
             </div>
         ));

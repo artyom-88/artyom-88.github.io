@@ -1,4 +1,5 @@
-import React, {ReactNode} from 'react';
+import {ReactNode} from 'react';
+import React from 'react';
 import IBlog from '../Model/IBlog';
 import {BLANK, REL} from '../Utils/Const';
 import DateUtil from '../Utils/Date';
@@ -36,12 +37,11 @@ export default class Blog extends AbstractPage<IBlog> {
      * Blog items markup
      */
     private getItems() {
-        return this.state.items.sort(DATE_COMPARATOR).map((item: IBlog) => (
-            <div key={item.id} className='page-blog__itemContainer'>
-                <div
-                    className='page-blog__title'>{DateUtil.format(`${item.year}-${item.month}-${item.day}`)}</div>
-                <div className='page-blog__item'>{item.title}</div>
-                <a href={item.link} target={BLANK} rel={REL}>{item.linkCaption}</a>
+        return this.state.items.sort(DATE_COMPARATOR).map(({id, year, month, day, title, link, linkCaption}: IBlog) => (
+            <div key={id} className='page-blog__itemContainer'>
+                <div className='page-blog__title'>{DateUtil.format(`${year}-${month}-${day}`)}</div>
+                <div className='page-blog__item'>{title}</div>
+                <a href={link} target={BLANK} rel={REL}>{linkCaption}</a>
             </div>
         ));
     }

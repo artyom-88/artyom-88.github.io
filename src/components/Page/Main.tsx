@@ -1,7 +1,7 @@
 import React from 'react';
 import img from '../../resources/artyom.jpg';
-import {BLANK, REL} from "../Utils/Const";
-import Container from "./Container";
+import {BLANK, REL} from '../Utils/Const';
+import Container from './Container';
 import './Main.scss';
 
 const LINKS = {

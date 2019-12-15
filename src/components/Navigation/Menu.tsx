@@ -7,8 +7,7 @@ const PAGES = [
     {name: 'About', url: 'about'},
     {name: 'Blog', url: 'blog'},
     {name: 'Career', url: 'career'},
-    {name: 'Contacts', url: 'contacts'},
-    {name: 'Gallery', url: 'gallery'}
+    {name: 'Contacts', url: 'contacts'}
 ];
 
 const items = PAGES.map(({name, url}) => <Link className="nav-menu__item" to={`/${url}`} key={name}>{name}</Link>);
@@ -16,10 +15,8 @@ const items = PAGES.map(({name, url}) => <Link className="nav-menu__item" to={`/
 /**
  * Navigation menu
  */
-export default () => {
-    return (
-        <div className="flexBox nav-menu__root" id="menu">
-            {items}
-        </div>
-    );
-}
+export default () => (
+    <div className="flexBox nav-menu__root" id="menu">
+        {items}
+    </div>
+);

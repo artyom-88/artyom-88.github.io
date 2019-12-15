@@ -17,16 +17,16 @@ interface IContact {
 /**
  * Contacts titles markup
  */
-const titles = contacts.data.map((item: IContact) => (
-    <div key={item.key}>{item.value}:&nbsp;</div>
+const titles = contacts.data.map(({key, value}: IContact) => (
+    <div key={key}>{value}:&nbsp;</div>
 ));
 
 /**
  * Contacts items markup
  */
-const items = contacts.data.map((item: IContact) => (
-    <div key={item.key}>
-        <a href={item.link} target={BLANK} rel={REL}>{item.title}</a>
+const items = contacts.data.map(({key, link, title}: IContact) => (
+    <div key={key}>
+        <a href={link} target={BLANK} rel={REL}>{title}</a>
     </div>
 ));
 

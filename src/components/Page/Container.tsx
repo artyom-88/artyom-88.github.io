@@ -6,7 +6,6 @@ import './Container.scss';
  */
 interface IProperties {
     title?: string;
-    content: ReactNode;
     className?: string;
 }
 
@@ -30,11 +29,11 @@ export default class Container extends React.Component<IProperties> {
         let className = this.props.className;
         className = className ? ` ${className} ` : ' ';
         const contentClass = `flexBox flexColumn${className}page-container__root${this.state.narrow ? '--narrow' : ''}`;
-        const {title, content} = this.props;
+        const {title, children} = this.props;
         return (
             <div className={contentClass}>
                 {title && <h2>{title}</h2>}
-                <div>{content}</div>
+                {children}
             </div>
         );
     }

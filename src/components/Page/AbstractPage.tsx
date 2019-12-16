@@ -21,7 +21,7 @@ export default abstract class AbstractPage<TPage> extends React.Component {
 
     public render(): ReactNode {
         const content = this.loaded ? this.getContent() : <LoadingIndicator/>;
-        return <Container title={this.getTitle()} content={content}/>;
+        return <Container title={this.getTitle()}>{content}</Container>;
     }
 
     /**

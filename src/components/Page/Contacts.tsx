@@ -43,4 +43,4 @@ const content = (
 /**
  * Contacts page
  */
-export default () => <Container title='Contacts and Social' content={content}/>;
+export default () => <Container title='Contacts and Social'>{content}</Container>;

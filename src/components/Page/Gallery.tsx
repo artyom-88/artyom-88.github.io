@@ -33,5 +33,5 @@ const content = (
 /**
  * Photo gallery page
  */
-export default () => <Container title='Gallery' className="alignItemsCenter" content={content}/>;
+export default () => <Container title='Gallery' className="alignItemsCenter">{content}</Container>;
 

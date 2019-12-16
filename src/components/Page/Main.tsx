@@ -40,4 +40,4 @@ const PAGE_CONTENT = (
     </div>
 );
 
-export default () => <Container content={PAGE_CONTENT}/>;
+export default () => <Container>{PAGE_CONTENT}</Container>;

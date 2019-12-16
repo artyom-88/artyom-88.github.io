@@ -18,12 +18,12 @@ export default () => (
         <div className='components-app__background'/>
         <div className='flexBox flexColumn components-app__content'>
             <Switch>
-                <Route exact={true} path='/' component={Main}/>
-                <Route path='/about' component={About}/>
-                <Route path='/blog' component={Blog}/>
-                <Route path='/career' component={Career}/>
-                <Route path='/contacts' component={Contacts}/>
-                <Route component={NotFound}/>
+                <Route exact={true} path='/'>{Main}</Route>
+                <Route path='/about'>{About}</Route>
+                <Route path='/blog'>{Blog}</Route>
+                <Route path='/career'>{Career}</Route>
+                <Route path='/contacts'>{Contacts}</Route>
+                <Route>{NotFound}</Route>
             </Switch>
         </div>
         <div className='components-app__rights'>© 2019 All rights reserved</div>

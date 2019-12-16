@@ -11,6 +11,4 @@ const content = (
     </div>
 );
 
-export default () => (
-    <Container title={TEXT} content={content}/>
-);
+export default () => <Container title={TEXT}>{content}</Container>;

@@ -18,7 +18,7 @@ export default class Container extends React.Component<IProperties> {
     public state: { narrow: boolean } = {narrow: isNarrow()};
 
     public componentDidMount() {
-        window.addEventListener('resize', this.onResize.bind(this));
+        window.addEventListener('resize', this.onResize);
     }
 
     public componentWillUnmount() {
@@ -38,7 +38,7 @@ export default class Container extends React.Component<IProperties> {
         );
     }
 
-    private onResize() {
+    private onResize = () => {
         const narrow = isNarrow();
         if (this.state.narrow !== narrow) {
             this.setState({narrow});

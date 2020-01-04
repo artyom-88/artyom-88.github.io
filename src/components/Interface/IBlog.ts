@@ -1,9 +1,9 @@
 /**
  * Base interface of Blog record
  */
-export default interface IBlog {
-    id: string;
-    title: string;
+import IPageData from './IPageData';
+
+export default interface IBlog extends IPageData {
     year: number;
     month: number;
     day: number;

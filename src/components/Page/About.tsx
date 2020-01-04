@@ -1,13 +1,21 @@
+import React from 'react';
+import json from '../../resources/bio.json';
+import IPageData from '../Interface/IPageData';
+import ISource from '../Interface/ISource';
+import JsonSource from '../Model/JsonSource';
+import './About.scss';
+import AbstractPage from './AbstractPage';
+
 /**
  * About page
  */
-import React from 'react';
-import bio from '../../resources/bio.json';
-import './About.scss';
-import Container from './Container';
+export default class About extends AbstractPage<IPageData> {
+    protected readonly pageName: string = 'about';
+    protected source: ISource<IPageData> = new JsonSource<IPageData>(json);
 
-const items = bio.data.map((value: string, key: number) => (
-    <div key={key} className='page-bio__item'>{value}</div>
-));
+    protected getContent = () => this.getItems().map(({ id, title }) => (
+        <div key={ id } className='page-bio__item'>{ title }</div>
+    ));
 
-export default () => <Container title='Artyom Ganev' content={items}/>;
+    protected getTitle = () => 'Artyom Ganev';
+}

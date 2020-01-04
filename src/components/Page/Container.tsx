@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, { ReactNode } from 'react';
 import './Container.scss';
 
 /**
@@ -16,10 +16,10 @@ const isNarrow = () => window.innerWidth <= 800;
  * Page container with title
  */
 export default class Container extends React.Component<IProperties> {
-    public state: { narrow: boolean } = {narrow: isNarrow()};
+    public state: { narrow: boolean } = { narrow: isNarrow() };
 
     public componentDidMount() {
-        window.addEventListener('resize', this.onResize.bind(this));
+        window.addEventListener('resize', this.onResize);
     }
 
     public componentWillUnmount() {
@@ -27,22 +27,22 @@ export default class Container extends React.Component<IProperties> {
     }
 
     public render() {
-        let className = this.props.className;
-        className = className ? ` ${className} ` : ' ';
-        const contentClass = `flexBox flexColumn${className}page-container__root${this.state.narrow ? '--narrow' : ''}`;
-        const {title, content} = this.props;
+        let { className } = this.props;
+        className = className ? ` ${ className } ` : ' ';
+        const contentClass = `flexBox flexColumn${ className }page-container__root${ this.state.narrow ? '--narrow' : '' }`;
+        const { title, content } = this.props;
         return (
-            <div className={contentClass}>
-                {title && <h2>{title}</h2>}
-                <div>{content}</div>
+            <div className={ contentClass }>
+                { title && <h2>{ title }</h2> }
+                <div>{ content }</div>
             </div>
         );
     }
 
-    private onResize() {
+    private onResize = () => {
         const narrow = isNarrow();
         if (this.state.narrow !== narrow) {
-            this.setState({narrow});
+            this.setState({ narrow });
         }
     }
 }

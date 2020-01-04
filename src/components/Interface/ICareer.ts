@@ -1,13 +1,13 @@
 /**
  * Base interface of Career record
  */
-export default interface ICareer {
+import IPageData from './IPageData';
+
+export default interface ICareer extends IPageData {
     description: string;
     endDate: Date;
-    id: string;
     post: string;
     site: string;
     startDate: Date;
-    title: string;
     tools: string;
 }

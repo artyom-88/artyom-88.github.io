@@ -1,5 +1,7 @@
-import React, {ReactNode} from 'react';
-import Source from '../Model/Source';
+import React, { ReactNode } from 'react';
+import IPage from '../Interface/IPage';
+import IPageData from '../Interface/IPageData';
+import ISource from '../Interface/ISource';
 import LoadingIndicator from '../Navigation/LoadingIndicator';
 import Container from './Container';
 
@@ -7,32 +9,25 @@ import Container from './Container';
  * Base component for all pages with source
  * @abstract
  */
-export default abstract class AbstractPage<TPage> extends React.Component {
-    public state: { items: TPage[] } = {items: []};
+export default abstract class AbstractPage<TPageData extends IPageData> extends React.Component implements IPage {
+    public state: { items: TPageData[] } = { items: [] };
+    protected abstract source: ISource<TPageData>;
+    protected abstract pageName: string;
     private loaded: boolean = false;
-    private readonly source: Source<TPage> = new Source<TPage>(this.getPageName(), this.getBaseUrl());
+
+    public getItems = () => this.state.items;
 
     public componentDidMount(): void {
-        this.source.getList().then((items: TPage[]) => {
+        this.source.getData().then((items: IPageData[]) => {
             this.loaded = true;
-            this.setState({items});
+            this.setState({ items });
         });
     }
 
     public render(): ReactNode {
         const content = this.loaded ? this.getContent() : <LoadingIndicator/>;
-        return <Container title={this.getTitle()} content={content}/>;
+        return <Container title={ this.getTitle() } content={ content }/>;
     }
-
-    /**
-     * Get page name
-     */
-    protected abstract getPageName(): string;
-
-    /**
-     * Get page backend url
-     */
-    protected abstract getBaseUrl(): string;
 
     /**
      * Get page content
@@ -42,8 +37,8 @@ export default abstract class AbstractPage<TPage> extends React.Component {
     /**
      * Get page title
      */
-    private getTitle(): string {
-        const pageName = this.getPageName();
-        return `${pageName.charAt(0).toUpperCase()}${pageName.substr(1, pageName.length - 1)}`;
+    protected getTitle(): string {
+        const pageName = this.pageName;
+        return `${ pageName.charAt(0).toUpperCase() }${ pageName.substr(1, pageName.length - 1) }`;
     }
 }

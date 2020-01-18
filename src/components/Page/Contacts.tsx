@@ -58,12 +58,12 @@ export default class Contacts extends React.Component<object, IState> {
                     <div>{ titles }</div>
                     <div className='page-contacts__item'>{ items }</div>
                 </div>
-                { !showDialog && (
-                    <div>
-                        <button onClick={ this.toggleContactDialog(true) }>Write me</button>
-                    </div>
-                ) }
-                { showDialog && <Dialog closeHandler={ this.toggleContactDialog() }/> }
+                <div className='page-contacts__btn'>
+                    { showDialog
+                        ? <Dialog closeHandler={ this.toggleContactDialog() }/>
+                        : <button onClick={ this.toggleContactDialog(true) }>Write me</button>
+                    }
+                </div>
             </div>
         )
     };

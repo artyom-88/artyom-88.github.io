@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Container 1`] = `
+<div
+  className="flexBox flexColumn page-container__root"
+>
+  <h2>
+    title 1
+  </h2>
+  <div>
+    <div>
+      text1
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Container 2`] = `
+<div
+  className="flexBox flexColumn page-container__root"
+>
+  <div>
+    <div>
+      text1
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dialog 1`] = `
+<div
+  className="page-blog__root"
+>
+  <div
+    className="flexBox flexColumn alignItemsCenter justifyContentCenter page-blog__content"
+  >
+    <form
+      className="page-blog__form"
+      onSubmit={[Function]}
+    >
+      <input
+        className="page-blog__formInput"
+        onChange={[Function]}
+        required={true}
+        type="text"
+        value=""
+      />
+      <button
+        type="submit"
+      >
+        Send
+      </button>
+    </form>
+    <div
+      className="page-blog__closeBtn"
+    >
+      <button
+        onClick={[Function]}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;

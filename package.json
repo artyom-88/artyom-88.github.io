@@ -38,7 +38,7 @@
     "gh-pages": "2.2.0",
     "node-sass": "4.13.1",
     "react-scripts": "3.3.0",
-    "sass": "1.24.0",
+    "sass": "1.25.0",
     "tslint": "5.20.1",
     "tslint-config-prettier": "1.18.0",
     "tslint-react": "4.1.0",

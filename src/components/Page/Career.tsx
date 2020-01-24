@@ -63,7 +63,7 @@ export default class Career extends AbstractPage<ICareer> {
   /**
    * Career items markup
    */
-  protected getContent = () => (
+  protected getContent = (): ReactNode => (
     <div className="flexBox flexColumn">
       {/* prettier-ignore */
       this.state.items.map(({ id, site, title, startDate, endDate, post, description, tools }: ICareer) => (

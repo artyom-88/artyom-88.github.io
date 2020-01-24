@@ -60,34 +60,25 @@ export default class Career extends AbstractPage<ICareer> {
     return PAGE_NAME;
   }
 
-  protected getContent(): ReactNode {
-    /**
-     * Career items markup
-     */
-    const items = this.state.items.map(
-      ({
-        id,
-        site,
-        title,
-        startDate,
-        endDate,
-        post,
-        description,
-        tools
-      }: ICareer) => (
-        <div key={id} className="page-career__item">
-          {prepareTitle(site, title)}
-          <div className="page-career__dates">
-            {prepareDates(startDate, endDate)}
+  /**
+   * Career items markup
+   */
+  protected getContent = () => (
+    <div className="flexBox flexColumn">
+      {/* prettier-ignore */
+      this.state.items.map(({ id, site, title, startDate, endDate, post, description, tools }: ICareer) => (
+          <div key={id} className="page-career__item">
+            {prepareTitle(site, title)}
+            <div className="page-career__dates">
+              {prepareDates(startDate, endDate)}
+            </div>
+            <div className="">Post:&nbsp;{post}</div>
+            <div className="">{description}</div>
+            <div className="flexBox flexColumn">
+              <div className="">Tools:&nbsp;{tools}</div>
+            </div>
           </div>
-          <div className="">Post:&nbsp;{post}</div>
-          <div className="">{description}</div>
-          <div className="flexBox flexColumn">
-            <div className="">Tools:&nbsp;{tools}</div>
-          </div>
-        </div>
-      )
-    );
-    return <div className="flexBox flexColumn">{items}</div>;
-  }
+        ))}
+    </div>
+  );
 }

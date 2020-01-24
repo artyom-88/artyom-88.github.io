@@ -12,12 +12,13 @@
 Backend sources of https://artyom-ganev.github.io/ site are here https://github.com/Artyom-Ganev/artyom-ganev-server
 - - - -
 **Made with:**
+* [axios](https://github.com/axios/axios/)
 * [Jest](https://jestjs.io/)
-* [Sass](https://sass-lang.com//)
 * [NPM](https://www.npmjs.com/)
-* [react-scripts](https://www.npmjs.com/package/react-scripts)
+* [Prettier](https://prettier.io/)
 * [ReactJS](https://reactjs.org/)
+* [react-scripts](https://www.npmjs.com/package/react-scripts)
+* [Sass](https://sass-lang.com//)
 * [TSLint](https://palantir.github.io/tslint/)
 * [TypeScript](https://www.typescriptlang.org)
-* [axios](https://github.com/axios/axios/)
 * [Webstorm](https://www.jetbrains.com/webstorm/)

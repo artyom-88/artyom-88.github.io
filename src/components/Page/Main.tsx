@@ -1,6 +1,6 @@
 import React from "react";
+import { BLANK, REL } from "../../constants/Html";
 import img from "../../resources/artyom.jpg";
-import { BLANK, REL } from "../Utils/Const";
 import Container from "./Container";
 import "./Main.scss";
 

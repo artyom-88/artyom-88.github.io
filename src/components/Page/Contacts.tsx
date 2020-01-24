@@ -1,6 +1,6 @@
 import React from "react";
+import { BLANK, REL } from "../../constants/Html";
 import contacts from "../../resources/contacts.json";
-import { BLANK, REL } from "../Utils/Const";
 import "./Contacts.scss";
 import Container from "./Container";
 

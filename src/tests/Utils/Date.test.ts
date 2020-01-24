@@ -1,4 +1,4 @@
-import DateUtil from '../../components/Utils/Date';
+import DateUtil from '../../utils/Date';
 
 test('DateUtil.parseDateFromString:empty string', () => {
     expect(DateUtil.parseDateFromString('')).toBeNull();

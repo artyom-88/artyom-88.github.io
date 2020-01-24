@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
-import IBlog from "../Model/IBlog";
-import { BLANK, REL } from "../Utils/Const";
-import DateUtil from "../Utils/Date";
+import { BLANK, REL } from "../../constants/Html";
+import IBlog from "../../interface/IBlog";
+import DateUtil from "../../utils/Date";
 import AbstractPage from "./AbstractPage";
 import "./Blog.scss";
 

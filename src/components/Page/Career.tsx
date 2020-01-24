@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
-import ICareer from "../Model/ICareer";
-import { BLANK, REL } from "../Utils/Const";
+import { BLANK, REL } from "../../constants/Html";
+import ICareer from "../../interface/ICareer";
 import AbstractPage from "./AbstractPage";
 import "./Career.scss";
 

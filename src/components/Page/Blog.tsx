@@ -23,10 +23,6 @@ const BASE_URL = `https://shielded-brushlands-46595.herokuapp.com/blog/`;
  * Blog page
  */
 export default class Blog extends AbstractPage<IBlog> {
-  protected getContent(): ReactNode {
-    return <div className="flexBox flexColumn">{this.getItems()}</div>;
-  }
-
   protected getBaseUrl(): string {
     return BASE_URL;
   }
@@ -38,8 +34,8 @@ export default class Blog extends AbstractPage<IBlog> {
   /**
    * Blog items markup
    */
-  private getItems() {
-    return this.state.items
+  protected getItems = (): ReactNode =>
+    this.state.items
       .sort(DATE_COMPARATOR)
       .map(({ id, year, month, day, title, link, linkCaption }: IBlog) => (
         <div key={id} className="page-blog__itemContainer">
@@ -52,5 +48,4 @@ export default class Blog extends AbstractPage<IBlog> {
           </a>
         </div>
       ));
-  }
 }

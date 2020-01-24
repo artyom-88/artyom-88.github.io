@@ -5,14 +5,17 @@ import Container from "./Container";
 
 export interface IState<TPage> {
   items: TPage[];
-  loaded: boolean
+  loaded: boolean;
 }
 
 /**
  * Base component for all pages with source
  * @abstract
  */
-export default abstract class AbstractPage<TPage> extends React.Component<{}, IState<TPage>> {
+export default abstract class AbstractPage<TPage> extends React.Component<
+  {},
+  IState<TPage>
+> {
   public state: IState<TPage> = {
     items: [],
     loaded: false
@@ -36,8 +39,8 @@ export default abstract class AbstractPage<TPage> extends React.Component<{}, IS
 
   public render(): ReactNode {
     const { loaded } = this.state;
-    const content = loaded ? this.getContent() : <LoadingIndicator/>;
-    return <Container title={this.getTitle()} content={content}/>;
+    const content = loaded ? this.getContent() : <LoadingIndicator />;
+    return <Container title={this.getTitle()} content={content} />;
   }
 
   /**

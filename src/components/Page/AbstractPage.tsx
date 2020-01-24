@@ -3,13 +3,21 @@ import Source from "../Model/Source";
 import LoadingIndicator from "../Navigation/LoadingIndicator";
 import Container from "./Container";
 
+export interface IState<TPage> {
+  items: TPage[];
+  loaded: boolean
+}
+
 /**
  * Base component for all pages with source
  * @abstract
  */
-export default abstract class AbstractPage<TPage> extends React.Component {
-  public state: { items: TPage[] } = { items: [] };
-  private loaded: boolean = false;
+export default abstract class AbstractPage<TPage> extends React.Component<{}, IState<TPage>> {
+  public state: IState<TPage> = {
+    items: [],
+    loaded: false
+  };
+
   private readonly source: Source<TPage> = new Source<TPage>(
     this.getPageName(),
     this.getBaseUrl()
@@ -19,19 +27,17 @@ export default abstract class AbstractPage<TPage> extends React.Component {
     this.source
       .getList()
       .then((items: TPage[]) => {
-        this.setState({ items });
+        this.setState({ items, loaded: true });
       })
       .catch(() => {
-        this.setState({ items: [] });
-      })
-      .finally(() => {
-        this.loaded = true;
+        this.setState({ items: [], loaded: true });
       });
   }
 
   public render(): ReactNode {
-    const content = this.loaded ? this.getContent() : <LoadingIndicator />;
-    return <Container title={this.getTitle()} content={content} />;
+    const { loaded } = this.state;
+    const content = loaded ? this.getContent() : <LoadingIndicator/>;
+    return <Container title={this.getTitle()} content={content}/>;
   }
 
   /**
@@ -45,9 +51,9 @@ export default abstract class AbstractPage<TPage> extends React.Component {
   protected abstract getBaseUrl(): string;
 
   /**
-   * Get page content
+   * Get page items
    */
-  protected abstract getContent(): ReactNode;
+  protected abstract getItems(): ReactNode;
 
   /**
    * Get page title
@@ -58,4 +64,8 @@ export default abstract class AbstractPage<TPage> extends React.Component {
     const otherPart = pageName.substr(1, pageName.length - 1);
     return `${firstSymbol}${otherPart}`;
   }
+
+  private getContent = () => (
+    <div className="flexBox flexColumn">{this.getItems()}</div>
+  );
 }

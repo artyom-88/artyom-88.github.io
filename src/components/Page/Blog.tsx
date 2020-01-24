@@ -1,5 +1,4 @@
-import { ReactNode } from "react";
-import React from "react";
+import React, { ReactNode } from "react";
 import IBlog from "../Model/IBlog";
 import { BLANK, REL } from "../Utils/Const";
 import DateUtil from "../Utils/Date";

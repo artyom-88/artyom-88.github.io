@@ -1,8 +1,8 @@
 import React from "react";
 import { BLANK, REL } from "../../constants/Html";
 import contacts from "../../resources/contacts.json";
-import "./Contacts.scss";
 import Container from "./Container";
+import "./Contacts.scss";
 
 /**
  * Contact options interface

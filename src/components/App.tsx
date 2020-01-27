@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import "./App.scss";
 import Menu from "./Navigation/Menu";
 import Main from "./Page/Main";
 import About from "./Page/About";
@@ -11,6 +10,7 @@ import NotFound from "./Page/NotFound";
 import IState from "../interface/IState";
 import { connect, DispatchProp } from "react-redux";
 import { MAIN } from "../constants/Pages";
+import "./App.scss";
 
 export interface IProperties extends DispatchProp {
   navigation: { activePage: string };

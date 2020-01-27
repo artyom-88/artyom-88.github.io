@@ -7,7 +7,7 @@ import { INavigationState } from "../interface/IState";
  * @param {INavigationState} state current state
  * @param {INavigateAction} action current action
  */
-export const navigation = (state: INavigationState, { payload, type }: INavigateAction): INavigationState => {
+export const navigation = (state: INavigationState = { activePage: '' }, { payload, type }: INavigateAction): INavigationState => {
   if (type === NAVIGATE) {
     const { activePage } = payload;
     return { activePage };

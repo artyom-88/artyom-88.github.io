@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import { Dispatch } from "redux";
 import { navigate } from "../../actions";
 import { MAIN, PAGES } from "../../constants/Pages";
+import { INavigateAction } from "../../interface/Actions";
 import "./Menu.scss";
 
-export interface IProperties extends DispatchProp {
+export interface IProperties extends DispatchProp<INavigateAction> {
   activePage: string;
 }
 
@@ -15,8 +16,9 @@ export interface IProperties extends DispatchProp {
  * Transfers menu item id and dispatching function to click handler
  * @param {Function} dispatch dispatching function
  */
-const clickWrapper = (dispatch: Dispatch) => (id: string) => () =>
-  dispatch(navigate(id));
+const clickWrapper = (dispatch: Dispatch<INavigateAction>) => (
+  id: string
+) => () => dispatch(navigate(id));
 
 /**
  * Menu items render function

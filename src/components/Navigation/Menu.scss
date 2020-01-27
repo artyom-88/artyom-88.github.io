@@ -11,15 +11,21 @@
     padding: 0.8em 1em;
     color: #343648;
 
+    &.active {
+      text-decoration: underline;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     &:visited {
       color: #343648;
     }
 
     &:hover {
-      background-color: #ba96ff;
       cursor: pointer;
       text-decoration: none;
-      color: #FFFFFF;
+      color: #75043b;
     }
   }
 }

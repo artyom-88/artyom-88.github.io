@@ -11,4 +11,7 @@ const content = (
   </div>
 );
 
+/**
+ * 404 page not component
+ */
 export default () => <Container title={TEXT} content={content} />;

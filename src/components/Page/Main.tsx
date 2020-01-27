@@ -13,7 +13,7 @@ const LINKS = {
 const CONTENT_BLOCK = "page-main__contentBlock";
 
 /**
- * Main page
+ * Main page component
  */
 const PAGE_CONTENT = (
   <div className="page-main__root">
@@ -36,8 +36,8 @@ const PAGE_CONTENT = (
       find some bugs, typos etc. I'm still working on it.
     </div>
     <div className={CONTENT_BLOCK}>
-      Frontend of this site is based on React, TypeScript and Sass, the sources
-      of this part are located on GitHub&nbsp;
+      Frontend of this site is based on React, Redux, TypeScript and Sass, the
+      sources of this part are located on GitHub&nbsp;
       <a href={LINKS.Front} target={BLANK} rel={REL}>
         here
       </a>

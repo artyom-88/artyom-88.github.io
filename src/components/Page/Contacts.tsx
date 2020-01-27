@@ -1,8 +1,8 @@
 import React from "react";
 import { BLANK, REL } from "../../constants/Html";
 import contacts from "../../resources/contacts.json";
-import "./Contacts.scss";
 import Container from "./Container";
+import "./Contacts.scss";
 
 /**
  * Contact options interface
@@ -43,8 +43,6 @@ const content = (
 );
 
 /**
- * Contacts page
+ * Contacts page component
  */
-export default () => (
-  <Container title="Contacts and Social" content={content} />
-);
+export default () => <Container content={content} />;

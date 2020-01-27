@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { Component, ReactNode } from "react";
 import Source from "../Model/Source";
 import LoadingIndicator from "../Navigation/LoadingIndicator";
 import Container from "./Container";
@@ -12,7 +12,7 @@ export interface IState<TPage> {
  * Base component for all pages with source
  * @abstract
  */
-export default abstract class AbstractPage<TPage> extends React.Component<
+export default abstract class AbstractPage<TPage> extends Component<
   {},
   IState<TPage>
 > {
@@ -40,7 +40,7 @@ export default abstract class AbstractPage<TPage> extends React.Component<
   public render(): ReactNode {
     const { loaded } = this.state;
     const content = loaded ? this.getContent() : <LoadingIndicator />;
-    return <Container title={this.getTitle()} content={content} />;
+    return <Container content={content} />;
   }
 
   /**
@@ -57,16 +57,6 @@ export default abstract class AbstractPage<TPage> extends React.Component<
    * Get page items
    */
   protected abstract getItems(): ReactNode;
-
-  /**
-   * Get page title
-   */
-  private getTitle(): string {
-    const pageName = this.getPageName();
-    const firstSymbol = pageName.charAt(0).toUpperCase();
-    const otherPart = pageName.substr(1, pageName.length - 1);
-    return `${firstSymbol}${otherPart}`;
-  }
 
   private getContent = () => (
     <div className="flexBox flexColumn">{this.getItems()}</div>

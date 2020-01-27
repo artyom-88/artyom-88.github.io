@@ -6,7 +6,7 @@ exports[`Menu 1`] = `
   id="menu"
 >
   <a
-    className="nav-menu__item"
+    className="nav-menu__item active"
     href="#/"
     onClick={[Function]}
   >

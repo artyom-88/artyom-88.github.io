@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { Component, ReactNode } from "react";
 import "./Container.scss";
 
 /**
@@ -10,16 +10,19 @@ interface IProperties {
   className?: string;
 }
 
+/**
+ * Check if the page is narrow
+ */
 const isNarrow = () => window.innerWidth <= 800;
 
 /**
  * Page container with title
  */
-export default class Container extends React.Component<IProperties> {
+export default class Container extends Component<IProperties> {
   public state: { narrow: boolean } = { narrow: isNarrow() };
 
   public componentDidMount() {
-    window.addEventListener("resize", this.onResize.bind(this));
+    window.addEventListener("resize", this.onResize);
   }
 
   public componentWillUnmount() {
@@ -41,10 +44,10 @@ export default class Container extends React.Component<IProperties> {
     );
   }
 
-  private onResize() {
+  private onResize = () => {
     const narrow = isNarrow();
     if (this.state.narrow !== narrow) {
       this.setState({ narrow });
     }
-  }
+  };
 }

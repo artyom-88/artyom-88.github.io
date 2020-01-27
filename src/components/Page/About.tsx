@@ -1,6 +1,3 @@
-/**
- * About page
- */
 import React from "react";
 import bio from "../../resources/bio.json";
 import "./About.scss";
@@ -12,4 +9,7 @@ const items = bio.data.map((value: string, key: number) => (
   </div>
 ));
 
+/**
+ * About page component
+ */
 export default () => <Container title="Artyom Ganev" content={items} />;

@@ -18,6 +18,7 @@ Backend sources of https://artyom-ganev.github.io/ site are here https://github.
 * [Prettier](https://prettier.io/)
 * [ReactJS](https://reactjs.org/)
 * [react-scripts](https://www.npmjs.com/package/react-scripts)
+* [Redux](https://redux.js.org/)
 * [Sass](https://sass-lang.com//)
 * [TSLint](https://palantir.github.io/tslint/)
 * [TypeScript](https://www.typescriptlang.org)

@@ -12,7 +12,10 @@
     color: #343648;
 
     &.active {
-      background-color: #ba96ff;
+      text-decoration: underline;
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     &:visited {
@@ -20,10 +23,9 @@
     }
 
     &:hover {
-      background-color: #ba96ff;
       cursor: pointer;
       text-decoration: none;
-      color: #FFFFFF;
+      color: #75043b;
     }
   }
 }

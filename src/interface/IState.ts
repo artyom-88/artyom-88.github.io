@@ -1,6 +1,13 @@
 /**
- * State structure interface
+ * Navigation state structure interface
+ */
+export interface INavigationState {
+  activePage: string;
+}
+
+/**
+ * Application state structure interface
  */
 export default interface IState {
-  navigation: { activePage: string };
+  navigation: INavigationState;
 }

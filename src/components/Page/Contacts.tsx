@@ -43,8 +43,6 @@ const content = (
 );
 
 /**
- * Contacts page
+ * Contacts page component
  */
-export default () => (
-  <Container title="Contacts and Social" content={content} />
-);
+export default () => <Container content={content} />;

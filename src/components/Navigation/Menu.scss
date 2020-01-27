@@ -11,6 +11,10 @@
     padding: 0.8em 1em;
     color: #343648;
 
+    &.active {
+      background-color: #ba96ff;
+    }
+
     &:visited {
       color: #343648;
     }

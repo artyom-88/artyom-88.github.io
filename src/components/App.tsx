@@ -1,5 +1,7 @@
 import React from "react";
+import { connect, DispatchProp } from "react-redux";
 import { HashRouter, Route, Switch } from "react-router-dom";
+import IState from "../interface/IState";
 import "./App.scss";
 import Menu from "./Navigation/Menu";
 import About from "./Page/About";
@@ -9,12 +11,16 @@ import Contacts from "./Page/Contacts";
 import Main from "./Page/Main";
 import NotFound from "./Page/NotFound";
 
+export interface IProperties extends DispatchProp {
+  navigation: { activePage: string };
+}
+
 /**
  * Main application
  */
-export default () => (
+const App = ({ dispatch, navigation }: IProperties) => (
   <HashRouter>
-    <Menu />
+    <Menu dispatch={dispatch} activePage={navigation.activePage} />
     <div className="components-app__background" />
     <div className="flexBox flexColumn components-app__content">
       <Switch>
@@ -29,3 +35,7 @@ export default () => (
     <div className="components-app__rights">© 2019 All rights reserved</div>
   </HashRouter>
 );
+
+const mapStateToProps = ({ navigation }: IState) => ({ navigation });
+
+export default connect(mapStateToProps)(App);

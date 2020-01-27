@@ -1,26 +1,37 @@
-import React from "react";
+import React, { MouseEvent, MouseEventHandler } from "react";
+import { DispatchProp } from "react-redux";
 import { Link } from "react-router-dom";
+import { Dispatch } from "redux";
+import { navigate } from "../../actions";
 import "./Menu.scss";
+import { MAIN, PAGES } from "../../constants/Pages";
 
-const PAGES = [
-  { name: "Main", url: "" },
-  { name: "About", url: "about" },
-  { name: "Blog", url: "blog" },
-  { name: "Career", url: "career" },
-  { name: "Contacts", url: "contacts" }
-];
+export interface IProperties extends DispatchProp {
+  activePage: string;
+}
 
-const items = PAGES.map(({ name, url }) => (
-  <Link className="nav-menu__item" to={`/${url}`} key={name}>
-    {name}
-  </Link>
-));
+const clickWrapper = (dispatch: Dispatch) => (id: string) => () => dispatch(navigate(id));
+
+const getItems = (
+  activePage: string,
+  clickHandler: (id: string) => MouseEventHandler<HTMLAnchorElement>
+) =>
+  PAGES.map(({ id, name, url }) => (
+    <Link
+      className={`nav-menu__item${activePage === id ? " active" : ""}`}
+      to={`/${url}`}
+      key={id}
+      onClick={clickHandler(id)}
+    >
+      {name}
+    </Link>
+  ));
 
 /**
  * Navigation menu
  */
-export default () => (
+export default ({ dispatch, activePage = MAIN.id }: IProperties) => (
   <div className="flexBox nav-menu__root" id="menu">
-    {items}
+    {getItems(activePage, clickWrapper(dispatch))}
   </div>
 );

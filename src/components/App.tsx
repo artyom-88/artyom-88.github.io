@@ -7,14 +7,12 @@ import Blog from './Page/Blog';
 import Career from './Page/Career';
 import Contacts from './Page/Contacts';
 import NotFound from './Page/NotFound';
-import IState from '../interface/IState';
-import { connect } from 'react-redux';
 import './App.scss';
 
 /**
  * Main application component
  */
-const App = () => (
+export default () => (
   <HashRouter>
     <div className='flexBox flexColumn'>
       <Menu />
@@ -34,11 +32,3 @@ const App = () => (
     </div>
   </HashRouter>
 );
-
-/**
- * Component state to props mapping function
- * @param {IState} state
- */
-const mapStateToProps = (state: IState) => state;
-
-export default connect(mapStateToProps)(App);

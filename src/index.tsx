@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
-import { navigation } from './reducers';
+import * as reducers from './reducers';
 import './index.scss';
 
-const store = createStore(combineReducers({ navigation }));
+const store = createStore(combineReducers(reducers));
 
 /**
  * Site root component

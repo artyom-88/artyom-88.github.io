@@ -6,8 +6,8 @@ import Menu from '../../components/Navigation/Menu';
 test('Menu', () => {
   const component = renderer.create(
     <HashRouter>
-      <Menu/>
-    </HashRouter>,
+      <Menu />
+    </HashRouter>
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();

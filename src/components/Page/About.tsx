@@ -1,10 +1,10 @@
-import React from "react";
-import bio from "../../resources/bio.json";
-import Container from "./Container";
-import "./About.scss";
+import React from 'react';
+import bio from '../../resources/bio.json';
+import Container from './Container';
+import './About.scss';
 
 const items = bio.data.map((value: string, key: number) => (
-  <div key={key} className="page-bio__item">
+  <div key={key} className='page-bio__item'>
     {value}
   </div>
 ));
@@ -12,4 +12,4 @@ const items = bio.data.map((value: string, key: number) => (
 /**
  * About page component
  */
-export default () => <Container title="Artyom Ganev" content={items} />;
+export default () => <Container title='Artyom Ganev' content={items} />;

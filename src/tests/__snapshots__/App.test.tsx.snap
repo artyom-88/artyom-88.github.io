@@ -9,13 +9,16 @@ exports[`App 1`] = `
     id="menu"
   >
     <a
+      aria-current="page"
       className="nav-menu__item active"
       href="#/"
       onClick={[Function]}
+      style={Object {}}
     >
       Main
     </a>
     <a
+      aria-current={null}
       className="nav-menu__item"
       href="#/about"
       onClick={[Function]}
@@ -23,6 +26,7 @@ exports[`App 1`] = `
       About
     </a>
     <a
+      aria-current={null}
       className="nav-menu__item"
       href="#/blog"
       onClick={[Function]}
@@ -30,6 +34,7 @@ exports[`App 1`] = `
       Blog
     </a>
     <a
+      aria-current={null}
       className="nav-menu__item"
       href="#/career"
       onClick={[Function]}
@@ -37,6 +42,7 @@ exports[`App 1`] = `
       Career
     </a>
     <a
+      aria-current={null}
       className="nav-menu__item"
       href="#/contacts"
       onClick={[Function]}

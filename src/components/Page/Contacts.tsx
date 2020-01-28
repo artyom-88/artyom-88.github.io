@@ -1,8 +1,8 @@
-import React from "react";
-import { BLANK, REL } from "../../constants/Html";
-import contacts from "../../resources/contacts.json";
-import Container from "./Container";
-import "./Contacts.scss";
+import React from 'react';
+import { BLANK, REL } from '../../constants/Html';
+import contacts from '../../resources/contacts.json';
+import Container from './Container';
+import './Contacts.scss';
 
 /**
  * Contact options interface
@@ -17,9 +17,7 @@ interface IContact {
 /**
  * Contacts titles markup
  */
-const titles = contacts.data.map(({ key, value }: IContact) => (
-  <div key={key}>{value}:&nbsp;</div>
-));
+const titles = contacts.data.map(({ key, value }: IContact) => <div key={key}>{value}:&nbsp;</div>);
 
 /**
  * Contacts items markup
@@ -36,9 +34,9 @@ const items = contacts.data.map(({ key, link, title }: IContact) => (
  * Page content
  */
 const content = (
-  <div className="flexBox alignItemsBaseline justifyContentBetween page-contacts__root">
+  <div className='flexBox alignItemsBaseline justifyContentBetween page-contacts__root'>
     <div>{titles}</div>
-    <div className="page-contacts__item">{items}</div>
+    <div className='page-contacts__item'>{items}</div>
   </div>
 );
 

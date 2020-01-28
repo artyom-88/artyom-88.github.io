@@ -1,5 +1,5 @@
-import React, { Component, ReactNode } from "react";
-import "./Container.scss";
+import React, { Component, ReactNode } from 'react';
+import './Container.scss';
 
 /**
  * Container properties interface
@@ -22,19 +22,17 @@ export default class Container extends Component<IProperties> {
   public state: { narrow: boolean } = { narrow: isNarrow() };
 
   public componentDidMount() {
-    window.addEventListener("resize", this.onResize);
+    window.addEventListener('resize', this.onResize);
   }
 
   public componentWillUnmount() {
-    window.removeEventListener("resize", this.onResize);
+    window.removeEventListener('resize', this.onResize);
   }
 
   public render() {
     let className = this.props.className;
-    className = className ? ` ${className} ` : " ";
-    const contentClass = `flexBox flexColumn${className}page-container__root${
-      this.state.narrow ? "--narrow" : ""
-    }`;
+    className = className ? ` ${className} ` : ' ';
+    const contentClass = `flexBox flexColumn${className}page-container__root${this.state.narrow ? '--narrow' : ''}`;
     const { title, content } = this.props;
     return (
       <div className={contentClass}>

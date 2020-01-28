@@ -1,58 +1,44 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import Menu from "./Navigation/Menu";
-import Main from "./Page/Main";
-import About from "./Page/About";
-import Blog from "./Page/Blog";
-import Career from "./Page/Career";
-import Contacts from "./Page/Contacts";
-import NotFound from "./Page/NotFound";
-import IState from "../interface/IState";
-import { connect, DispatchProp } from "react-redux";
-import { MAIN } from "../constants/Pages";
-import "./App.scss";
-
-export interface IProperties extends DispatchProp {
-  navigation: { activePage: string };
-}
+import React from 'react';
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
+import Menu from './Navigation/Menu';
+import Main from './Page/Main';
+import About from './Page/About';
+import Blog from './Page/Blog';
+import Career from './Page/Career';
+import Contacts from './Page/Contacts';
+import NotFound from './Page/NotFound';
+import IState from '../interface/IState';
+import { connect } from 'react-redux';
+import './App.scss';
 
 /**
  * Main application component
  */
-const App = ({ dispatch, navigation }: IProperties) => (
-  <div className="flexBox flexColumn">
-    <Menu dispatch={dispatch} activePage={navigation.activePage} />
-    <div className="components-app__background" />
-    <div className="flexBox flexColumn components-app__content">
-      <Switch>
-        <Route exact={true} path="" component={Main} />
-        <Route path="about" component={About} />
-        <Route path="blog" component={Blog} />
-        <Route path="career" component={Career} />
-        <Route path="contacts" component={Contacts} />
-        <Route component={NotFound} />
-      </Switch>
+const App = () => (
+  <HashRouter>
+    <div className='flexBox flexColumn'>
+      <Menu />
+      <div className='components-app__background' />
+      <div className='flexBox flexColumn components-app__content'>
+        <Switch>
+          <Redirect from='/main' to='/' />
+          <Route exact={true} path='/' component={Main} />
+          <Route path='/about' component={About} />
+          <Route path='/blog' component={Blog} />
+          <Route path='/career' component={Career} />
+          <Route path='/contacts' component={Contacts} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+      <div className='components-app__rights'>© 2019 All rights reserved</div>
     </div>
-    <div className="components-app__rights">© 2019 All rights reserved</div>
-  </div>
+  </HashRouter>
 );
 
 /**
  * Component state to props mapping function
  * @param {IState} state
- * @param {Object} ownProps
  */
-const mapStateToProps = (
-  { navigation }: IState,
-  ownProps: { location: { pathname: string } }
-) => {
-  const { activePage } = navigation;
-  if (activePage) {
-    return { navigation: { activePage } };
-  }
-  // We need to set default page on first login
-  const paths = ownProps.location.pathname.split("/");
-  return { navigation: { activePage: paths[1] || MAIN.id } };
-};
+const mapStateToProps = (state: IState) => state;
 
 export default connect(mapStateToProps)(App);

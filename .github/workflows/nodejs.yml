@@ -18,19 +18,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies
-      run: |
-        npm ci
+      run: npm ci
       env:
         CI: true
     - name: Run linter
-        npm run lint
+      run: npm run lint
     - name: Run prettier
-        npm run prettier-check
+      run: npm run prettier-check
     - name: Run tests
-      run:
-        npm test
+      run: npm test
       env:
         CI: true
     - name: Run build
-      run:
-        npm run build --if-present
+      run: npm run build --if-present

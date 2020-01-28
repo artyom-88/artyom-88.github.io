@@ -17,12 +17,17 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
-      run: |
-        npm ci
-        npm run lint
-        npm run prettier-check
-        npm test
-        npm run build --if-present
+    - name: Install dependencies
+      run: npm ci
       env:
         CI: true
+    - name: Run linter
+      run: npm run lint
+    - name: Run prettier
+      run: npm run prettier-check
+    - name: Run tests
+      run: npm test
+      env:
+        CI: true
+    - name: Run build
+      run: npm run build --if-present

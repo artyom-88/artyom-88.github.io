@@ -1,7 +1,7 @@
-import React, { Component, ReactNode } from "react";
-import Source from "../Model/Source";
-import LoadingIndicator from "../Navigation/LoadingIndicator";
-import Container from "./Container";
+import React, { Component, ReactNode } from 'react';
+import Source from '../Model/Source';
+import LoadingIndicator from '../Navigation/LoadingIndicator';
+import Container from './Container';
 
 export interface IState<TPage> {
   items: TPage[];
@@ -12,19 +12,13 @@ export interface IState<TPage> {
  * Base component for all pages with source
  * @abstract
  */
-export default abstract class AbstractPage<TPage> extends Component<
-  {},
-  IState<TPage>
-> {
+export default abstract class AbstractPage<TPage> extends Component<{}, IState<TPage>> {
   public state: IState<TPage> = {
     items: [],
-    loaded: false
+    loaded: false,
   };
 
-  private readonly source: Source<TPage> = new Source<TPage>(
-    this.getPageName(),
-    this.getBaseUrl()
-  );
+  private readonly source: Source<TPage> = new Source<TPage>(this.getPageName(), this.getBaseUrl());
 
   public componentDidMount(): void {
     this.source
@@ -58,7 +52,5 @@ export default abstract class AbstractPage<TPage> extends Component<
    */
   protected abstract getItems(): ReactNode;
 
-  private getContent = () => (
-    <div className="flexBox flexColumn">{this.getItems()}</div>
-  );
+  private getContent = () => <div className='flexBox flexColumn'>{this.getItems()}</div>;
 }

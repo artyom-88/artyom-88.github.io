@@ -1,9 +1,9 @@
-import React from "react";
-import { HashRouter } from "react-router-dom";
-import renderer from "react-test-renderer";
-import NotFound from "../../components/Page/NotFound";
+import React from 'react';
+import { HashRouter } from 'react-router-dom';
+import renderer from 'react-test-renderer';
+import NotFound from '../../components/Page/NotFound';
 
-test("NotFound", () => {
+test('NotFound', () => {
   const component = renderer.create(
     <HashRouter>
       <NotFound />

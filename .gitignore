@@ -6,7 +6,7 @@
 # converted sources
 *.css
 *.map
-*.js
+src/**/*.js
 
 # testing
 /coverage

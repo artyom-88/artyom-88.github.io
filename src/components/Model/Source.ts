@@ -12,8 +12,9 @@ export default class Source<TPage = object> {
    private readonly pageName: string;
    private readonly baseUrl: string;
 
-   constructor(pageName: string, baseUrl: string) {
-      this.pageName = pageName;
+   constructor(pageName: string, baseUrl:
+     string) {
+      this.pageName =    pageName;
       this.baseUrl = baseUrl;
    }
 

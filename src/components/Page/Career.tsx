@@ -1,71 +1,71 @@
 import React, { ReactNode } from 'react';
 import { BLANK, REL } from '../../constants/Html';
-import ICareer from '../../interface/ICareer';
-import AbstractPage from './AbstractPage';
+import { ICareer } from '../../interface/ICareer';
+import { connect } from 'react-redux';
+import IState from '../../interface/IState';
+import * as actions from '../../actions';
+import DateUtil from '../../utils/Date';
+import Abstract, { IProps as IAbstractProps } from './Data/Abstract';
 import './Career.scss';
+import Source from '../../model/Source';
 
-const DATE_FORMAT = {
-  month: 'long',
-  year: 'numeric',
+const mapStateToProps = ({ career: { items } }: IState) => {
+  return {
+    items: Object.values(items),
+  };
 };
 
-const PAGE_NAME = 'career';
-const BASE_URL = `https://shielded-brushlands-46595.herokuapp.com/career/`;
-
-/**
- * Career dates formatting
- * @param {Date} start - Star date
- * @param {Date} end - End date
- */
-const prepareDates = (start: Date, end: Date): string => {
-  if (start) {
-    const startDate = new Date(start);
-    const string1 = startDate.toLocaleDateString('en-US', DATE_FORMAT);
-    if (end) {
-      const endDate = new Date(end);
-      return `${string1} - ${endDate.toLocaleDateString('en-US', DATE_FORMAT)}`;
-    }
-    return `Since ${string1}`;
-  }
-  return '';
+const actionCreators = {
+  appLoading: actions.appLoading,
+  careerLoadList: actions.careerLoadList,
 };
 
-/**
- * Prepare Career item title. Wraps company name with link if site exists.
- * @param site - company site
- * @param title - company name
- */
-const prepareTitle = (site: string | undefined, title: string | undefined) => {
-  const header = <h3 className='page-career__title'>{title}</h3>;
-  return site ? (
-    <a href={site} target={BLANK} rel={REL}>
-      {header}
-    </a>
-  ) : (
-    title
-  );
-};
+interface IProps<TData> extends IAbstractProps<TData> {
+  appLoading: (payload: { loading: boolean }) => void;
+  careerLoadList: (payload: { items: TData[] }) => void;
+}
 
 /**
  * Career page
  */
-export default class Career extends AbstractPage<ICareer> {
-  protected getBaseUrl(): string {
-    return BASE_URL;
+class Career extends Abstract<ICareer, IProps<ICareer>> {
+  private readonly source: Source<ICareer>;
+
+  constructor(props: IProps<ICareer>) {
+    super(props);
+    const { appLoading, careerLoadList } = props;
+    this.source = new Source<ICareer>(
+      'career',
+      () => {
+        appLoading({ loading: true });
+      },
+      (data: ICareer[]) => {
+        careerLoadList({ items: data });
+      }
+    );
   }
 
-  protected getPageName(): string {
-    return PAGE_NAME;
-  }
+  protected getSource = (): Source<ICareer> => this.source;
+
+  private prepareTitle = (site: string, title: string) => {
+    const header = <h3 className='page-career__title'>{title}</h3>;
+    return site ? (
+      <a href={site} target={BLANK} rel={REL} title='Click for details'>
+        {header}
+      </a>
+    ) : (
+      <h3>{title}</h3>
+    );
+  };
 
   /**
    * Career items markup
    */
-  protected getItems = (): ReactNode =>
-    this.state.items.map(({ id, site, title, startDate, endDate, post, description, tools }: ICareer) => (
+  protected getContent = (careerList: ICareer[]): ReactNode => {
+    return careerList.map(({ id, site, title, startDate, endDate, post, description, tools }: ICareer) => (
       <div key={id} className='page-career__item'>
-        {prepareTitle(site, title)}
-        <div className='page-career__dates'>{prepareDates(startDate, endDate)}</div>
+        {this.prepareTitle(site, title)}
+        <div className='page-career__dates'>{DateUtil.prepareDates(startDate, endDate)}</div>
         <div className=''>Post:&nbsp;{post}</div>
         <div className=''>{description}</div>
         <div className='flexBox flexColumn'>
@@ -73,4 +73,7 @@ export default class Career extends AbstractPage<ICareer> {
         </div>
       </div>
     ));
+  };
 }
+
+export default connect(mapStateToProps, actionCreators)(Career);

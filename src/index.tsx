@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { combineReducers, createStore } from 'redux';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
-import { navigation } from './reducers';
+import store from './store';
 import './index.scss';
-
-const store = createStore(combineReducers({ navigation }));
 
 /**
  * Site root component

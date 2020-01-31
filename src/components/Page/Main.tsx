@@ -15,37 +15,37 @@ const CONTENT_BLOCK = 'page-main__contentBlock';
 /**
  * Main page component
  */
-const PAGE_CONTENT = (
-  <div className='page-main__root'>
-    <img className='page-main__image' src={img} alt='Artyom' title='artyom.jpg' />
-    <h2 className={CONTENT_BLOCK}>Hi! My name is Artyom.</h2>
-    <div className={CONTENT_BLOCK}>
-      I'm a programmer, based in&nbsp;
-      <a href={LINKS.Rybinsk} target={BLANK} rel={REL}>
-        Rybinsk
-      </a>
-      ,&nbsp;Russia. There are some facts about me on this site.
+export default () => (
+  <Container>
+    <div className='page-main__root'>
+      <img className='page-main__image' src={img} alt='Artyom' title='artyom.jpg' />
+      <h2 className={CONTENT_BLOCK}>Hi! My name is Artyom.</h2>
+      <div className={CONTENT_BLOCK}>
+        I'm a programmer, based in&nbsp;
+        <a href={LINKS.Rybinsk} target={BLANK} rel={REL}>
+          Rybinsk
+        </a>
+        ,&nbsp;Russia. There are some facts about me on this site.
+      </div>
+      <div className={CONTENT_BLOCK}>
+        You can contact me if you have some ideas for it's improvement or if you find some bugs, typos etc. I'm still
+        working on it.
+      </div>
+      <div className={CONTENT_BLOCK}>
+        Frontend of this site is based on React, Redux, TypeScript and Sass, the sources of this part are located on
+        GitHub&nbsp;
+        <a href={LINKS.Front} target={BLANK} rel={REL}>
+          here
+        </a>
+        .
+      </div>
+      <div className={CONTENT_BLOCK}>
+        Backend uses Spring Boot, Maven, Heroku and PostgreSQL and is located&nbsp;
+        <a href={LINKS.Back} target={BLANK} rel={REL}>
+          here
+        </a>
+        .
+      </div>
     </div>
-    <div className={CONTENT_BLOCK}>
-      You can contact me if you have some ideas for it's improvement or if you find some bugs, typos etc. I'm still
-      working on it.
-    </div>
-    <div className={CONTENT_BLOCK}>
-      Frontend of this site is based on React, Redux, TypeScript and Sass, the sources of this part are located on
-      GitHub&nbsp;
-      <a href={LINKS.Front} target={BLANK} rel={REL}>
-        here
-      </a>
-      .
-    </div>
-    <div className={CONTENT_BLOCK}>
-      Backend uses Spring Boot, Maven, Heroku and PostgreSQL and is located&nbsp;
-      <a href={LINKS.Back} target={BLANK} rel={REL}>
-        here
-      </a>
-      .
-    </div>
-  </div>
+  </Container>
 );
-
-export default () => <Container content={PAGE_CONTENT} />;

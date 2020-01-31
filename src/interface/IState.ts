@@ -1,13 +1,16 @@
-/**
- * Navigation state structure interface
- */
-export interface INavigationState {
-  activePage: string;
+import { ICareerProps } from './ICareer';
+import { IBlogProps } from './IBlog';
+
+export interface IAppState {
+  narrow: boolean;
+  loading: boolean;
 }
 
 /**
  * Application state structure interface
  */
 export default interface IState {
-  navigation: INavigationState;
+  app: IAppState
+  blog: IBlogProps,
+  career: ICareerProps,
 }

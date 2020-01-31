@@ -1,71 +1,86 @@
-import React, { ReactNode } from 'react';
+import React, { Component, ReactNode } from 'react';
 import { BLANK, REL } from '../../constants/Html';
-import ICareer from '../../interface/ICareer';
-import AbstractPage from './AbstractPage';
+import { ICareer } from '../../interface/ICareer';
+import { connect } from 'react-redux';
+import IState from '../../interface/IState';
+import * as actions from '../../actions';
+import Source from '../../model/Source';
+import Container from './Container';
+import DateUtil from '../../utils/Date';
 import './Career.scss';
 
-const DATE_FORMAT = {
-  month: 'long',
-  year: 'numeric',
+interface IProps {
+  items: ICareer[];
+  appLoading: (payload: { loading: boolean }) => void;
+  careerLoadList: (payload: { items: ICareer[] }) => void;
+}
+
+const mapStateToProps = ({ career: { items } }: IState) => {
+  return {
+    items: Object.values(items),
+  };
 };
 
-const PAGE_NAME = 'career';
-const BASE_URL = `https://shielded-brushlands-46595.herokuapp.com/career/`;
-
-/**
- * Career dates formatting
- * @param {Date} start - Star date
- * @param {Date} end - End date
- */
-const prepareDates = (start: Date, end: Date): string => {
-  if (start) {
-    const startDate = new Date(start);
-    const string1 = startDate.toLocaleDateString('en-US', DATE_FORMAT);
-    if (end) {
-      const endDate = new Date(end);
-      return `${string1} - ${endDate.toLocaleDateString('en-US', DATE_FORMAT)}`;
-    }
-    return `Since ${string1}`;
-  }
-  return '';
-};
-
-/**
- * Prepare Career item title. Wraps company name with link if site exists.
- * @param site - company site
- * @param title - company name
- */
-const prepareTitle = (site: string | undefined, title: string | undefined) => {
-  const header = <h3 className='page-career__title'>{title}</h3>;
-  return site ? (
-    <a href={site} target={BLANK} rel={REL}>
-      {header}
-    </a>
-  ) : (
-    title
-  );
+const actionCreators = {
+  appLoading: actions.appLoading,
+  careerLoadList: actions.careerLoadList,
 };
 
 /**
  * Career page
  */
-export default class Career extends AbstractPage<ICareer> {
-  protected getBaseUrl(): string {
-    return BASE_URL;
+class Career extends Component<IProps> {
+  private readonly source: Source<ICareer>;
+
+  constructor(props: IProps) {
+    super(props);
+    const { appLoading, careerLoadList } = props;
+    this.source = new Source<ICareer>(
+      'career',
+      () => {
+        appLoading({ loading: true });
+      },
+      (data) => {
+        careerLoadList({ items: data });
+      }
+    );
   }
 
-  protected getPageName(): string {
-    return PAGE_NAME;
+  public componentDidMount(): void {
+    const { items } = this.props;
+    if (!items.length) {
+      this.source.getList();
+    }
   }
+
+  public render(): ReactNode {
+    const { items } = this.props;
+    return (
+      <Container>
+        <div className='flexBox flexColumn'>{this.getContent(items)}</div>
+      </Container>
+    );
+  }
+
+  private prepareTitle = (site: string, title: string) => {
+    const header = <h3 className='page-career__title'>{title}</h3>;
+    return site ? (
+      <a href={site} target={BLANK} rel={REL} title='Click for details'>
+        {header}
+      </a>
+    ) : (
+      <h3>{title}</h3>
+    );
+  };
 
   /**
    * Career items markup
    */
-  protected getItems = (): ReactNode =>
-    this.state.items.map(({ id, site, title, startDate, endDate, post, description, tools }: ICareer) => (
+  private getContent = (careerList: ICareer[]): ReactNode => {
+    return careerList.map(({ id, site, title, startDate, endDate, post, description, tools }: ICareer) => (
       <div key={id} className='page-career__item'>
-        {prepareTitle(site, title)}
-        <div className='page-career__dates'>{prepareDates(startDate, endDate)}</div>
+        {this.prepareTitle(site, title)}
+        <div className='page-career__dates'>{DateUtil.prepareDates(startDate, endDate)}</div>
         <div className=''>Post:&nbsp;{post}</div>
         <div className=''>{description}</div>
         <div className='flexBox flexColumn'>
@@ -73,4 +88,7 @@ export default class Career extends AbstractPage<ICareer> {
         </div>
       </div>
     ));
+  };
 }
+
+export default connect(mapStateToProps, actionCreators)(Career);

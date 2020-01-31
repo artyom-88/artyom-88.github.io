@@ -12,10 +12,7 @@ const LINKS = {
 
 const CONTENT_BLOCK = 'page-main__contentBlock';
 
-/**
- * Main page component
- */
-const PAGE_CONTENT = (
+const CONTENT = (
   <div className='page-main__root'>
     <img className='page-main__image' src={img} alt='Artyom' title='artyom.jpg' />
     <h2 className={CONTENT_BLOCK}>Hi! My name is Artyom.</h2>
@@ -48,4 +45,7 @@ const PAGE_CONTENT = (
   </div>
 );
 
-export default () => <Container content={PAGE_CONTENT} />;
+/**
+ * Main page component
+ */
+export default () => <Container>{CONTENT}</Container>;

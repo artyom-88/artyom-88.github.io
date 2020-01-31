@@ -8,7 +8,7 @@ import './Menu.scss';
  */
 const renderItems = () =>
   PAGES.map(({ id, name, url }) => (
-    <NavLink exact={true} className='nav-menu__item' activeClassName='active' to={`/${url}`} key={id}>
+    <NavLink exact={!url} className='nav-menu__item' activeClassName='active' to={`/${url}`} key={id}>
       {name}
     </NavLink>
   ));

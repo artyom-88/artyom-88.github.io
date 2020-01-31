@@ -1,9 +1,13 @@
 import React, { ReactNode } from 'react';
 import { BLANK, REL } from '../../constants/Html';
-import IBlog from '../../interface/IBlog';
+import { IBlog } from '../../interface/IBlog';
 import DateUtil from '../../utils/Date';
-import AbstractPage from './AbstractPage';
+import IState from '../../interface/IState';
+import * as actions from '../../actions';
+import { connect } from 'react-redux';
+import Abstract, { IProps as IAbstractProps } from './Data/Abstract';
 import './Blog.scss';
+import Source from '../../model/Source';
 
 const DATE_COMPARATOR = (item1: IBlog, item2: IBlog): number => {
   // TODO: Migrate to normal Date format https://github.com/Artyom-Ganev/artyom-ganev-src/issues/83
@@ -12,32 +16,54 @@ const DATE_COMPARATOR = (item1: IBlog, item2: IBlog): number => {
   return date1 < date2 ? 1 : -1;
 };
 
-const PAGE_NAME = 'blog';
-const BASE_URL = `https://shielded-brushlands-46595.herokuapp.com/blog/`;
+const mapStateToProps = ({ blog: { items } }: IState) => ({
+  items: Object.values(items),
+});
+
+const actionCreators = {
+  appLoading: actions.appLoading,
+  blogLoadList: actions.blogLoadList,
+};
+
+interface IProps<TData> extends IAbstractProps<TData> {
+  appLoading: (payload: { loading: boolean }) => void;
+  blogLoadList: (payload: { items: TData[] }) => void;
+}
 
 /**
  * Blog page
  */
-export default class Blog extends AbstractPage<IBlog> {
-  protected getBaseUrl(): string {
-    return BASE_URL;
+class Blog extends Abstract<IBlog, IProps<IBlog>> {
+  private readonly source: Source<IBlog>;
+
+  constructor(props: IProps<IBlog>) {
+    super(props);
+    const { appLoading, blogLoadList } = props;
+    this.source = new Source<IBlog>(
+      'blog',
+      () => {
+        appLoading({ loading: true });
+      },
+      (data: IBlog[]) => {
+        blogLoadList({ items: data });
+      }
+    );
   }
 
-  protected getPageName(): string {
-    return PAGE_NAME;
-  }
+  protected getSource = (): Source<IBlog> => this.source;
 
-  /**
-   * Blog items markup
-   */
-  protected getItems = (): ReactNode =>
-    this.state.items.sort(DATE_COMPARATOR).map(({ id, year, month, day, title, link, linkCaption }: IBlog) => (
+  protected getContent = (blogList: IBlog[]): ReactNode[] =>
+    blogList.sort(DATE_COMPARATOR).map(({ id, year, month, day, title, link, linkCaption }: IBlog) => (
       <div key={id} className='page-blog__itemContainer'>
         <div className='page-blog__title'>{DateUtil.format(`${year}-${month}-${day}`)}</div>
         <div className='page-blog__item'>{title}</div>
-        <a href={link} target={BLANK} rel={REL}>
-          {linkCaption}
-        </a>
+        {link && (
+          <a href={link} target={BLANK} rel={REL} title='Click for details'>
+            {linkCaption}
+          </a>
+        )}
       </div>
     ));
 }
+
+export default connect(mapStateToProps, actionCreators)(Blog);

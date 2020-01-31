@@ -1,9 +1,21 @@
-import { NAVIGATE } from "../constants/ActionTypes";
-import { INavigateAction } from "../interface/Actions";
+import { createAction } from 'redux-actions';
 
 /**
- * Navigate action
- * @param {String} activePage new active page id
- * @return INavigateAction
+ * App loading state change action
  */
-export const navigate = (activePage: string): INavigateAction => ({ payload: { activePage }, type: NAVIGATE });
+export const appLoading = createAction('APP_LOADING');
+
+/**
+ * App resize state change action
+ */
+export const appResize = createAction('APP_RESIZE');
+
+/**
+ * Load Blog data action
+ */
+export const blogLoadList = createAction('BLOG_LOAD_LIST');
+
+/**
+ * Load Career data action
+ */
+export const careerLoadList = createAction('CAREER_LOAD_LIST');

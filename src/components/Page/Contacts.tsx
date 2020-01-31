@@ -31,16 +31,13 @@ const items = contacts.data.map(({ key, link, title }: IContact) => (
 ));
 
 /**
- * Page content
- */
-const content = (
-  <div className='flexBox alignItemsBaseline justifyContentBetween page-contacts__root'>
-    <div>{titles}</div>
-    <div className='page-contacts__item'>{items}</div>
-  </div>
-);
-
-/**
  * Contacts page component
  */
-export default () => <Container content={content} />;
+export default () => (
+  <Container>
+    <div className='flexBox alignItemsBaseline justifyContentBetween page-contacts__root'>
+      <div>{titles}</div>
+      <div className='page-contacts__item'>{items}</div>
+    </div>
+  </Container>
+);

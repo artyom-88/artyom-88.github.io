@@ -1,19 +1,13 @@
-import React, { Component, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { BLANK, REL } from '../../constants/Html';
 import { ICareer } from '../../interface/ICareer';
 import { connect } from 'react-redux';
 import IState from '../../interface/IState';
 import * as actions from '../../actions';
-import Source from '../../model/Source';
-import Container from './Container';
 import DateUtil from '../../utils/Date';
+import Abstract, { IProps as IAbstractProps } from './Data/Abstract';
 import './Career.scss';
-
-interface IProps {
-  items: ICareer[];
-  appLoading: (payload: { loading: boolean }) => void;
-  careerLoadList: (payload: { items: ICareer[] }) => void;
-}
+import Source from '../../model/Source';
 
 const mapStateToProps = ({ career: { items } }: IState) => {
   return {
@@ -26,13 +20,18 @@ const actionCreators = {
   careerLoadList: actions.careerLoadList,
 };
 
+interface IProps<TData> extends IAbstractProps<TData> {
+  appLoading: (payload: { loading: boolean }) => void;
+  careerLoadList: (payload: { items: TData[] }) => void;
+}
+
 /**
  * Career page
  */
-class Career extends Component<IProps> {
+class Career extends Abstract<ICareer, IProps<ICareer>> {
   private readonly source: Source<ICareer>;
 
-  constructor(props: IProps) {
+  constructor(props: IProps<ICareer>) {
     super(props);
     const { appLoading, careerLoadList } = props;
     this.source = new Source<ICareer>(
@@ -40,27 +39,13 @@ class Career extends Component<IProps> {
       () => {
         appLoading({ loading: true });
       },
-      (data) => {
+      (data: ICareer[]) => {
         careerLoadList({ items: data });
       }
     );
   }
 
-  public componentDidMount(): void {
-    const { items } = this.props;
-    if (!items.length) {
-      this.source.getList();
-    }
-  }
-
-  public render(): ReactNode {
-    const { items } = this.props;
-    return (
-      <Container>
-        <div className='flexBox flexColumn'>{this.getContent(items)}</div>
-      </Container>
-    );
-  }
+  protected getSource = (): Source<ICareer> => this.source;
 
   private prepareTitle = (site: string, title: string) => {
     const header = <h3 className='page-career__title'>{title}</h3>;
@@ -76,7 +61,7 @@ class Career extends Component<IProps> {
   /**
    * Career items markup
    */
-  private getContent = (careerList: ICareer[]): ReactNode => {
+  protected getContent = (careerList: ICareer[]): ReactNode => {
     return careerList.map(({ id, site, title, startDate, endDate, post, description, tools }: ICareer) => (
       <div key={id} className='page-career__item'>
         {this.prepareTitle(site, title)}

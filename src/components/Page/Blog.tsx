@@ -1,13 +1,13 @@
-import React, { Component, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { BLANK, REL } from '../../constants/Html';
 import { IBlog } from '../../interface/IBlog';
 import DateUtil from '../../utils/Date';
 import IState from '../../interface/IState';
 import * as actions from '../../actions';
-import Source from '../../model/Source';
-import Container from './Container';
 import { connect } from 'react-redux';
+import Abstract, { IProps as IAbstractProps } from './Data/Abstract';
 import './Blog.scss';
+import Source from '../../model/Source';
 
 const DATE_COMPARATOR = (item1: IBlog, item2: IBlog): number => {
   // TODO: Migrate to normal Date format https://github.com/Artyom-Ganev/artyom-ganev-src/issues/83
@@ -15,12 +15,6 @@ const DATE_COMPARATOR = (item1: IBlog, item2: IBlog): number => {
   const date2 = DateUtil.parseDateFromString(`${item2.year}-${item2.month}-${item2.day}`) || new Date();
   return date1 < date2 ? 1 : -1;
 };
-
-interface IProps {
-  items: IBlog[];
-  appLoading: (payload: { loading: boolean }) => void;
-  blogLoadList: (payload: { items: IBlog[] }) => void;
-}
 
 const mapStateToProps = ({ blog: { items } }: IState) => ({
   items: Object.values(items),
@@ -31,13 +25,18 @@ const actionCreators = {
   blogLoadList: actions.blogLoadList,
 };
 
+interface IProps<TData> extends IAbstractProps<TData> {
+  appLoading: (payload: { loading: boolean }) => void;
+  blogLoadList: (payload: { items: TData[] }) => void;
+}
+
 /**
  * Blog page
  */
-class Blog extends Component<IProps> {
+class Blog extends Abstract<IBlog, IProps<IBlog>> {
   private readonly source: Source<IBlog>;
 
-  constructor(props: IProps) {
+  constructor(props: IProps<IBlog>) {
     super(props);
     const { appLoading, blogLoadList } = props;
     this.source = new Source<IBlog>(
@@ -45,29 +44,15 @@ class Blog extends Component<IProps> {
       () => {
         appLoading({ loading: true });
       },
-      (data) => {
+      (data: IBlog[]) => {
         blogLoadList({ items: data });
       }
     );
   }
 
-  public componentDidMount(): void {
-    const { items } = this.props;
-    if (!items.length) {
-      this.source.getList();
-    }
-  }
+  protected getSource = (): Source<IBlog> => this.source;
 
-  public render(): ReactNode {
-    const { items } = this.props;
-    return (
-      <Container>
-        <div className='flexBox flexColumn'>{this.getContent(items)}</div>
-      </Container>
-    );
-  }
-
-  private getContent = (blogList: IBlog[]): ReactNode[] =>
+  protected getContent = (blogList: IBlog[]): ReactNode[] =>
     blogList.sort(DATE_COMPARATOR).map(({ id, year, month, day, title, link, linkCaption }: IBlog) => (
       <div key={id} className='page-blog__itemContainer'>
         <div className='page-blog__title'>{DateUtil.format(`${year}-${month}-${day}`)}</div>

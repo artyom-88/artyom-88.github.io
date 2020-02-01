@@ -8,6 +8,7 @@ import { IAppState } from '../interface/IState';
 // fix redux-actions TypeScript bad support
 const appLoading = `${actions.appLoading}`;
 const appResize = `${actions.appResize}`;
+const appContributions = `${actions.appContribution}`;
 const blogLoadList = `${actions.blogLoadList}`;
 const careerLoadList = `${actions.careerLoadList}`;
 
@@ -15,11 +16,15 @@ const careerLoadList = `${actions.careerLoadList}`;
  * App state reducer
  */
 export const app = handleActions<IAppState>({
-  [appLoading](state: IAppState, { payload: { loading } }: { payload: { loading: boolean } }) {
+  [appLoading](state: IAppState, { payload: { loading } }) {
     return { ...state, loading };
   },
-  [appResize](state: IAppState, { payload: { narrow } }: { payload: { narrow: boolean } }) {
+  [appResize](state: IAppState, { payload: { narrow } }) {
     return { ...state, narrow };
+  },
+  [appContributions](state: IAppState, { payload: { contribution: { svg } } }) {
+    const contribution = { ...state.contribution, svg };
+    return { ...state, contribution };
   },
   [blogLoadList](state: IAppState) {
     return { ...state, loading: false };
@@ -27,7 +32,7 @@ export const app = handleActions<IAppState>({
   [careerLoadList](state: IAppState) {
     return { ...state, loading: false };
   },
-}, { narrow: false, loading: false });
+}, { narrow: false, loading: false, contribution: { svg: null } });
 
 /**
  * Blog actions reducer

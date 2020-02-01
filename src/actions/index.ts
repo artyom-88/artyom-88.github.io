@@ -11,6 +11,11 @@ export const appLoading = createAction('APP_LOADING');
 export const appResize = createAction('APP_RESIZE');
 
 /**
+ * GitHub contributions update action
+ */
+export const appContribution = createAction('APP_CONTRIBUTIONS');
+
+/**
  * Load Blog data action
  */
 export const blogLoadList = createAction('BLOG_LOAD_LIST');

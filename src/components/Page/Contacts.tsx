@@ -3,6 +3,7 @@ import { BLANK, REL } from '../../constants/Html';
 import contacts from '../../resources/contacts.json';
 import Container from './Container';
 import './Contacts.scss';
+import GitHub from './Main/GitHub';
 
 /**
  * Contact options interface
@@ -39,5 +40,6 @@ export default () => (
       <div>{titles}</div>
       <div className='page-contacts__item'>{items}</div>
     </div>
+    <GitHub />
   </Container>
 );

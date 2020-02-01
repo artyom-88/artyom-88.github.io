@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GitHub 1`] = `
+<div
+  className="flexBox justifyContentCenter page-main__githubContainer"
+>
+  <div
+    className="page-main__githubContributions"
+  />
+  <div
+    className="flexBox flexGrow-1 flexShrink-1 justifyContentCenter"
+  >
+    <div
+      className="nav-loading__indicator"
+    />
+  </div>
+</div>
+`;

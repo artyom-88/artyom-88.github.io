@@ -8,21 +8,21 @@
     },
     {
       "key": "1",
+      "value": "LinkedIn",
+      "link": "https://www.linkedin.com/in/artem-ganev-185b38192",
+      "title": "artem-ganev-185b38192"
+    },
+    {
+      "key": "2",
       "value": "Facebook",
       "link": "https://www.facebook.com/artyom.ganev",
       "title": "artyom.ganev"
     },
     {
-      "key": "2",
+      "key": "3",
       "value": "VK",
       "link": "https://vk.com/a.a.ganev",
       "title": "a.a.ganev"
-    },
-    {
-      "key": "3",
-      "value": "GitHub",
-      "link": "https://github.com/Artyom-Ganev/",
-      "title": "Artyom-Ganev"
     },
     {
       "key": "4",
@@ -32,9 +32,9 @@
     },
     {
       "key": "5",
-      "value": "LinkedIn",
-      "link": "https://www.linkedin.com/in/artem-ganev-185b38192",
-      "title": "artem-ganev-185b38192"
+      "value": "GitHub",
+      "link": "https://github.com/Artyom-Ganev/",
+      "title": "Artyom-Ganev"
     }
   ]
 }

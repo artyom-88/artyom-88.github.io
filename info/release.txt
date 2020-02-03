@@ -1,1 +1,2 @@
+2020-02-03: Add Redux reselect library && Fix IE11 Object.values support
 2020-01-31: Add Redux store to application

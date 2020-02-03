@@ -1,19 +1,21 @@
 import React, { ReactNode } from 'react';
-import { BLANK, REL } from '../../constants/Html';
-import { ICareer } from '../../interface/ICareer';
 import { connect } from 'react-redux';
-import IState from '../../interface/IState';
+import { createSelector } from 'reselect';
 import * as actions from '../../actions';
-import DateUtil from '../../utils/Date';
-import Abstract, { IProps as IAbstractProps } from './Data/Abstract';
-import './Career.scss';
+import { BLANK, REL } from '../../constants/Html';
+import { ICareer, ICareerItems } from '../../interface/ICareer';
+import IState from '../../interface/IState';
 import Source from '../../model/Source';
+import DateUtil from '../../utils/Date';
+import './Career.scss';
+import Abstract, { IProps as IAbstractProps } from './Data/Abstract';
 
-const mapStateToProps = ({ career: { items } }: IState) => {
-  return {
-    items: Object.values(items),
-  };
-};
+const itemsSelector = createSelector(
+  ({ career }: IState) => career,
+  (career: { items: ICareerItems }) => Object.values(career.items)
+);
+
+const mapStateToProps = (state: IState) => ({ items: itemsSelector(state) });
 
 const actionCreators = {
   appLoading: actions.appLoading,

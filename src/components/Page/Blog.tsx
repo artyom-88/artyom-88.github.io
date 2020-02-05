@@ -4,8 +4,9 @@ import { createSelector } from 'reselect';
 import * as actions from '../../actions';
 import { BLANK, REL } from '../../constants/Html';
 import { IBlog, IBlogItems } from '../../interface/IBlog';
+import { ISource } from '../../interface/ISource';
 import IState from '../../interface/IState';
-import Source from '../../model/Source';
+import create from '../../model/Source';
 import DateUtil from '../../utils/Date';
 import './Blog.scss';
 import Abstract, { IProps as IAbstractProps } from './Data/Abstract';
@@ -38,23 +39,23 @@ interface IProps<TData> extends IAbstractProps<TData> {
  * Blog page
  */
 class Blog extends Abstract<IBlog, IProps<IBlog>> {
-  private readonly source: Source<IBlog>;
+  private readonly source: ISource;
 
   constructor(props: IProps<IBlog>) {
     super(props);
     const { appLoading, blogLoadList } = props;
-    this.source = new Source<IBlog>(
-      'blog',
-      () => {
+    this.source = create<IBlog>()
+      .endpoint('blog')
+      .beforeLoad(() => {
         appLoading({ loading: true });
-      },
-      (data: IBlog[]) => {
+      })
+      .afterLoad((data: IBlog[]) => {
         blogLoadList({ items: data });
-      }
-    );
+      })
+      .build();
   }
 
-  protected getSource = (): Source<IBlog> => this.source;
+  protected getSource = (): ISource => this.source;
 
   protected getContent = (blogList: IBlog[]): ReactNode[] =>
     blogList.sort(DATE_COMPARATOR).map(({ id, year, month, day, title, link, linkCaption }: IBlog) => (

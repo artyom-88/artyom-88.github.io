@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Container 1`] = `
+exports[`Container with title 1`] = `
 <div
   className="flexBox flexColumn page-container__root"
 >
@@ -15,7 +15,7 @@ exports[`Container 1`] = `
 </div>
 `;
 
-exports[`Container 2`] = `
+exports[`Container without title 1`] = `
 <div
   className="flexBox flexColumn page-container__root"
 >

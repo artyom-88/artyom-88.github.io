@@ -18,7 +18,7 @@ const renderItems = () =>
  * Navigation menu component
  */
 export default () => (
-  <div className='flexBox nav-menu__root' id='menu'>
+  <nav className='flexBox nav-menu__root' id='menu'>
     {renderItems()}
-  </div>
+  </nav>
 );

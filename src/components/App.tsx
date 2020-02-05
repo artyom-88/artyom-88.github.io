@@ -45,7 +45,9 @@ class App extends Component<IProperties> {
   render = () => (
     <HashRouter>
       <div className='flexBox flexColumn'>
-        <Menu />
+        <header className='flexBox'>
+          <Menu />
+        </header>
         <div className='components-app__background' />
         <div className='flexBox flexColumn components-app__content'>
           <Switch>
@@ -59,7 +61,7 @@ class App extends Component<IProperties> {
             <Route component={NotFound} />
           </Switch>
         </div>
-        <div className='components-app__rights'>© 2019 All rights reserved</div>
+        <footer className='components-app__rights'>© 2019 All rights reserved</footer>
       </div>
     </HashRouter>
   );

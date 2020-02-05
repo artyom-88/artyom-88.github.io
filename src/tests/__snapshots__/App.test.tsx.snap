@@ -4,52 +4,56 @@ exports[`App 1`] = `
 <div
   className="flexBox flexColumn"
 >
-  <div
-    className="flexBox nav-menu__root"
-    id="menu"
+  <header
+    className="flexBox"
   >
-    <a
-      aria-current="page"
-      className="nav-menu__item active"
-      href="#/"
-      onClick={[Function]}
-      style={Object {}}
+    <nav
+      className="flexBox nav-menu__root"
+      id="menu"
     >
-      Main
-    </a>
-    <a
-      aria-current={null}
-      className="nav-menu__item"
-      href="#/about"
-      onClick={[Function]}
-    >
-      About
-    </a>
-    <a
-      aria-current={null}
-      className="nav-menu__item"
-      href="#/blog"
-      onClick={[Function]}
-    >
-      Blog
-    </a>
-    <a
-      aria-current={null}
-      className="nav-menu__item"
-      href="#/career"
-      onClick={[Function]}
-    >
-      Career
-    </a>
-    <a
-      aria-current={null}
-      className="nav-menu__item"
-      href="#/contacts"
-      onClick={[Function]}
-    >
-      Contacts
-    </a>
-  </div>
+      <a
+        aria-current="page"
+        className="nav-menu__item active"
+        href="#/"
+        onClick={[Function]}
+        style={Object {}}
+      >
+        Main
+      </a>
+      <a
+        aria-current={null}
+        className="nav-menu__item"
+        href="#/about"
+        onClick={[Function]}
+      >
+        About
+      </a>
+      <a
+        aria-current={null}
+        className="nav-menu__item"
+        href="#/blog"
+        onClick={[Function]}
+      >
+        Blog
+      </a>
+      <a
+        aria-current={null}
+        className="nav-menu__item"
+        href="#/career"
+        onClick={[Function]}
+      >
+        Career
+      </a>
+      <a
+        aria-current={null}
+        className="nav-menu__item"
+        href="#/contacts"
+        onClick={[Function]}
+      >
+        Contacts
+      </a>
+    </nav>
+  </header>
   <div
     className="components-app__background"
   />
@@ -122,10 +126,10 @@ exports[`App 1`] = `
       </div>
     </div>
   </div>
-  <div
+  <footer
     className="components-app__rights"
   >
     © 2019 All rights reserved
-  </div>
+  </footer>
 </div>
 `;

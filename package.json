@@ -13,6 +13,7 @@
     "url": "git+https://github.com/Artyom-Ganev/artyom-ganev-site.git"
   },
   "scripts": {
+    "precommit": "lint-staged",
     "predeploy": "npm run build",
     "deploy": "gh-pages -o production -d build -t -s **/* !node_modules",
     "start": "react-scripts start",
@@ -22,7 +23,8 @@
     "eject": "react-scripts eject",
     "prettier-check": "prettier -c \"src/**/*.ts?\"",
     "prettier-fix": "prettier -c --write \"src/**/*.ts?\"",
-    "lint": "tslint -p tsconfig.json"
+    "lint": "tslint -p tsconfig.json",
+    "lint-fix": "tslint -p tsconfig.json --fix"
   },
   "dependencies": {
     "axios": "0.19.2",
@@ -46,6 +48,8 @@
     "@types/redux-actions": "2.6.1",
     "@types/reselect": "2.2.0",
     "gh-pages": "2.2.0",
+    "husky": "4.2.1",
+    "lint-staged": "10.0.7",
     "node-sass": "4.13.1",
     "prettier": "1.19.1",
     "react-scripts": "3.3.0",
@@ -54,6 +58,18 @@
     "tslint-config-prettier": "1.18.0",
     "tslint-react": "4.2.0",
     "typescript": "3.7.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "npm run lint-fix",
+      "npm run lint",
+      "npm run prettier-fix"
+    ]
   },
   "browserslist": {
     "production": [

@@ -8,9 +8,7 @@ exports[`Container with title 1`] = `
     title 1
   </h2>
   <div>
-    <div>
-      text1
-    </div>
+    text1
   </div>
 </div>
 `;
@@ -20,9 +18,7 @@ exports[`Container without title 1`] = `
   className="flexBox flexColumn page-container__root"
 >
   <div>
-    <div>
-      text1
-    </div>
+    text1
   </div>
 </div>
 `;

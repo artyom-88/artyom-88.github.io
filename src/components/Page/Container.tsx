@@ -34,7 +34,7 @@ const Container = (props: IProperties) => {
   ) : (
     <div className={contentClass}>
       {title && <h2>{title}</h2>}
-      <div>{children}</div>
+      {children}
     </div>
   );
 };

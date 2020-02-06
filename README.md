@@ -13,7 +13,9 @@ Backend sources of https://artyom-ganev.github.io/ site are here https://github.
 - - - -
 **Made with:**
 * [axios](https://github.com/axios/axios/)
+* [husky](https://github.com/typicode/husky)
 * [Jest](https://jestjs.io/)
+* [lint-staged](https://github.com/okonet/lint-staged)
 * [NPM](https://www.npmjs.com/)
 * [Prettier](https://prettier.io/)
 * [ReactJS](https://reactjs.org/)
@@ -22,4 +24,3 @@ Backend sources of https://artyom-ganev.github.io/ site are here https://github.
 * [Sass](https://sass-lang.com//)
 * [TSLint](https://palantir.github.io/tslint/)
 * [TypeScript](https://www.typescriptlang.org)
-* [Webstorm](https://www.jetbrains.com/webstorm/)

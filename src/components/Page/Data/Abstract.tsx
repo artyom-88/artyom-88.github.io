@@ -19,11 +19,7 @@ export default abstract class Abstract<TData, TProps extends IProps<TData> = IPr
 
   public render(): ReactNode {
     const { items } = this.props;
-    return (
-      <Container>
-        <div className='flexBox flexColumn'>{this.getContent(items)}</div>
-      </Container>
-    );
+    return <Container>{this.getContent(items)}</Container>;
   }
 
   protected abstract getSource(): ISource;

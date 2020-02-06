@@ -63,65 +63,63 @@ exports[`App 1`] = `
     <div
       className="flexBox flexColumn page-container__root"
     >
-      <div>
-        <div
-          className="page-main__root"
+      <div
+        className="page-main__root"
+      >
+        <img
+          alt="Artyom"
+          className="page-main__image"
+          src="artyom.jpg"
+          title="artyom.jpg"
+        />
+        <h2
+          className="page-main__contentBlock"
         >
-          <img
-            alt="Artyom"
-            className="page-main__image"
-            src="artyom.jpg"
-            title="artyom.jpg"
-          />
-          <h2
-            className="page-main__contentBlock"
+          Hi! My name is Artyom.
+        </h2>
+        <div
+          className="page-main__contentBlock"
+        >
+          I'm a programmer, based in 
+          <a
+            href="https://en.wikipedia.org/wiki/Rybinsk"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            Hi! My name is Artyom.
-          </h2>
-          <div
-            className="page-main__contentBlock"
+            Rybinsk
+          </a>
+          , Russia. There are some facts about me on this site.
+        </div>
+        <div
+          className="page-main__contentBlock"
+        >
+          You can contact me if you have some ideas for it's improvement or if you find some bugs, typos etc. I'm still working on it.
+        </div>
+        <div
+          className="page-main__contentBlock"
+        >
+          Frontend of this site is based on React, Redux, TypeScript and Sass, the sources of this part are located on GitHub 
+          <a
+            href="https://github.com/Artyom-Ganev/artyom-ganev-site"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            I'm a programmer, based in 
-            <a
-              href="https://en.wikipedia.org/wiki/Rybinsk"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Rybinsk
-            </a>
-            , Russia. There are some facts about me on this site.
-          </div>
-          <div
-            className="page-main__contentBlock"
+            here
+          </a>
+          .
+        </div>
+        <div
+          className="page-main__contentBlock"
+        >
+          Backend uses Spring Boot, Maven, Heroku and PostgreSQL and is located 
+          <a
+            href="https://github.com/Artyom-Ganev/artyom-ganev-server"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            You can contact me if you have some ideas for it's improvement or if you find some bugs, typos etc. I'm still working on it.
-          </div>
-          <div
-            className="page-main__contentBlock"
-          >
-            Frontend of this site is based on React, Redux, TypeScript and Sass, the sources of this part are located on GitHub 
-            <a
-              href="https://github.com/Artyom-Ganev/artyom-ganev-site"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              here
-            </a>
-            .
-          </div>
-          <div
-            className="page-main__contentBlock"
-          >
-            Backend uses Spring Boot, Maven, Heroku and PostgreSQL and is located 
-            <a
-              href="https://github.com/Artyom-Ganev/artyom-ganev-server"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              here
-            </a>
-            .
-          </div>
+            here
+          </a>
+          .
         </div>
       </div>
     </div>

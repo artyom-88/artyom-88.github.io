@@ -7,17 +7,15 @@ exports[`NotFound 1`] = `
   <h2>
     Page Not Found
   </h2>
-  <div>
-    <div
-      className="page-notFound__item"
+  <div
+    className="page-notFound__item"
+  >
+    <a
+      href="#/"
+      onClick={[Function]}
     >
-      <a
-        href="#/"
-        onClick={[Function]}
-      >
-        Go to main page
-      </a>
-    </div>
+      Go to main page
+    </a>
   </div>
 </div>
 `;

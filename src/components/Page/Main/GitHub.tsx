@@ -1,62 +1,51 @@
-import React, { Component, RefObject } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { connect } from 'react-redux';
-import IState from '../../../interface/IState';
-import * as actions from '../../../actions';
+import React, { useEffect, useState } from 'react';
 import LoadingIndicator from '../../Navigation/LoadingIndicator';
 import './GitHub.scss';
 
-interface IProps {
-  svg: Element | null;
-  appContribution: (payload: { contribution: object }) => void;
-}
-
 const PROXY = 'https://urlreq.appspot.com/req?method=GET&url=';
 const CONTR = 'https://github.com/users/Artyom-Ganev/contributions';
+const svgRef = React.createRef<HTMLDivElement>();
 
-const mapStateToProps = ({
-  app: {
-    contribution: { svg },
-  },
-}: IState) => ({ svg });
-
-const actionCreators = {
-  appContribution: actions.appContribution,
+/**
+ * Load GitHub contribution hook
+ */
+const useContribution = () => {
+  const [contribution, setContribution] = useState<string>('');
+  useEffect(() => {
+    let cancel = false;
+    if (!contribution) {
+      (async () => {
+        const { data }: AxiosResponse<string> = await axios.get(`${PROXY}${CONTR}`);
+        if (!cancel) {
+          setContribution(data);
+        }
+      })();
+    }
+    return () => {
+      cancel = true;
+    };
+  });
+  return contribution;
 };
 
 /**
  * Github contributions chart component
  */
-class GitHub extends Component<IProps> {
-  private readonly svg: RefObject<HTMLDivElement>;
-
-  constructor(props: IProps) {
-    super(props);
-    this.svg = React.createRef();
+const GitHub = () => {
+  const data = useContribution();
+  if (svgRef.current) {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = data;
+    const contribution = wrapper.querySelector('svg.js-calendar-graph-svg');
+    svgRef.current.innerHTML = contribution ? contribution.outerHTML : '';
   }
+  return (
+    <div className='flexBox justifyContentCenter page-main__githubContainer'>
+      <div ref={svgRef} className='page-main__githubContributions' />
+      {!svgRef.current && <LoadingIndicator />}
+    </div>
+  );
+};
 
-  componentDidMount() {
-    const { appContribution } = this.props;
-    axios.get(`${PROXY}${CONTR}`).then(({ data }: AxiosResponse<string>) => {
-      const wrapper = document.createElement('div');
-      wrapper.innerHTML = data;
-      const svg = wrapper.querySelector('svg.js-calendar-graph-svg');
-      appContribution({ contribution: { svg } });
-    });
-  }
-
-  render = () => {
-    const { svg } = this.props;
-    if (this.svg.current) {
-      this.svg.current.innerHTML = svg ? svg.outerHTML : '';
-    }
-    return (
-      <div className='flexBox justifyContentCenter page-main__githubContainer'>
-        <div ref={this.svg} className='page-main__githubContributions' />
-        {!this.svg.current && <LoadingIndicator />}
-      </div>
-    );
-  };
-}
-
-export default connect(mapStateToProps, actionCreators)(GitHub);
+export default GitHub;

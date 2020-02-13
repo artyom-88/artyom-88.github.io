@@ -10,7 +10,7 @@ import NotFound from '../Page/NotFound';
 /**
  * Application routes component
  */
-export default () => (
+const Routes = () => (
   <Switch>
     <Redirect from='/main' to='/' />
     <Route exact={true} path='/' component={Main} />
@@ -21,3 +21,5 @@ export default () => (
     <Route component={NotFound} />
   </Switch>
 );
+
+export default Routes;

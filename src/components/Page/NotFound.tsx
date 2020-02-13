@@ -8,10 +8,12 @@ const TITLE = 'Page Not Found';
 /**
  * 404 page not component
  */
-export default () => (
+const NotFound = () => (
   <Container title={TITLE}>
     <div className='page-notFound__item'>
       <Link to='/'>Go to main page</Link>
     </div>
   </Container>
 );
+
+export default NotFound;

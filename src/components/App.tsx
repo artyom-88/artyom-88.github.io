@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { HashRouter } from 'react-router-dom';
-import './App.scss';
-import Menu from './Navigation/Menu';
-import Routes from './Navigation/Routes';
+import Content from './Layout/Content';
+import Footer from './Layout/Footer';
+import Header from './Layout/Header';
 
 /**
  * Check if the page is narrow
@@ -12,10 +12,11 @@ const isNarrow = () => window.innerWidth <= 800;
 export const NarrowContext = React.createContext(isNarrow());
 
 /**
- * App initial settings
+ * Main application component
  */
-const init = () => {
-  const [, setNarrow] = useState<boolean>(isNarrow());
+const App = () => {
+  const [narrow, setNarrow] = useState<boolean>(isNarrow());
+
   useEffect(() => {
     const onResize = () => setNarrow(isNarrow());
     window.addEventListener('resize', onResize);
@@ -23,26 +24,15 @@ const init = () => {
       window.removeEventListener('resize', onResize);
     };
   });
-};
 
-/**
- * Main application component
- */
-const App = () => {
-  init();
   return (
     <HashRouter>
       <div className='flexBox flexColumn'>
-        <NarrowContext.Provider value={isNarrow()}>
-          <header className='flexBox'>
-            <Menu />
-          </header>
-          <div className='components-app__background' />
-          <div className='flexBox flexColumn components-app__content'>
-            <Routes />
-          </div>
-          <footer className='components-app__rights'>© 2019 All rights reserved</footer>
+        <Header />
+        <NarrowContext.Provider value={narrow}>
+          <Content />
         </NarrowContext.Provider>
+        <Footer />
       </div>
     </HashRouter>
   );

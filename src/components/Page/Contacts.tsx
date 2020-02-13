@@ -1,8 +1,8 @@
 import React from 'react';
 import { BLANK, REL } from '../../constants/Html';
 import contacts from '../../resources/contacts.json';
-import Container from './Container';
 import './Contacts.scss';
+import Container from './Container';
 
 /**
  * Contact options interface
@@ -33,7 +33,7 @@ const items = contacts.data.map(({ key, link, title }: IContact) => (
 /**
  * Contacts page component
  */
-export default () => (
+const Contacts = () => (
   <Container>
     <div className='flexBox alignItemsBaseline justifyContentBetween page-contacts__root'>
       <div>{titles}</div>
@@ -41,3 +41,5 @@ export default () => (
     </div>
   </Container>
 );
+
+export default Contacts;

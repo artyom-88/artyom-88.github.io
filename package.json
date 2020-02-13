@@ -48,7 +48,7 @@
     "@types/redux-actions": "2.6.1",
     "@types/reselect": "2.2.0",
     "gh-pages": "2.2.0",
-    "husky": "4.2.1",
+    "husky": "4.2.3",
     "lint-staged": "10.0.7",
     "node-sass": "4.13.1",
     "prettier": "1.19.1",

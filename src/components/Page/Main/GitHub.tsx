@@ -8,22 +8,38 @@ const CONTR = 'https://github.com/users/Artyom-Ganev/contributions';
 const svgRef = React.createRef<HTMLDivElement>();
 
 /**
+ * Load GitHub contribution request
+ * @param {Function} update update function
+ */
+const loadData = (update: (data: string) => void) => {
+  axios
+    .get(`${PROXY}${CONTR}`)
+    .then(({ data }: AxiosResponse<string>) => {
+      update(data);
+    })
+    .catch(() => {
+      update('');
+    });
+};
+
+/**
  * Load GitHub contribution hook
  */
 const useContribution = () => {
   const [contribution, setContribution] = useState<string>('');
   useEffect(() => {
-    let cancel = false;
-    if (!contribution) {
-      (async () => {
-        const { data }: AxiosResponse<string> = await axios.get(`${PROXY}${CONTR}`);
-        if (!cancel) {
-          setContribution(data);
-        }
-      })();
+    if (contribution) {
+      return;
     }
+    let needUpdate = true;
+    loadData((data) => {
+      if (needUpdate) {
+        setContribution(data);
+      }
+    });
     return () => {
-      cancel = true;
+      // useEffect was cancelled
+      needUpdate = false;
     };
   });
   return contribution;
@@ -33,12 +49,13 @@ const useContribution = () => {
  * Github contributions chart component
  */
 const GitHub = () => {
-  const data = useContribution();
+  const contribution = useContribution();
   if (svgRef.current) {
     const wrapper = document.createElement('div');
-    wrapper.innerHTML = data;
-    const contribution = wrapper.querySelector('svg.js-calendar-graph-svg');
-    svgRef.current.innerHTML = contribution ? contribution.outerHTML : '';
+    wrapper.innerHTML = contribution;
+    // extracting svg graph
+    const svg = wrapper.querySelector('svg.js-calendar-graph-svg');
+    svgRef.current.innerHTML = svg ? svg.outerHTML : '';
   }
   return (
     <div className='flexBox justifyContentCenter page-main__githubContainer'>

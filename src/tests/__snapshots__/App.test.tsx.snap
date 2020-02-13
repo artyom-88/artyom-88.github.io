@@ -4,128 +4,132 @@ exports[`App 1`] = `
 <div
   className="flexBox flexColumn"
 >
-  <div
-    className="flexBox nav-menu__root"
-    id="menu"
+  <header
+    className="flexBox"
   >
-    <a
-      aria-current="page"
-      className="nav-menu__item active"
-      href="#/"
-      onClick={[Function]}
-      style={Object {}}
+    <nav
+      className="flexBox nav-menu__root"
+      id="menu"
     >
-      Main
-    </a>
-    <a
-      aria-current={null}
-      className="nav-menu__item"
-      href="#/about"
-      onClick={[Function]}
-    >
-      About
-    </a>
-    <a
-      aria-current={null}
-      className="nav-menu__item"
-      href="#/blog"
-      onClick={[Function]}
-    >
-      Blog
-    </a>
-    <a
-      aria-current={null}
-      className="nav-menu__item"
-      href="#/career"
-      onClick={[Function]}
-    >
-      Career
-    </a>
-    <a
-      aria-current={null}
-      className="nav-menu__item"
-      href="#/contacts"
-      onClick={[Function]}
-    >
-      Contacts
-    </a>
-  </div>
+      <a
+        aria-current="page"
+        className="nav-menu__item active"
+        href="#/"
+        onClick={[Function]}
+        style={Object {}}
+      >
+        Main
+      </a>
+      <a
+        aria-current={null}
+        className="nav-menu__item"
+        href="#/about"
+        onClick={[Function]}
+      >
+        About
+      </a>
+      <a
+        aria-current={null}
+        className="nav-menu__item"
+        href="#/blog"
+        onClick={[Function]}
+      >
+        Blog
+      </a>
+      <a
+        aria-current={null}
+        className="nav-menu__item"
+        href="#/career"
+        onClick={[Function]}
+      >
+        Career
+      </a>
+      <a
+        aria-current={null}
+        className="nav-menu__item"
+        href="#/contacts"
+        onClick={[Function]}
+      >
+        Contacts
+      </a>
+    </nav>
+  </header>
   <div
-    className="components-app__background"
+    className="components-content__background"
   />
   <div
-    className="flexBox flexColumn components-app__content"
+    className="flexBox flexColumn components-content__wrapper"
   >
     <div
       className="flexBox flexColumn page-container__root"
     >
-      <div>
-        <div
-          className="page-main__root"
+      <div
+        className="page-main__root"
+      >
+        <img
+          alt="Artyom"
+          className="page-main__image"
+          src="artyom.jpg"
+          title="artyom.jpg"
+        />
+        <h2
+          className="page-main__contentBlock"
         >
-          <img
-            alt="Artyom"
-            className="page-main__image"
-            src="artyom.jpg"
-            title="artyom.jpg"
-          />
-          <h2
-            className="page-main__contentBlock"
+          Hi! My name is Artyom.
+        </h2>
+        <div
+          className="page-main__contentBlock"
+        >
+          I'm a programmer, based in 
+          <a
+            href="https://en.wikipedia.org/wiki/Rybinsk"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            Hi! My name is Artyom.
-          </h2>
-          <div
-            className="page-main__contentBlock"
+            Rybinsk
+          </a>
+          , Russia. There are some facts about me on this site.
+        </div>
+        <div
+          className="page-main__contentBlock"
+        >
+          You can contact me if you have some ideas for it's improvement or if you find some bugs, typos etc. I'm still working on it.
+        </div>
+        <div
+          className="page-main__contentBlock"
+        >
+          Frontend of this site is based on React, Redux, TypeScript and Sass, the sources of this part are located on GitHub 
+          <a
+            href="https://github.com/Artyom-Ganev/artyom-ganev-site"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            I'm a programmer, based in 
-            <a
-              href="https://en.wikipedia.org/wiki/Rybinsk"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Rybinsk
-            </a>
-            , Russia. There are some facts about me on this site.
-          </div>
-          <div
-            className="page-main__contentBlock"
+            here
+          </a>
+          .
+        </div>
+        <div
+          className="page-main__contentBlock"
+        >
+          Backend uses Spring Boot, Maven, Heroku and PostgreSQL and is located 
+          <a
+            href="https://github.com/Artyom-Ganev/artyom-ganev-server"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            You can contact me if you have some ideas for it's improvement or if you find some bugs, typos etc. I'm still working on it.
-          </div>
-          <div
-            className="page-main__contentBlock"
-          >
-            Frontend of this site is based on React, Redux, TypeScript and Sass, the sources of this part are located on GitHub 
-            <a
-              href="https://github.com/Artyom-Ganev/artyom-ganev-site"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              here
-            </a>
-            .
-          </div>
-          <div
-            className="page-main__contentBlock"
-          >
-            Backend uses Spring Boot, Maven, Heroku and PostgreSQL and is located 
-            <a
-              href="https://github.com/Artyom-Ganev/artyom-ganev-server"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              here
-            </a>
-            .
-          </div>
+            here
+          </a>
+          .
         </div>
       </div>
     </div>
   </div>
-  <div
-    className="components-app__rights"
+  <footer
+    className="components-footer__container"
   >
-    © 2019 All rights reserved
-  </div>
+    <span>
+      © 2019 All rights reserved
+    </span>
+  </footer>
 </div>
 `;

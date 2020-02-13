@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from 'react';
-import Source from '../../../model/Source';
+import { ISource } from '../../../interface/ISource';
 import Container from '../Container';
 
 export interface IProps<TData> {
@@ -13,20 +13,16 @@ export default abstract class Abstract<TData, TProps extends IProps<TData> = IPr
   public componentDidMount(): void {
     const { items } = this.props;
     if (!items.length) {
-      this.getSource().getList();
+      this.getSource().loadList();
     }
   }
 
   public render(): ReactNode {
     const { items } = this.props;
-    return (
-      <Container>
-        <div className='flexBox flexColumn'>{this.getContent(items)}</div>
-      </Container>
-    );
+    return <Container>{this.getContent(items)}</Container>;
   }
 
-  protected abstract getSource(): Source<TData>;
+  protected abstract getSource(): ISource;
 
   protected abstract getContent(items: TData[]): ReactNode | ReactNode[];
 }

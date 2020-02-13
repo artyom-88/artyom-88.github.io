@@ -1,19 +1,22 @@
 import React, { ReactNode } from 'react';
-import { BLANK, REL } from '../../constants/Html';
-import { ICareer } from '../../interface/ICareer';
 import { connect } from 'react-redux';
-import IState from '../../interface/IState';
+import { createSelector } from 'reselect';
 import * as actions from '../../actions';
+import { BLANK, REL } from '../../constants/Html';
+import { ICareer, ICareerItems } from '../../interface/ICareer';
+import { ISource } from '../../interface/ISource';
+import IState from '../../interface/IState';
+import create from '../../model/Source';
 import DateUtil from '../../utils/Date';
-import Abstract, { IProps as IAbstractProps } from './Data/Abstract';
 import './Career.scss';
-import Source from '../../model/Source';
+import Abstract, { IProps as IAbstractProps } from './Data/Abstract';
 
-const mapStateToProps = ({ career: { items } }: IState) => {
-  return {
-    items: Object.values(items),
-  };
-};
+const itemsSelector = createSelector(
+  ({ career }: IState) => career,
+  (career: { items: ICareerItems }) => Object.values(career.items)
+);
+
+const mapStateToProps = (state: IState) => ({ items: itemsSelector(state) });
 
 const actionCreators = {
   appLoading: actions.appLoading,
@@ -29,23 +32,23 @@ interface IProps<TData> extends IAbstractProps<TData> {
  * Career page
  */
 class Career extends Abstract<ICareer, IProps<ICareer>> {
-  private readonly source: Source<ICareer>;
+  private readonly source: ISource;
 
   constructor(props: IProps<ICareer>) {
     super(props);
     const { appLoading, careerLoadList } = props;
-    this.source = new Source<ICareer>(
-      'career',
-      () => {
+    this.source = create<ICareer>()
+      .endpoint('career')
+      .beforeLoad(() => {
         appLoading({ loading: true });
-      },
-      (data: ICareer[]) => {
+      })
+      .afterLoad((data: ICareer[]) => {
         careerLoadList({ items: data });
-      }
-    );
+      })
+      .build();
   }
 
-  protected getSource = (): Source<ICareer> => this.source;
+  protected getSource = (): ISource => this.source;
 
   private prepareTitle = (site: string, title: string) => {
     const header = <h3 className='page-career__title'>{title}</h3>;

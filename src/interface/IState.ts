@@ -1,10 +1,8 @@
-import { ICareerProps } from './ICareer';
 import { IBlogProps } from './IBlog';
+import { ICareerProps } from './ICareer';
 
 export interface IAppState {
-  narrow: boolean;
   loading: boolean;
-  contribution: { svg: Element | null; };
 }
 
 /**

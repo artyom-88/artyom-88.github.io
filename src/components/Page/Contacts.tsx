@@ -3,7 +3,6 @@ import { BLANK, REL } from '../../constants/Html';
 import contacts from '../../resources/contacts.json';
 import Container from './Container';
 import './Contacts.scss';
-import GitHub from './Main/GitHub';
 
 /**
  * Contact options interface
@@ -34,12 +33,13 @@ const items = contacts.data.map(({ key, link, title }: IContact) => (
 /**
  * Contacts page component
  */
-export default () => (
+const Contacts = () => (
   <Container>
     <div className='flexBox alignItemsBaseline justifyContentBetween page-contacts__root'>
       <div>{titles}</div>
       <div className='page-contacts__item'>{items}</div>
     </div>
-    <GitHub />
   </Container>
 );
+
+export default Contacts;

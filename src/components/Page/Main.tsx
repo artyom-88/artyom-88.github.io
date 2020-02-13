@@ -48,4 +48,6 @@ const CONTENT = (
 /**
  * Main page component
  */
-export default () => <Container>{CONTENT}</Container>;
+const Main = () => <Container>{CONTENT}</Container>;
+
+export default Main;

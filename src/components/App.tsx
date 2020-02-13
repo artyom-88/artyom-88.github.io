@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import './App.scss';
 import Menu from './Navigation/Menu';
-import About from './Page/About';
-import Blog from './Page/Blog';
-import Career from './Page/Career';
-import Contacts from './Page/Contacts';
-import Main from './Page/Main';
-import NotFound from './Page/NotFound';
+import Routes from './Navigation/Routes';
 
 /**
  * Check if the page is narrow
@@ -39,16 +34,7 @@ const App = () => {
           </header>
           <div className='components-app__background' />
           <div className='flexBox flexColumn components-app__content'>
-            <Switch>
-              <Redirect from='/main' to='/' />
-              <Route exact={true} path='/' component={Main} />
-              <Route exact={true} path='/about' component={About} />
-              <Route exact={true} path='/blog' component={Blog} />
-              <Route exact={true} path='/career' component={Career} />
-
-              <Route exact={true} path='/contacts' component={Contacts} />
-              <Route component={NotFound} />
-            </Switch>
+            <Routes />
           </div>
           <footer className='components-app__rights'>© 2019 All rights reserved</footer>
         </NarrowContext.Provider>

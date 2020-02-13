@@ -55,10 +55,10 @@ exports[`App 1`] = `
     </nav>
   </header>
   <div
-    className="components-app__background"
+    className="components-content__background"
   />
   <div
-    className="flexBox flexColumn components-app__content"
+    className="flexBox flexColumn components-content__wrapper"
   >
     <div
       className="flexBox flexColumn page-container__root"
@@ -125,9 +125,11 @@ exports[`App 1`] = `
     </div>
   </div>
   <footer
-    className="components-app__rights"
+    className="components-footer__container"
   >
-    © 2019 All rights reserved
+    <span>
+      © 2019 All rights reserved
+    </span>
   </footer>
 </div>
 `;

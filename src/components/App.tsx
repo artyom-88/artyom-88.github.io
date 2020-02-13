@@ -9,14 +9,11 @@ import Header from './Layout/Header';
  */
 const isNarrow = () => window.innerWidth <= 800;
 
-export const NarrowContext = React.createContext(isNarrow());
-
 /**
- * Main application component
+ * Resize hook
  */
-const App = () => {
+const useResize = () => {
   const [narrow, setNarrow] = useState<boolean>(isNarrow());
-
   useEffect(() => {
     const onResize = () => setNarrow(isNarrow());
     window.addEventListener('resize', onResize);
@@ -24,18 +21,24 @@ const App = () => {
       window.removeEventListener('resize', onResize);
     };
   });
-
-  return (
-    <HashRouter>
-      <div className='flexBox flexColumn'>
-        <Header />
-        <NarrowContext.Provider value={narrow}>
-          <Content />
-        </NarrowContext.Provider>
-        <Footer />
-      </div>
-    </HashRouter>
-  );
+  return narrow;
 };
+
+export const NarrowContext = React.createContext(isNarrow());
+
+/**
+ * Main application component
+ */
+const App = () => (
+  <HashRouter>
+    <div className='flexBox flexColumn'>
+      <Header />
+      <NarrowContext.Provider value={useResize()}>
+        <Content />
+      </NarrowContext.Provider>
+      <Footer />
+    </div>
+  </HashRouter>
+);
 
 export default App;

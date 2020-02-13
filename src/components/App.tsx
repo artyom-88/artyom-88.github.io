@@ -12,11 +12,10 @@ const isNarrow = () => window.innerWidth <= 800;
 export const NarrowContext = React.createContext(isNarrow());
 
 /**
- * Main application component
+ * App initial settings
  */
-const App = () => {
+const init = () => {
   const [, setNarrow] = useState<boolean>(isNarrow());
-
   useEffect(() => {
     const onResize = () => setNarrow(isNarrow());
     window.addEventListener('resize', onResize);
@@ -24,7 +23,13 @@ const App = () => {
       window.removeEventListener('resize', onResize);
     };
   });
+};
 
+/**
+ * Main application component
+ */
+const App = () => {
+  init();
   return (
     <HashRouter>
       <div className='flexBox flexColumn'>

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import LoadingIndicator from '../../Navigation/LoadingIndicator';
 import './GitHub.scss';
 
@@ -23,33 +23,31 @@ const loadData = (update: (data: string) => void) => {
 };
 
 /**
- * Load GitHub contribution hook
+ * Load GitHub contribution data hook
  */
-const useContribution = () => {
-  const [contribution, setContribution] = useState<string>('');
-  useEffect(() => {
-    if (contribution) {
-      return;
+const contributionEffectWrapper = (contribution: string, setContribution: Dispatch<SetStateAction<string>>) => () => {
+  if (contribution) {
+    return;
+  }
+  let needUpdate = true;
+  loadData((data) => {
+    if (needUpdate) {
+      setContribution(data);
     }
-    let needUpdate = true;
-    loadData((data) => {
-      if (needUpdate) {
-        setContribution(data);
-      }
-    });
-    return () => {
-      // useEffect was cancelled
-      needUpdate = false;
-    };
   });
-  return contribution;
+  return () => {
+    // useEffect was cancelled
+    needUpdate = false;
+  };
 };
 
 /**
  * Github contributions chart component
  */
 const GitHub = () => {
-  const contribution = useContribution();
+  const [contribution, setContribution] = useState<string>('');
+  useEffect(contributionEffectWrapper(contribution, setContribution));
+
   if (svgRef.current) {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = contribution;
@@ -57,6 +55,7 @@ const GitHub = () => {
     const svg = wrapper.querySelector('svg.js-calendar-graph-svg');
     svgRef.current.innerHTML = svg ? svg.outerHTML : '';
   }
+
   return (
     <div className='flexBox justifyContentCenter page-main__githubContainer'>
       <div ref={svgRef} className='page-main__githubContributions' />

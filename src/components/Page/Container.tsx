@@ -1,7 +1,8 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useContext } from 'react';
 import { connect } from 'react-redux';
-import IState from '../../interface/IState';
 import * as actions from '../../actions';
+import IState from '../../interface/IState';
+import { NarrowContext } from '../App';
 import LoadingIndicator from '../Navigation/LoadingIndicator';
 import './Container.scss';
 
@@ -12,10 +13,9 @@ interface IProperties {
   title?: string;
   children?: ReactNode | ReactNode[];
   loading?: boolean;
-  narrow: boolean;
 }
 
-const mapStateToProps = ({ app: { loading, narrow } }: IState) => ({ loading, narrow });
+const mapStateToProps = ({ app: { loading } }: IState) => ({ loading });
 
 const actionCreators = {
   appLoading: actions.appLoading,
@@ -25,7 +25,8 @@ const actionCreators = {
  * Page container with title
  */
 const Container = (props: IProperties) => {
-  const { children, loading, narrow, title } = props;
+  const { children, loading, title } = props;
+  const narrow = useContext(NarrowContext);
   const contentClass = `flexBox flexColumn page-container__root${narrow ? '--narrow' : ''}`;
   return loading ? (
     <div className={contentClass}>

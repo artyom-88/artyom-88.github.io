@@ -17,8 +17,10 @@ const renderItems = () =>
  * /**
  * Navigation menu component
  */
-export default () => (
+const Menu = () => (
   <nav className='flexBox nav-menu__root' id='menu'>
     {renderItems()}
   </nav>
 );
+
+export default Menu;

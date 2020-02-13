@@ -1,8 +1,7 @@
-import { ICareerProps } from './ICareer';
 import { IBlogProps } from './IBlog';
+import { ICareerProps } from './ICareer';
 
 export interface IAppState {
-  narrow: boolean;
   loading: boolean;
 }
 
@@ -10,7 +9,7 @@ export interface IAppState {
  * Application state structure interface
  */
 export default interface IState {
-  app: IAppState
-  blog: IBlogProps,
-  career: ICareerProps,
+  app: IAppState;
+  blog: IBlogProps;
+  career: ICareerProps;
 }

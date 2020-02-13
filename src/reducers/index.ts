@@ -7,53 +7,57 @@ import { IAppState } from '../interface/IState';
 
 // fix redux-actions TypeScript bad support
 const appLoading = `${actions.appLoading}`;
-const appResize = `${actions.appResize}`;
 const blogLoadList = `${actions.blogLoadList}`;
 const careerLoadList = `${actions.careerLoadList}`;
 
 /**
  * App state reducer
  */
-export const app = handleActions<IAppState>({
-  [appLoading](state: IAppState, { payload: { loading } }: { payload: { loading: boolean } }) {
-    return { ...state, loading };
+export const app = handleActions<IAppState>(
+  {
+    [appLoading](state: IAppState, { payload: { loading } }: { payload: { loading: boolean } }) {
+      return { ...state, loading };
+    },
+    [blogLoadList](state: IAppState) {
+      return { ...state, loading: false };
+    },
+    [careerLoadList](state: IAppState) {
+      return { ...state, loading: false };
+    },
   },
-  [appResize](state: IAppState, { payload: { narrow } }: { payload: { narrow: boolean } }) {
-    return { ...state, narrow };
-  },
-  [blogLoadList](state: IAppState) {
-    return { ...state, loading: false };
-  },
-  [careerLoadList](state: IAppState) {
-    return { ...state, loading: false };
-  },
-}, { narrow: false, loading: false });
+  { loading: false }
+);
 
 /**
  * Blog actions reducer
  */
-export const blog = handleActions({
-  [blogLoadList](state: IBlogProps, { payload: { items } }: { payload: { items: IBlog[] } }) {
-    const newItems = state.items;
-    items.forEach((item) => {
-      newItems[item.id] = item;
-    });
-    return { ...state, items: newItems };
+export const blog = handleActions(
+  {
+    [blogLoadList](state: IBlogProps, { payload: { items } }: { payload: { items: IBlog[] } }) {
+      const newItems = state.items;
+      items.forEach((item) => {
+        newItems[item.id] = item;
+      });
+      return { ...state, items: newItems };
+    },
   },
-}, { items: {}, detail: {} });
+  { items: {}, detail: {} }
+);
 
 /**
  * Career actions reducer
  */
-export const career = handleActions({
-  [careerLoadList](state: ICareerProps, { payload: { items } }: { payload: { items: ICareer[] } }) {
-    const newItems = state.items;
-    items.forEach((item) => {
-      newItems[item.id] = item;
-    });
-    return { ...state, items: newItems };
+export const career = handleActions(
+  {
+    [careerLoadList](state: ICareerProps, { payload: { items } }: { payload: { items: ICareer[] } }) {
+      const newItems = state.items;
+      items.forEach((item) => {
+        newItems[item.id] = item;
+      });
+      return { ...state, items: newItems };
+    },
   },
-}, { items: {}, detail: {} });
-
+  { items: {}, detail: {} }
+);
 
 export default combineReducers({ app, blog, career });

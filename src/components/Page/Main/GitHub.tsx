@@ -9,7 +9,7 @@ const svgRef = React.createRef<HTMLDivElement>();
 
 /**
  * Load GitHub contribution request
- * @param {Function} update update function
+ * @param {Function} update function
  */
 const loadData = (update: (data: string) => void) => {
   axios
@@ -29,12 +29,15 @@ const contributionEffectWrapper = (contribution: string, setContribution: Dispat
   if (contribution) {
     return;
   }
+
   let needUpdate = true;
-  loadData((data) => {
+  const updater = (data: string) => {
     if (needUpdate) {
       setContribution(data);
     }
-  });
+  };
+  loadData(updater);
+
   return () => {
     // useEffect was cancelled
     needUpdate = false;

@@ -25,7 +25,7 @@ const loadData = (update: (data: string) => void) => {
 /**
  * Load GitHub contribution data hook
  */
-const contributionEffectWrapper = (contribution: string, setContribution: Dispatch<SetStateAction<string>>) => () => {
+const contributionEffectWrapper = (contribution: string, setContribution: Dispatch<SetStateAction<string>>) => {
   if (contribution) {
     return;
   }
@@ -45,20 +45,26 @@ const contributionEffectWrapper = (contribution: string, setContribution: Dispat
 };
 
 /**
+ * Extract Svg Element from contribution data
+ * @param {String} contribution data
+ * @return {HTMLDivElement} Svg Element
+ */
+const extractSvg = (contribution: string) => {
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = contribution;
+  const svg = wrapper.querySelector<HTMLDivElement>('svg.js-calendar-graph-svg');
+  if (svgRef.current) {
+    svgRef.current.innerHTML = svg ? svg.outerHTML : '';
+  }
+};
+
+/**
  * Github contributions chart component
  */
 const GitHub = () => {
   const [contribution, setContribution] = useState<string>('');
-  useEffect(contributionEffectWrapper(contribution, setContribution));
-
-  if (svgRef.current) {
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = contribution;
-    // extracting svg graph
-    const svg = wrapper.querySelector('svg.js-calendar-graph-svg');
-    svgRef.current.innerHTML = svg ? svg.outerHTML : '';
-  }
-
+  useEffect(() => contributionEffectWrapper(contribution, setContribution), [contribution]);
+  useEffect(() => extractSvg(contribution), [contribution]);
   return (
     <div className='flexBox justifyContentCenter page-main__githubContainer'>
       <div ref={svgRef} className='page-main__githubContributions' />

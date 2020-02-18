@@ -13,7 +13,8 @@ const Source = <TPage>(endpoint: string, beforeLoad: () => void, afterLoad: (dat
      */
     loadList(): void {
       beforeLoad();
-      axios.get<TPage[]>(`${API_URL}/${endpoint}/`, REQUEST_CONFIG)
+      axios
+        .get<TPage[]>(`${API_URL}/${endpoint}/`, REQUEST_CONFIG)
         .then(({ data }: AxiosResponse<TPage[]>) => {
           afterLoad(data);
         })
@@ -26,7 +27,8 @@ const Source = <TPage>(endpoint: string, beforeLoad: () => void, afterLoad: (dat
      */
     loadById(id: string): void {
       beforeLoad();
-      axios.get<TPage>(`${API_URL}/${endpoint}/${id}`, REQUEST_CONFIG)
+      axios
+        .get<TPage>(`${API_URL}/${endpoint}/${id}`, REQUEST_CONFIG)
         .then(({ data }: AxiosResponse<TPage>) => {
           afterLoad([data]);
         })

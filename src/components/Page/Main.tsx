@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BLANK, REL } from '../../constants/Html';
 import img from '../../resources/artyom.jpg';
+import { NarrowContext } from '../App';
 import Container from './Container';
 import './Main.scss';
+import GitHub from './Main/GitHub';
 
 const LINKS = {
   Back: 'https://github.com/Artyom-Ganev/artyom-ganev-server',
@@ -48,6 +50,14 @@ const CONTENT = (
 /**
  * Main page component
  */
-const Main = () => <Container>{CONTENT}</Container>;
+const Main = () => {
+  const narrow = useContext(NarrowContext);
+  return (
+    <Container>
+      {CONTENT}
+      {!narrow && <GitHub />}
+    </Container>
+  );
+};
 
 export default Main;

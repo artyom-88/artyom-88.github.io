@@ -8,7 +8,7 @@ import { ISource } from '../../interface/ISource';
 import IState from '../../interface/IState';
 import create from '../../model/Source';
 import DateUtil from '../../utils/Date';
-import './Blog.scss';
+import styles from './Blog.module.scss';
 import Abstract, { IProps as IAbstractProps } from './Data/Abstract';
 
 const DATE_COMPARATOR = (item1: IBlog, item2: IBlog): number => {
@@ -59,9 +59,9 @@ class Blog extends Abstract<IBlog, IProps<IBlog>> {
 
   protected getContent = (blogList: IBlog[]): ReactNode[] =>
     blogList.sort(DATE_COMPARATOR).map(({ id, year, month, day, title, link, linkCaption }: IBlog) => (
-      <div key={id} className='page-blog__itemContainer'>
-        <div className='page-blog__title'>{DateUtil.format(`${year}-${month}-${day}`)}</div>
-        <div className='page-blog__item'>{title}</div>
+      <div key={id} className={styles.itemContainer}>
+        <div className={styles.title}>{DateUtil.format(`${year}-${month}-${day}`)}</div>
+        <div className={styles.item}>{title}</div>
         {link && (
           <a href={link} target={BLANK} rel={REL} title='Click for details'>
             {linkCaption}

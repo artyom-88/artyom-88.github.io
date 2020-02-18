@@ -4,7 +4,7 @@ import * as actions from '../../actions';
 import IState from '../../interface/IState';
 import { NarrowContext } from '../App';
 import LoadingIndicator from '../Navigation/LoadingIndicator';
-import './Container.scss';
+import styles from './Container.module.scss';
 
 /**
  * Container properties interface
@@ -27,7 +27,7 @@ const actionCreators = {
 const Container = (props: IProperties) => {
   const { children, loading, title } = props;
   const narrow = useContext(NarrowContext);
-  const contentClass = `flexBox flexColumn page-container__root${narrow ? '--narrow' : ''}`;
+  const contentClass = `flexBox flexColumn ${styles.container} ${narrow ? styles.narrow : styles.wide}`;
   return loading ? (
     <div className={contentClass}>
       <LoadingIndicator />

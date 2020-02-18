@@ -1,8 +1,8 @@
 import React from 'react';
 import { BLANK, REL } from '../../constants/Html';
 import contacts from '../../resources/contacts.json';
+import styles from './Contacts.module.scss';
 import Container from './Container';
-import './Contacts.scss';
 
 /**
  * Contact options interface
@@ -35,9 +35,9 @@ const items = contacts.data.map(({ key, link, title }: IContact) => (
  */
 const Contacts = () => (
   <Container>
-    <div className='flexBox alignItemsBaseline justifyContentBetween page-contacts__root'>
+    <div className={`flexBox alignItemsBaseline justifyContentBetween ${styles.container}`}>
       <div>{titles}</div>
-      <div className='page-contacts__item'>{items}</div>
+      <div className={styles.item}>{items}</div>
     </div>
   </Container>
 );

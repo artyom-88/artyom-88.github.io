@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import LoadingIndicator from '../../Navigation/LoadingIndicator';
-import './GitHub.scss';
+import styles from './GitHub.module.scss';
 
 const PROXY = 'https://urlreq.appspot.com/req?method=GET&url=';
 const CONTR = 'https://github.com/users/Artyom-Ganev/contributions';
@@ -66,8 +66,8 @@ const GitHub = () => {
   useEffect(() => contributionEffectWrapper(contribution, setContribution), [contribution]);
   useEffect(() => extractSvg(contribution), [contribution]);
   return (
-    <div className='flexBox justifyContentCenter page-main__githubContainer'>
-      <div ref={svgRef} className='page-main__githubContributions' />
+    <div className={`flexBox justifyContentCenter ${styles.container}`}>
+      <div ref={svgRef} className={styles.contributions} />
       {!svgRef.current && <LoadingIndicator />}
     </div>
   );

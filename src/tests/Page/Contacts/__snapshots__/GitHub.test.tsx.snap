@@ -2,16 +2,16 @@
 
 exports[`GitHub 1`] = `
 <div
-  className="flexBox justifyContentCenter page-main__githubContainer"
+  className="flexBox justifyContentCenter container"
 >
   <div
-    className="page-main__githubContributions"
+    className="contributions"
   />
   <div
     className="flexBox flexGrow-1 flexShrink-1 justifyContentCenter"
   >
     <div
-      className="nav-loading__indicator"
+      className="container"
     />
   </div>
 </div>

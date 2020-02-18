@@ -1,11 +1,11 @@
 import React from 'react';
-import './Footer.scss';
+import styles from './Footer.module.scss';
 
 /**
  * Footer component
  */
 const Footer = () => (
-  <footer className='components-footer__container'>
+  <footer className={styles.container}>
     <span>© 2019 All rights reserved</span>
   </footer>
 );

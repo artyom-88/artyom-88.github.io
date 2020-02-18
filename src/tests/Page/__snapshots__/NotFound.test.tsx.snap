@@ -2,13 +2,13 @@
 
 exports[`NotFound 1`] = `
 <div
-  className="flexBox flexColumn page-container__root"
+  className="flexBox flexColumn container wide"
 >
   <h2>
     Page Not Found
   </h2>
   <div
-    className="page-notFound__item"
+    className="container"
   >
     <a
       href="#/"

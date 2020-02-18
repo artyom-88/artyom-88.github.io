@@ -2,7 +2,7 @@
 
 exports[`Container with title 1`] = `
 <div
-  className="flexBox flexColumn page-container__root"
+  className="flexBox flexColumn container wide"
 >
   <h2>
     title 1
@@ -15,7 +15,7 @@ exports[`Container with title 1`] = `
 
 exports[`Container without title 1`] = `
 <div
-  className="flexBox flexColumn page-container__root"
+  className="flexBox flexColumn container wide"
 >
   <div>
     text1

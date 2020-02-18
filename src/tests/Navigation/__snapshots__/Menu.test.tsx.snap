@@ -2,12 +2,12 @@
 
 exports[`Menu 1`] = `
 <nav
-  className="flexBox nav-menu__root"
+  className="flexBox container"
   id="menu"
 >
   <a
     aria-current="page"
-    className="nav-menu__item active"
+    className="item active"
     href="#/"
     onClick={[Function]}
     style={Object {}}
@@ -16,7 +16,7 @@ exports[`Menu 1`] = `
   </a>
   <a
     aria-current={null}
-    className="nav-menu__item"
+    className="item"
     href="#/about"
     onClick={[Function]}
   >
@@ -24,7 +24,7 @@ exports[`Menu 1`] = `
   </a>
   <a
     aria-current={null}
-    className="nav-menu__item"
+    className="item"
     href="#/blog"
     onClick={[Function]}
   >
@@ -32,7 +32,7 @@ exports[`Menu 1`] = `
   </a>
   <a
     aria-current={null}
-    className="nav-menu__item"
+    className="item"
     href="#/career"
     onClick={[Function]}
   >
@@ -40,7 +40,7 @@ exports[`Menu 1`] = `
   </a>
   <a
     aria-current={null}
-    className="nav-menu__item"
+    className="item"
     href="#/contacts"
     onClick={[Function]}
   >

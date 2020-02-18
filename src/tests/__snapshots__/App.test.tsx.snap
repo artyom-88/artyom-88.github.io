@@ -8,12 +8,12 @@ exports[`App 1`] = `
     className="flexBox"
   >
     <nav
-      className="flexBox nav-menu__root"
+      className="flexBox container"
       id="menu"
     >
       <a
         aria-current="page"
-        className="nav-menu__item active"
+        className="item active"
         href="#/"
         onClick={[Function]}
         style={Object {}}
@@ -22,7 +22,7 @@ exports[`App 1`] = `
       </a>
       <a
         aria-current={null}
-        className="nav-menu__item"
+        className="item"
         href="#/about"
         onClick={[Function]}
       >
@@ -30,7 +30,7 @@ exports[`App 1`] = `
       </a>
       <a
         aria-current={null}
-        className="nav-menu__item"
+        className="item"
         href="#/blog"
         onClick={[Function]}
       >
@@ -38,7 +38,7 @@ exports[`App 1`] = `
       </a>
       <a
         aria-current={null}
-        className="nav-menu__item"
+        className="item"
         href="#/career"
         onClick={[Function]}
       >
@@ -46,7 +46,7 @@ exports[`App 1`] = `
       </a>
       <a
         aria-current={null}
-        className="nav-menu__item"
+        className="item"
         href="#/contacts"
         onClick={[Function]}
       >
@@ -55,30 +55,28 @@ exports[`App 1`] = `
     </nav>
   </header>
   <div
-    className="components-content__background"
+    className="background"
   />
   <div
-    className="flexBox flexColumn components-content__wrapper"
+    className="flexBox flexColumn container"
   >
     <div
-      className="flexBox flexColumn page-container__root"
+      className="flexBox flexColumn container wide"
     >
-      <div
-        className="page-main__root"
-      >
+      <div>
         <img
           alt="Artyom"
-          className="page-main__image"
+          className="image"
           src="artyom.jpg"
           title="artyom.jpg"
         />
         <h2
-          className="page-main__contentBlock"
+          className="contentBlock"
         >
           Hi! My name is Artyom.
         </h2>
         <div
-          className="page-main__contentBlock"
+          className="contentBlock"
         >
           I'm a programmer, based in 
           <a
@@ -91,12 +89,12 @@ exports[`App 1`] = `
           , Russia. There are some facts about me on this site.
         </div>
         <div
-          className="page-main__contentBlock"
+          className="contentBlock"
         >
           You can contact me if you have some ideas for it's improvement or if you find some bugs, typos etc. I'm still working on it.
         </div>
         <div
-          className="page-main__contentBlock"
+          className="contentBlock"
         >
           Frontend of this site is based on React, Redux, TypeScript and Sass, the sources of this part are located on GitHub 
           <a
@@ -109,7 +107,7 @@ exports[`App 1`] = `
           .
         </div>
         <div
-          className="page-main__contentBlock"
+          className="contentBlock"
         >
           Backend uses Spring Boot, Maven, Heroku and PostgreSQL and is located 
           <a
@@ -123,23 +121,23 @@ exports[`App 1`] = `
         </div>
       </div>
       <div
-        className="flexBox justifyContentCenter page-main__githubContainer"
+        className="flexBox justifyContentCenter container"
       >
         <div
-          className="page-main__githubContributions"
+          className="contributions"
         />
         <div
           className="flexBox flexGrow-1 flexShrink-1 justifyContentCenter"
         >
           <div
-            className="nav-loading__indicator"
+            className="container"
           />
         </div>
       </div>
     </div>
   </div>
   <footer
-    className="components-footer__container"
+    className="container"
   >
     <span>
       © 2019 All rights reserved

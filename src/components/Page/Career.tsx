@@ -8,7 +8,7 @@ import { ISource } from '../../interface/ISource';
 import IState from '../../interface/IState';
 import create from '../../model/Source';
 import DateUtil from '../../utils/Date';
-import './Career.scss';
+import styles from './Career.module.scss';
 import Abstract, { IProps as IAbstractProps } from './Data/Abstract';
 
 const itemsSelector = createSelector(
@@ -51,7 +51,7 @@ class Career extends Abstract<ICareer, IProps<ICareer>> {
   protected getSource = (): ISource => this.source;
 
   private prepareTitle = (site: string, title: string) => {
-    const header = <h3 className='page-career__title'>{title}</h3>;
+    const header = <h3>{title}</h3>;
     return site ? (
       <a href={site} target={BLANK} rel={REL} title='Click for details'>
         {header}
@@ -66,13 +66,13 @@ class Career extends Abstract<ICareer, IProps<ICareer>> {
    */
   protected getContent = (careerList: ICareer[]): ReactNode => {
     return careerList.map(({ id, site, title, startDate, endDate, post, description, tools }: ICareer) => (
-      <div key={id} className='page-career__item'>
+      <div key={id} className={styles.item}>
         {this.prepareTitle(site, title)}
-        <div className='page-career__dates'>{DateUtil.prepareDates(startDate, endDate)}</div>
-        <div className=''>Post:&nbsp;{post}</div>
-        <div className=''>{description}</div>
+        <div className={styles.dates}>{DateUtil.prepareDates(startDate, endDate)}</div>
+        <div>Post:&nbsp;{post}</div>
+        <div>{description}</div>
         <div className='flexBox flexColumn'>
-          <div className=''>Tools:&nbsp;{tools}</div>
+          <div>Tools:&nbsp;{tools}</div>
         </div>
       </div>
     ));

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Container from './Container';
-import './NotFound.scss';
+import styles from './NotFound.module.scss';
 
 const TITLE = 'Page Not Found';
 
@@ -10,7 +10,7 @@ const TITLE = 'Page Not Found';
  */
 const NotFound = () => (
   <Container title={TITLE}>
-    <div className='page-notFound__item'>
+    <div className={styles.container}>
       <Link to='/'>Go to main page</Link>
     </div>
   </Container>

@@ -1,12 +1,15 @@
-import React from 'react';
-import { HashRouter } from 'react-router-dom';
-import renderer from 'react-test-renderer';
-import NotFound from '../../components/Page/NotFound';
-import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 
+import React from 'react';
+import { Provider } from 'react-redux';
+import { HashRouter } from 'react-router-dom';
+import renderer from 'react-test-renderer';
+
+import { NotFound } from 'components/Pages';
+import { IAppState } from 'interface/IState';
+
 test('NotFound', () => {
-  const app = () => ({ loading: false });
+  const app = (): IAppState => ({ loading: false });
 
   const store = createStore(combineReducers({ app }));
 

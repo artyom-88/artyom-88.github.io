@@ -1,10 +1,13 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import Container from '../../components/Page/Container';
 import { combineReducers, createStore } from 'redux';
-import { Provider } from 'react-redux';
 
-const app = () => ({ loading: false });
+import React from 'react';
+import { Provider } from 'react-redux';
+import renderer from 'react-test-renderer';
+
+import { PageContainer } from 'container';
+import { IAppState } from 'interface/IState';
+
+const app = (): IAppState => ({ loading: false });
 
 const store = createStore(combineReducers({ app }));
 
@@ -14,7 +17,7 @@ describe('Container', () => {
     const content = <div>text1</div>;
     const component = renderer.create(
       <Provider store={store}>
-        <Container title={title}>{content}</Container>
+        <PageContainer title={title}>{content}</PageContainer>
       </Provider>
     );
     const tree = component.toJSON();
@@ -25,7 +28,7 @@ describe('Container', () => {
     const content = <div>text1</div>;
     const component = renderer.create(
       <Provider store={store}>
-        <Container>{content}</Container>
+        <PageContainer>{content}</PageContainer>
       </Provider>
     );
     const tree = component.toJSON();

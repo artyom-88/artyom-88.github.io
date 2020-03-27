@@ -1,8 +1,10 @@
-import React from 'react';
-import { BLANK, REL } from '../../constants/Html';
-import contacts from '../../resources/contacts.json';
+import React, { FunctionComponent } from 'react';
+
+import contacts from 'assets/contacts.json';
+import { BLANK, REL } from 'const';
+import { PageContainer } from 'container';
+
 import styles from './Contacts.module.scss';
-import Container from './Container';
 
 /**
  * Contact options interface
@@ -33,13 +35,13 @@ const items = contacts.data.map(({ key, link, title }: IContact) => (
 /**
  * Contacts page component
  */
-const Contacts = () => (
-  <Container>
+const Contacts: FunctionComponent = () => (
+  <PageContainer>
     <div className={`flexBox alignItemsBaseline justifyContentBetween ${styles.container}`}>
       <div>{titles}</div>
       <div className={styles.item}>{items}</div>
     </div>
-  </Container>
+  </PageContainer>
 );
 
 export default Contacts;

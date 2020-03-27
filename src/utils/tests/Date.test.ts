@@ -1,4 +1,4 @@
-import DateUtil from '../../utils/Date';
+import { DateUtil } from 'utils';
 
 describe('parseDateFromString', () => {
   test('empty string', () => {
@@ -28,11 +28,13 @@ describe('prepareDates', () => {
   });
 
   test('left date', () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     expect(DateUtil.prepareDates(new Date(2017, 1))).toEqual('Since February 2017');
   });
 
   test('no dates', () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     expect(DateUtil.prepareDates()).toEqual('');
   });

@@ -1,6 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import GitHub from '../../../components/Page/Main/GitHub';
+
+import GitHub from '../GitHub';
 
 test('GitHub', () => {
   const component = renderer.create(<GitHub />);

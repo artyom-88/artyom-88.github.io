@@ -1,43 +1,47 @@
 import React, { ReactNode } from 'react';
 import { connect } from 'react-redux';
+
+import * as actions from 'actions';
+import { BLANK, REL } from 'const';
+import { AbstractDataContainer } from 'container';
+import { ICareer, ICareerItems } from 'interface/ICareer';
+import { IDataProps } from 'interface/IData';
+import { ISource } from 'interface/ISource';
+import IState from 'interface/IState';
+import { createSource } from 'model';
+import { DateUtil } from 'utils';
+
 import { createSelector } from 'reselect';
-import * as actions from '../../actions';
-import { BLANK, REL } from '../../constants/Html';
-import { ICareer, ICareerItems } from '../../interface/ICareer';
-import { ISource } from '../../interface/ISource';
-import IState from '../../interface/IState';
-import create from '../../model/Source';
-import DateUtil from '../../utils/Date';
+
 import styles from './Career.module.scss';
-import Abstract, { IProps as IAbstractProps } from './Data/Abstract';
+
+interface IProps<TData> extends IDataProps<TData> {
+  appLoading: (payload: { loading: boolean }) => void;
+  careerLoadList: (payload: { items: TData[] }) => void;
+}
 
 const itemsSelector = createSelector(
   ({ career }: IState) => career,
   (career: { items: ICareerItems }) => Object.values(career.items)
 );
 
-const mapStateToProps = (state: IState) => ({ items: itemsSelector(state) });
+const mapStateToProps = (state: IState): IDataProps<ICareer> => ({ items: itemsSelector(state) });
 
 const actionCreators = {
   appLoading: actions.appLoading,
   careerLoadList: actions.careerLoadList,
 };
 
-interface IProps<TData> extends IAbstractProps<TData> {
-  appLoading: (payload: { loading: boolean }) => void;
-  careerLoadList: (payload: { items: TData[] }) => void;
-}
-
 /**
  * Career page
  */
-class Career extends Abstract<ICareer, IProps<ICareer>> {
+class Career extends AbstractDataContainer<ICareer, IProps<ICareer>> {
   private readonly source: ISource;
 
   constructor(props: IProps<ICareer>) {
     super(props);
     const { appLoading, careerLoadList } = props;
-    this.source = create<ICareer>()
+    this.source = createSource<ICareer>()
       .endpoint('career')
       .beforeLoad(() => {
         appLoading({ loading: true });
@@ -50,7 +54,7 @@ class Career extends Abstract<ICareer, IProps<ICareer>> {
 
   protected getSource = (): ISource => this.source;
 
-  private prepareTitle = (site: string, title: string) => {
+  private prepareTitle = (site: string, title: string): ReactNode => {
     const header = <h3>{title}</h3>;
     return site ? (
       <a href={site} target={BLANK} rel={REL} title='Click for details'>

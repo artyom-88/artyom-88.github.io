@@ -1,7 +1,6 @@
 const DATE_FORMAT = { month: 'long', year: 'numeric' };
 
 export default class DateUtil {
-
   /**
    * Create Date from date string.
    * @param dateStr source string with %YYYY-MM-DD% format. Day is optional.
@@ -24,10 +23,10 @@ export default class DateUtil {
     const date = DateUtil.parseDateFromString(dateStr);
     return date
       ? new Intl.DateTimeFormat('en-GB', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-      }).format(date)
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric',
+        }).format(date)
       : '';
   }
 

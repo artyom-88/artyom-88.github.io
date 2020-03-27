@@ -69,6 +69,17 @@
       "since 2010"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
   "jest": {
     "moduleNameMapper": {
       "^actions$": "<rootDir>/src/actions",

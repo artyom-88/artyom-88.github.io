@@ -131,7 +131,9 @@ exports[`App 1`] = `
         >
           <div
             className="container"
-          />
+          >
+            loading-indicator.svg
+          </div>
         </div>
       </div>
     </div>

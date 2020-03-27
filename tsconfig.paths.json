@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "actions": ["src/actions"],
+      "assets": ["src/assets"],
+      "assets/*": ["src/assets/*"],
+      "components": ["src/components"],
+      "components/*": ["src/components/*"],
+      "container": ["src/container"],
+      "const": ["src/const"],
+      "interface": ["src/interface"],
+      "interface/*": ["src/interface/*"],
+      "model": ["src/model"],
+      "pages": ["src/pages"],
+      "reducers": ["src/reducers"],
+      "store": ["src/store"],
+      "utils": ["src/utils"]
+    }
+  }
+}

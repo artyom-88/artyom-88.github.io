@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-import contacts from 'assets/contacts.json';
+import { contacts } from 'assets';
 import { BLANK, REL } from 'const';
 import { PageContainer } from 'container';
 

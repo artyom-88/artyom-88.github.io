@@ -1,13 +1,13 @@
 import React, { FunctionComponent, useContext } from 'react';
 
-import img from 'assets/artyom.jpg';
+import { artyom } from 'assets';
 import { NarrowContext } from 'components';
 import { BLANK, REL } from 'const';
 import { PageContainer } from 'container';
 
 import GitHub from './GitHub';
 
-import styles from './style.module.scss';
+import styles from './Main.module.scss';
 
 const LINKS = {
   Back: 'https://github.com/Artyom-Ganev/artyom-ganev-server',
@@ -17,7 +17,7 @@ const LINKS = {
 
 const CONTENT = (
   <div>
-    <img className={styles.image} src={img} alt='Artyom' title='artyom.jpg' />
+    <img className={styles.image} src={artyom} alt='Artyom' title='artyom.jpg' />
     <h2 className={styles.contentBlock}>Hi! My name is Artyom.</h2>
     <div className={styles.contentBlock}>
       I&apos;m a programmer, based in&nbsp;

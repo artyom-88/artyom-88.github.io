@@ -1,10 +1,13 @@
-import React, { useContext } from 'react';
-import { BLANK, REL } from '../../constants/Html';
-import img from '../../resources/artyom.jpg';
-import { NarrowContext } from '../App';
-import Container from './Container';
-import styles from './Main.module.scss';
-import GitHub from './Main/GitHub';
+import React, { FunctionComponent, useContext } from 'react';
+
+import img from 'assets/artyom.jpg';
+import { NarrowContext } from 'components';
+import { BLANK, REL } from 'const';
+import { PageContainer } from 'container';
+
+import GitHub from './GitHub';
+
+import styles from './style.module.scss';
 
 const LINKS = {
   Back: 'https://github.com/Artyom-Ganev/artyom-ganev-server',
@@ -17,15 +20,15 @@ const CONTENT = (
     <img className={styles.image} src={img} alt='Artyom' title='artyom.jpg' />
     <h2 className={styles.contentBlock}>Hi! My name is Artyom.</h2>
     <div className={styles.contentBlock}>
-      I'm a programmer, based in&nbsp;
+      I&apos;m a programmer, based in&nbsp;
       <a href={LINKS.Rybinsk} target={BLANK} rel={REL}>
         Rybinsk
       </a>
       ,&nbsp;Russia. There are some facts about me on this site.
     </div>
     <div className={styles.contentBlock}>
-      You can contact me if you have some ideas for it's improvement or if you find some bugs, typos etc. I'm still
-      working on it.
+      You can contact me if you have some ideas for it&apos;s improvement or if you find some bugs, typos etc. I&apos;m
+      still working on it.
     </div>
     <div className={styles.contentBlock}>
       Frontend of this site is based on React, Redux, TypeScript and Sass, the sources of this part are located on
@@ -48,13 +51,13 @@ const CONTENT = (
 /**
  * Main page component
  */
-const Main = () => {
+const Main: FunctionComponent = () => {
   const narrow = useContext(NarrowContext);
   return (
-    <Container>
+    <PageContainer>
       {CONTENT}
       {!narrow && <GitHub />}
-    </Container>
+    </PageContainer>
   );
 };
 

@@ -1,25 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { HashRouter } from 'react-router-dom';
-import Content from './Layout/Content';
-import Footer from './Layout/Footer';
-import Header from './Layout/Header';
+
+import { Content, Header, Footer } from 'components/Layout';
 
 /**
  * Check if the page is narrow
  */
-const isNarrow = () => window.innerWidth <= 800;
+const isNarrow = (): boolean => window.innerWidth <= 800;
 
 /**
  * Resize hook
  */
-const useResize = () => {
+const useResize = (): boolean => {
   const [narrow, setNarrow] = useState<boolean>(isNarrow());
   useEffect(() => {
-    const onResize = () => setNarrow(isNarrow());
+    const onResize = (): void => setNarrow(isNarrow());
     window.addEventListener('resize', onResize);
-    return () => {
-      window.removeEventListener('resize', onResize);
-    };
+    return (): void => window.removeEventListener('resize', onResize);
   });
   return narrow;
 };
@@ -29,7 +26,7 @@ export const NarrowContext = React.createContext(isNarrow());
 /**
  * Main application component
  */
-const App = () => (
+const App: FunctionComponent = () => (
   <HashRouter>
     <div className='flexBox flexColumn'>
       <Header />

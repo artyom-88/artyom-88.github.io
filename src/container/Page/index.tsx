@@ -1,9 +1,11 @@
-import React, { ReactNode, useContext } from 'react';
+import React, { FunctionComponent, ReactNode, useContext } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
-import IState from '../../interface/IState';
-import { NarrowContext } from '../App';
-import LoadingIndicator from '../Navigation/LoadingIndicator';
+
+import * as actions from 'actions';
+import { NarrowContext } from 'components';
+import { LoadingIndicator } from 'components/Navigation';
+import IState, { IAppState } from 'interface/IState';
+
 import styles from './Container.module.scss';
 
 /**
@@ -15,7 +17,7 @@ interface IProperties {
   loading?: boolean;
 }
 
-const mapStateToProps = ({ app: { loading } }: IState) => ({ loading });
+const mapStateToProps = ({ app: { loading } }: IState): IAppState => ({ loading });
 
 const actionCreators = {
   appLoading: actions.appLoading,
@@ -24,7 +26,7 @@ const actionCreators = {
 /**
  * Page container with title
  */
-const Container = (props: IProperties) => {
+const Container: FunctionComponent = (props: IProperties) => {
   const { children, loading, title } = props;
   const narrow = useContext(NarrowContext);
   const contentClass = `flexBox flexColumn ${styles.container} ${narrow ? styles.narrow : styles.wide}`;
@@ -40,4 +42,4 @@ const Container = (props: IProperties) => {
   );
 };
 
-export default connect(mapStateToProps, actionCreators)(Container);
+export default connect<IAppState, {}, IProperties, IState>(mapStateToProps, actionCreators)(Container);

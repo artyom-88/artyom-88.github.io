@@ -1,15 +1,15 @@
 import React, { Component, ReactNode } from 'react';
-import { ISource } from '../../../interface/ISource';
-import Container from '../Container';
 
-export interface IProps<TData> {
-  items: TData[];
-}
+import { PageContainer } from 'container';
+import { IDataProps } from 'interface/IData';
+import { ISource } from 'interface/ISource';
 
 /**
  * Abstract page with data source
  */
-export default abstract class Abstract<TData, TProps extends IProps<TData> = IProps<TData>> extends Component<TProps> {
+export default abstract class Index<TData, TProps extends IDataProps<TData> = IDataProps<TData>> extends Component<
+  TProps
+> {
   public componentDidMount(): void {
     const { items } = this.props;
     if (!items.length) {
@@ -19,7 +19,7 @@ export default abstract class Abstract<TData, TProps extends IProps<TData> = IPr
 
   public render(): ReactNode {
     const { items } = this.props;
-    return <Container>{this.getContent(items)}</Container>;
+    return <PageContainer>{this.getContent(items)}</PageContainer>;
   }
 
   protected abstract getSource(): ISource;

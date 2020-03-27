@@ -1,15 +1,24 @@
 import React, { ReactNode } from 'react';
 import { connect } from 'react-redux';
+
+import * as actions from 'actions';
+import { BLANK, REL } from 'const';
+import { AbstractDataContainer } from 'container';
+import { IBlog, IBlogItems } from 'interface/IBlog';
+import { IDataProps } from 'interface/IData';
+import { ISource } from 'interface/ISource';
+import IState from 'interface/IState';
+import { createSource } from 'model';
+import { DateUtil } from 'utils';
+
 import { createSelector } from 'reselect';
-import * as actions from '../../actions';
-import { BLANK, REL } from '../../constants/Html';
-import { IBlog, IBlogItems } from '../../interface/IBlog';
-import { ISource } from '../../interface/ISource';
-import IState from '../../interface/IState';
-import create from '../../model/Source';
-import DateUtil from '../../utils/Date';
+
 import styles from './Blog.module.scss';
-import Abstract, { IProps as IAbstractProps } from './Data/Abstract';
+
+interface IProps<TData> extends IDataProps<TData> {
+  appLoading: (payload: { loading: boolean }) => void;
+  blogLoadList: (payload: { items: TData[] }) => void;
+}
 
 const DATE_COMPARATOR = (item1: IBlog, item2: IBlog): number => {
   // TODO: Migrate to normal Date format https://github.com/Artyom-Ganev/artyom-ganev-src/issues/83
@@ -23,28 +32,23 @@ const itemsSelector = createSelector(
   (blog: { items: IBlogItems }) => Object.values(blog.items)
 );
 
-const mapStateToProps = (state: IState) => ({ items: itemsSelector(state) });
+const mapStateToProps = (state: IState): IDataProps<IBlog> => ({ items: itemsSelector(state) });
 
 const actionCreators = {
   appLoading: actions.appLoading,
   blogLoadList: actions.blogLoadList,
 };
 
-interface IProps<TData> extends IAbstractProps<TData> {
-  appLoading: (payload: { loading: boolean }) => void;
-  blogLoadList: (payload: { items: TData[] }) => void;
-}
-
 /**
  * Blog page
  */
-class Blog extends Abstract<IBlog, IProps<IBlog>> {
+class Blog extends AbstractDataContainer<IBlog, IProps<IBlog>> {
   private readonly source: ISource;
 
   constructor(props: IProps<IBlog>) {
     super(props);
     const { appLoading, blogLoadList } = props;
-    this.source = create<IBlog>()
+    this.source = createSource<IBlog>()
       .endpoint('blog')
       .beforeLoad(() => {
         appLoading({ loading: true });

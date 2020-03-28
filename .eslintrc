@@ -42,6 +42,7 @@
   "rules": {
     "prettier/prettier": "error",
     "@typescript-eslint/interface-name-prefix": 0,
+    "@typescript-eslint/no-non-null-assertion": 0,
     "import/order": [
       "error",
       {

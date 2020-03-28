@@ -6,8 +6,6 @@ exports[`LoadingIndicator 1`] = `
 >
   <div
     className="container"
-  >
-    loading-indicator.svg
-  </div>
+  />
 </div>
 `;

@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import { loadingIndicator } from 'src/assets';
 import styles from './LoadingIndicator.module.scss';
 
 /**
@@ -7,7 +6,7 @@ import styles from './LoadingIndicator.module.scss';
  */
 const LoadingIndicator: FunctionComponent = () => (
   <div className='flexBox flexGrow-1 flexShrink-1 justifyContentCenter'>
-    <div className={styles.container}>{loadingIndicator}</div>
+    <div className={styles.container} />
   </div>
 );
 

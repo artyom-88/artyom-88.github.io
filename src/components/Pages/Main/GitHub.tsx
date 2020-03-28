@@ -1,9 +1,6 @@
 import React, { Dispatch, FunctionComponent, SetStateAction, useEffect, useState } from 'react';
-
-import { LoadingIndicator } from 'src/components/Navigation';
-
 import axios, { AxiosResponse } from 'axios';
-
+import { LoadingIndicator } from 'src/components/Navigation';
 import styles from './GitHub.module.scss';
 
 const PROXY = 'https://urlreq.appspot.com/req?method=GET&url=';

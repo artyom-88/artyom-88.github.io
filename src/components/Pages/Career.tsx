@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { connect } from 'react-redux';
-
+import { createSelector } from 'reselect';
 import * as actions from 'src/actions';
 import { BLANK, REL } from 'src/const';
 import { AbstractDataContainer } from 'src/container';
@@ -10,9 +10,6 @@ import { ISource } from 'src/interface/ISource';
 import IState from 'src/interface/IState';
 import { createSource } from 'src/model';
 import { DateUtil } from 'src/utils';
-
-import { createSelector } from 'reselect';
-
 import styles from './Career.module.scss';
 
 interface IProps<TData> extends IDataProps<TData> {

@@ -1,6 +1,5 @@
-import { ISource, ISourceBuilder } from 'src/interface/ISource';
-
 import axios, { AxiosResponse } from 'axios';
+import { ISource, ISourceBuilder } from 'src/interface/ISource';
 
 const API_URL = 'https://shielded-brushlands-46595.herokuapp.com';
 const REQUEST_CONFIG = { headers: { 'x-requested-with': 'xhr' } } as const;

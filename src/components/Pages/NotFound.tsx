@@ -1,8 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
-
 import { PageContainer } from 'src/container';
-
 import styles from './NotFound.module.scss';
 
 const TITLE = 'Page Not Found';

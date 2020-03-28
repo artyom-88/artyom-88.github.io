@@ -1,12 +1,9 @@
 import React, { FunctionComponent, useContext } from 'react';
-
 import { artyom } from 'src/assets';
 import { NarrowContext } from 'src/components';
 import { BLANK, REL } from 'src/const';
 import { PageContainer } from 'src/container';
-
 import GitHub from './GitHub';
-
 import styles from './Main.module.scss';
 
 const LINKS = {

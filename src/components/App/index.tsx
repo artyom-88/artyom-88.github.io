@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { HashRouter } from 'react-router-dom';
-
 import { Content, Header, Footer } from 'src/components/Layout';
 
 /**

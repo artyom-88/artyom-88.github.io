@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-
 import { About, Blog, Career, Contacts, Main, NotFound } from 'src/components/Pages';
 
 /**

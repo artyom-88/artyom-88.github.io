@@ -1,5 +1,4 @@
 import React, { Component, ReactNode } from 'react';
-
 import { PageContainer } from 'src/container';
 import { IDataProps } from 'src/interface/IData';
 import { ISource } from 'src/interface/ISource';

@@ -1,9 +1,7 @@
 import { combineReducers, createStore } from 'redux';
-
 import React from 'react';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
-
 import { PageContainer } from 'src/container';
 import { IAppState } from 'src/interface/IState';
 

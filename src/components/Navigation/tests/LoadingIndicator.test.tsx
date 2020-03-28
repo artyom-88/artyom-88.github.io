@@ -1,6 +1,5 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-
 import { LoadingIndicator } from 'src/components/Navigation';
 
 test('LoadingIndicator', () => {

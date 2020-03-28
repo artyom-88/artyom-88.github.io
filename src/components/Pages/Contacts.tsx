@@ -1,9 +1,7 @@
 import React, { FunctionComponent } from 'react';
-
 import { contacts } from 'src/assets';
 import { BLANK, REL } from 'src/const';
 import { PageContainer } from 'src/container';
-
 import styles from './Contacts.module.scss';
 
 /**

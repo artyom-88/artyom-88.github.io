@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
-
 import * as actions from 'src/actions';
 import { IBlog, IBlogProps } from 'src/interface/IBlog';
 import { ICareer, ICareerProps } from 'src/interface/ICareer';

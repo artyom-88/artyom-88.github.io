@@ -1,7 +1,5 @@
 import React, { FunctionComponent } from 'react';
-
 import { loadingIndicator } from 'src/assets';
-
 import styles from './LoadingIndicator.module.scss';
 
 /**

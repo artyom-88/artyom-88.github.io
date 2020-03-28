@@ -47,8 +47,9 @@
       {
         "groups": [
           "builtin",
-          "external",
           "internal",
+          "unknown",
+          "external",
           "parent",
           "sibling",
           "index"
@@ -65,12 +66,12 @@
             "position": "before"
           },
           {
-            "pattern": ".*/*.scss",
+            "pattern": "*.scss",
             "group": "index",
             "position": "after"
           }
         ],
-        "newlines-between": "always",
+        "newlines-between": "never",
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true

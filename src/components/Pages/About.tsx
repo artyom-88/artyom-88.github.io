@@ -1,8 +1,6 @@
 import React, { FunctionComponent } from 'react';
-
 import { bio } from 'src/assets';
 import { PageContainer } from 'src/container';
-
 import styles from './About.module.scss';
 
 /**

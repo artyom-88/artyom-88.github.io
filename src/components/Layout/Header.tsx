@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-
 import { Menu } from 'src/components/Navigation';
 
 /**

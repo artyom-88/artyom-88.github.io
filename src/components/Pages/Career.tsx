@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 import * as actions from 'src/actions';
 import { BLANK, REL } from 'src/const';
 import { AbstractDataContainer } from 'src/container';
+import { IAppLoading } from 'src/interface/Actions';
 import { ICareer, ICareerItems } from 'src/interface/ICareer';
 import { IDataProps } from 'src/interface/IData';
 import { ISource } from 'src/interface/ISource';
@@ -12,8 +13,7 @@ import { createSource } from 'src/model';
 import { DateUtil } from 'src/utils';
 import styles from './Career.module.scss';
 
-interface IProps<TData> extends IDataProps<TData> {
-  appLoading: (payload: { loading: boolean }) => void;
+interface IProps<TData> extends IDataProps<TData>, IAppLoading {
   careerLoadList: (payload: { items: TData[] }) => void;
 }
 

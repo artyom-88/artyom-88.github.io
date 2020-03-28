@@ -1,4 +1,4 @@
-import { DateUtil } from 'utils';
+import { DateUtil } from 'src/utils';
 
 describe('parseDateFromString', () => {
   test('empty string', () => {

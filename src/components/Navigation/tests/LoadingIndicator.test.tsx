@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { LoadingIndicator } from 'components/Navigation';
+import { LoadingIndicator } from 'src/components/Navigation';
 
 test('LoadingIndicator', () => {
   const component = renderer.create(<LoadingIndicator />);

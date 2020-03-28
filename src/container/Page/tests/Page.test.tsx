@@ -4,8 +4,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
 
-import { PageContainer } from 'container';
-import { IAppState } from 'interface/IState';
+import { PageContainer } from 'src/container';
+import { IAppState } from 'src/interface/IState';
 
 const app = (): IAppState => ({ loading: false });
 

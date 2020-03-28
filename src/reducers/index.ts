@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 
-import * as actions from 'actions';
-import { IBlog, IBlogProps } from 'interface/IBlog';
-import { ICareer, ICareerProps } from 'interface/ICareer';
-import { IAppState } from 'interface/IState';
+import * as actions from 'src/actions';
+import { IBlog, IBlogProps } from 'src/interface/IBlog';
+import { ICareer, ICareerProps } from 'src/interface/ICareer';
+import { IAppState } from 'src/interface/IState';
 
 // fix redux-actions TypeScript bad support
 const appLoading = `${actions.appLoading}`;

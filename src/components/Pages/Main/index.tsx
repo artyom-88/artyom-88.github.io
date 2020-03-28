@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useContext } from 'react';
 
-import { artyom } from 'assets';
-import { NarrowContext } from 'components';
-import { BLANK, REL } from 'const';
-import { PageContainer } from 'container';
+import { artyom } from 'src/assets';
+import { NarrowContext } from 'src/components';
+import { BLANK, REL } from 'src/const';
+import { PageContainer } from 'src/container';
 
 import GitHub from './GitHub';
 

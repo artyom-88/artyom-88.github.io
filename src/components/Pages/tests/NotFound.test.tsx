@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 import renderer from 'react-test-renderer';
 
-import { NotFound } from 'components/Pages';
-import { IAppState } from 'interface/IState';
+import { NotFound } from 'src/components/Pages';
+import { IAppState } from 'src/interface/IState';
 
 test('NotFound', () => {
   const app = (): IAppState => ({ loading: false });

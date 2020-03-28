@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { HashRouter } from 'react-router-dom';
 
-import { Content, Header, Footer } from 'components/Layout';
+import { Content, Header, Footer } from 'src/components/Layout';
 
 /**
  * Check if the page is narrow

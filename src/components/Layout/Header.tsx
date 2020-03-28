@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-import { Menu } from 'components/Navigation';
+import { Menu } from 'src/components/Navigation';
 
 /**
  * Header component

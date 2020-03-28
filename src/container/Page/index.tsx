@@ -1,10 +1,10 @@
 import React, { FunctionComponent, ReactNode, useContext } from 'react';
 import { connect } from 'react-redux';
 
-import * as actions from 'actions';
-import { NarrowContext } from 'components';
-import { LoadingIndicator } from 'components/Navigation';
-import IState, { IAppState } from 'interface/IState';
+import * as actions from 'src/actions';
+import { NarrowContext } from 'src/components';
+import { LoadingIndicator } from 'src/components/Navigation';
+import IState, { IAppState } from 'src/interface/IState';
 
 import styles from './Container.module.scss';
 

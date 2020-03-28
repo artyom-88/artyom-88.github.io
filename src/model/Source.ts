@@ -1,4 +1,4 @@
-import { ISource, ISourceBuilder } from 'interface/ISource';
+import { ISource, ISourceBuilder } from 'src/interface/ISource';
 
 import axios, { AxiosResponse } from 'axios';
 

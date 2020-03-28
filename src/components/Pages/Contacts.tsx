@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 
-import { contacts } from 'assets';
-import { BLANK, REL } from 'const';
-import { PageContainer } from 'container';
+import { contacts } from 'src/assets';
+import { BLANK, REL } from 'src/const';
+import { PageContainer } from 'src/container';
 
 import styles from './Contacts.module.scss';
 

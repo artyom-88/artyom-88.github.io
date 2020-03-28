@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { PAGES } from 'const';
+import { PAGES } from 'src/const';
 
 import styles from './Menu.module.scss';
 

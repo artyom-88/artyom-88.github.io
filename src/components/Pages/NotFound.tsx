@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 
-import { PageContainer } from 'container';
+import { PageContainer } from 'src/container';
 
 import styles from './NotFound.module.scss';
 

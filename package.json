@@ -79,24 +79,5 @@
       "eslint --fix",
       "prettier --write"
     ]
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "^actions$": "<rootDir>/src/actions",
-      "^assets$": "<rootDir>/src/assets",
-      "^components$": "<rootDir>/src/components",
-      "^components/Layout$": "<rootDir>/src/components/Layout",
-      "^components/Navigation$": "<rootDir>/src/components/Navigation",
-      "^components/Pages$": "<rootDir>/src/components/Pages",
-      "^const$": "<rootDir>/src/const",
-      "^container$": "<rootDir>/src/container",
-      "^model$": "<rootDir>/src/model",
-      "^reducers$": "<rootDir>/src/reducers",
-      "^store$": "<rootDir>/src/store",
-      "^utils$": "<rootDir>/src/utils"
-    },
-    "transform": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jestFileTransformer.js"
-    }
   }
 }

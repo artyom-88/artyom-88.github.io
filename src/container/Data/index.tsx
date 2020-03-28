@@ -1,8 +1,8 @@
 import React, { Component, ReactNode } from 'react';
 
-import { PageContainer } from 'container';
-import { IDataProps } from 'interface/IData';
-import { ISource } from 'interface/ISource';
+import { PageContainer } from 'src/container';
+import { IDataProps } from 'src/interface/IData';
+import { ISource } from 'src/interface/ISource';
 
 /**
  * Abstract page with data source

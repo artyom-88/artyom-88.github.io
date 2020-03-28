@@ -1,6 +1,6 @@
 import React, { Dispatch, FunctionComponent, SetStateAction, useEffect, useState } from 'react';
 
-import { LoadingIndicator } from 'components/Navigation';
+import { LoadingIndicator } from 'src/components/Navigation';
 
 import axios, { AxiosResponse } from 'axios';
 

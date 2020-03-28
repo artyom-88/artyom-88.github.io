@@ -1,10 +1,10 @@
-import React from 'react';
-import Menu from '../Navigation/Menu';
+import React, { FunctionComponent } from 'react';
+import { Menu } from 'src/components/Navigation';
 
 /**
  * Header component
  */
-const Header = () => (
+const Header: FunctionComponent = () => (
   <header className='flexBox'>
     <Menu />
   </header>

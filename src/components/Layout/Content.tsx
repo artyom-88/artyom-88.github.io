@@ -1,11 +1,11 @@
-import React from 'react';
-import Routes from '../Navigation/Routes';
+import React, { FunctionComponent } from 'react';
+import { Routes } from 'src/components/Navigation';
 import styles from './Content.module.scss';
 
 /**
  * App Content component
  */
-const Content = () => (
+const Content: FunctionComponent = () => (
   <>
     <div className={styles.background} />
     <div className={`flexBox flexColumn ${styles.container}`}>

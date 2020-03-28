@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import App from './components/App';
+import { App } from 'src/components';
+import store from 'src/store';
 import registerServiceWorker from './registerServiceWorker';
-import store from './store';
-import './index.scss';
+import 'src/assets/styles.scss';
 
 /**
  * Site root component

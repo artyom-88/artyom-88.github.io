@@ -1,16 +1,11 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import About from '../Page/About';
-import Blog from '../Page/Blog';
-import Career from '../Page/Career';
-import Contacts from '../Page/Contacts';
-import Main from '../Page/Main';
-import NotFound from '../Page/NotFound';
+import { About, Blog, Career, Contacts, Main, NotFound } from 'src/components/Pages';
 
 /**
  * Application routes component
  */
-const Routes = () => (
+const Routes: FunctionComponent = () => (
   <Switch>
     <Redirect from='/main' to='/' />
     <Route exact={true} path='/' component={Main} />

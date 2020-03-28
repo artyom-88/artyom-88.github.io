@@ -40,7 +40,14 @@
     }
   },
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": ["error", {
+      "arrowParens": "always",
+      "endOfLine": "lf",
+      "jsxSingleQuote": true,
+      "printWidth": 120,
+      "singleQuote": true,
+      "trailingComma": "es5"
+    }],
     "@typescript-eslint/interface-name-prefix": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
     "import/order": [

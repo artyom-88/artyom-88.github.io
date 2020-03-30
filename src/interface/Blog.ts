@@ -1,7 +1,6 @@
-/**
- * Base interface of Blog record
- */
-export interface IBlog {
+import { BlogModel } from 'src/model';
+
+export interface IRawBlogData {
   id: string;
   title: string;
   year: number;
@@ -11,22 +10,19 @@ export interface IBlog {
   linkCaption: string;
 }
 
-/**
- * Base interface of Blog detail record
- */
 export interface IBlogDetail {
   id: string;
 }
 
 export interface IBlogItems {
-  [key: string]: IBlog;
+  [key: string]: BlogModel;
 }
 
 export interface IBlogDetailItems {
   [key: string]: IBlogDetail;
 }
 
-export interface IBlogProps {
+export interface IBlogState {
   items: IBlogItems;
   detail: IBlogDetailItems;
 }

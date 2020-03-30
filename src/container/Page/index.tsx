@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from 'src/actions';
 import { NarrowContext } from 'src/components';
 import { LoadingIndicator } from 'src/components/Navigation';
-import IState, { IAppState } from 'src/interface/IState';
+import { IAppState, IState } from 'src/interface';
 import styles from './Container.module.scss';
 
 /**

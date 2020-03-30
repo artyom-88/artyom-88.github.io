@@ -1,7 +1,6 @@
-/**
- * Base interface of Career record
- */
-export interface ICareer {
+import { CareerModel } from 'src/model';
+
+export interface ICareerRawData {
   description: string;
   endDate: Date;
   id: string;
@@ -12,22 +11,19 @@ export interface ICareer {
   tools: string;
 }
 
-/**
- * Base interface of Career detail record
- */
 export interface ICareerDetail {
   id: string;
 }
 
 export interface ICareerItems {
-  [key: string]: ICareer;
+  [key: string]: CareerModel;
 }
 
 export interface ICareerDetailItems {
   [key: string]: ICareerDetail;
 }
 
-export interface ICareerProps {
+export interface ICareerState {
   items: ICareerItems;
   detail: ICareerDetailItems;
 }

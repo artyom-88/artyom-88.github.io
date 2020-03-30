@@ -1,11 +1,23 @@
+import { APP_LOADING, BLOG_LOAD_LIST, CAREER_LOAD_LIST } from 'src/actions';
+import { BlogModel, CareerModel } from 'src/model';
+
 export interface IAppLoading {
-  appLoading: (payload: { loading: boolean }) => void;
+  type: typeof APP_LOADING;
+  payload: { loading: boolean };
 }
 
-export interface IBlogActions<TData> extends IAppLoading {
-  blogLoadList: (payload: { items: TData[] }) => void;
+export interface ILoadBlogList {
+  type: typeof BLOG_LOAD_LIST;
+  payload: { items: BlogModel[] };
 }
 
-export interface ICareerActions<TData> extends IAppLoading {
-  careerLoadList: (payload: { items: TData[] }) => void;
+export interface ILoadCareerList {
+  type: typeof CAREER_LOAD_LIST;
+  payload: { items: CareerModel[] };
 }
+
+export type AppActionTypes = IAppLoading | ILoadBlogList | ILoadCareerList;
+
+export type BlogActionsType = ILoadBlogList;
+
+export type CareerActionsType = ILoadCareerList;

@@ -1,55 +1,64 @@
 import React, { ReactNode } from 'react';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 import * as actions from 'src/actions';
+import { APP_LOADING, CAREER_LOAD_LIST } from 'src/actions';
 import { BLANK, REL } from 'src/const';
 import { AbstractDataContainer } from 'src/container';
-import { IAppLoading } from 'src/interface/Actions';
-import { ICareer, ICareerItems } from 'src/interface/ICareer';
-import { IDataProps } from 'src/interface/IData';
-import { ISource } from 'src/interface/ISource';
-import IState from 'src/interface/IState';
-import { createSource } from 'src/model';
-import { DateUtil } from 'src/utils';
+import { IAppLoading, ICareerRawData, IDataProps, ILoadCareerList, IState, Source } from 'src/interface';
+import { CareerModel, createSource } from 'src/model';
+import { careerItemsSelector } from 'src/selectors';
 import styles from './Career.module.scss';
 
-interface IProps<TData> extends IDataProps<TData>, IAppLoading {
-  careerLoadList: (payload: { items: TData[] }) => void;
+interface IDispatchProps {
+  appLoading: typeof actions.appLoading;
+  careerLoadList: typeof actions.careerLoadList;
 }
 
-const itemsSelector = createSelector(
-  ({ career }: IState) => career,
-  (career: { items: ICareerItems }) => Object.values(career.items)
-);
+type Props = IDataProps<CareerModel> & IDispatchProps;
 
-const mapStateToProps = (state: IState): IDataProps<ICareer> => ({ items: itemsSelector(state) });
+const mapStateToProps = (state: IState): IDataProps<CareerModel> => ({ items: careerItemsSelector(state) });
 
-const actionCreators = {
-  appLoading: actions.appLoading,
-  careerLoadList: actions.careerLoadList,
+const mapDispatch: IDispatchProps = {
+  appLoading: (loading: boolean): IAppLoading => ({
+    type: APP_LOADING,
+    payload: { loading },
+  }),
+  careerLoadList: (items: CareerModel[]): ILoadCareerList => ({
+    type: CAREER_LOAD_LIST,
+    payload: { items },
+  }),
 };
+
+const createModel = ({ id, title, description, post, site, tools, startDate, endDate }: ICareerRawData): CareerModel =>
+  // prettier-ignore
+  CareerModel.create()
+    .description(description)
+    .post(post)
+    .site(site)
+    .tools(tools)
+    .startDate(startDate)
+    .endDate(endDate)
+    .title(title)
+    .id(id)
+    .build();
 
 /**
  * Career page
  */
-class Career extends AbstractDataContainer<ICareer, IProps<ICareer>> {
-  private readonly source: ISource;
+class Career extends AbstractDataContainer<CareerModel, Props> {
+  private readonly source: Source;
 
-  constructor(props: IProps<ICareer>) {
+  constructor(props: Props) {
     super(props);
     const { appLoading, careerLoadList } = props;
-    this.source = createSource<ICareer>()
+    this.source = createSource<ICareerRawData>()
       .endpoint('career')
-      .beforeLoad(() => {
-        appLoading({ loading: true });
-      })
-      .afterLoad((data: ICareer[]) => {
-        careerLoadList({ items: data });
-      })
+      .beforeLoad(() => appLoading(true))
+      .afterLoad((data: ICareerRawData[]) => careerLoadList(data.map(createModel)))
       .build();
   }
 
-  protected getSource = (): ISource => this.source;
+  protected getSource = (): Source => this.source;
 
   private prepareTitle = (site: string, title: string): ReactNode => {
     const header = <h3>{title}</h3>;
@@ -65,19 +74,22 @@ class Career extends AbstractDataContainer<ICareer, IProps<ICareer>> {
   /**
    * Career items markup
    */
-  protected getContent = (careerList: ICareer[]): ReactNode => {
-    return careerList.map(({ id, site, title, startDate, endDate, post, description, tools }: ICareer) => (
-      <div key={id} className={styles.item}>
-        {this.prepareTitle(site, title)}
-        <div className={styles.dates}>{DateUtil.prepareDates(startDate, endDate)}</div>
-        <div>Post:&nbsp;{post}</div>
-        <div>{description}</div>
-        <div className='flexBox flexColumn'>
-          <div>Tools:&nbsp;{tools}</div>
+  protected getContent = (careerList: CareerModel[]): ReactNode => {
+    return careerList.map((item: CareerModel) => {
+      const { id, site, title, post, description, tools } = item;
+      return (
+        <div key={id} className={styles.item}>
+          {this.prepareTitle(site, title)}
+          <div className={styles.dates}>{item.formatDates()}</div>
+          <div>Post:&nbsp;{post}</div>
+          <div>{description}</div>
+          <div className='flexBox flexColumn'>
+            <div>Tools:&nbsp;{tools}</div>
+          </div>
         </div>
-      </div>
-    ));
+      );
+    });
   };
 }
 
-export default connect(mapStateToProps, actionCreators)(Career);
+export default connect<IDataProps<CareerModel>, IDispatchProps, {}, IState>(mapStateToProps, mapDispatch)(Career);

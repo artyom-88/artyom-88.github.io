@@ -1,7 +1,7 @@
 /**
  * Data source interface
  */
-export interface ISource {
+export interface Source {
   /**
    * Load all data items
    */
@@ -21,5 +21,5 @@ export interface ISourceBuilder<TPage> {
 
   afterLoad(value: (data: TPage[]) => void): ISourceBuilder<TPage>;
 
-  build(): ISource;
+  build(): Source;
 }

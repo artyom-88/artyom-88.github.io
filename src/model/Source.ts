@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { ISource, ISourceBuilder } from 'src/interface/ISource';
+import { ISourceBuilder, Source } from 'src/interface';
 
 const API_URL = 'https://shielded-brushlands-46595.herokuapp.com';
 const REQUEST_CONFIG = { headers: { 'x-requested-with': 'xhr' } } as const;
@@ -7,7 +7,7 @@ const REQUEST_CONFIG = { headers: { 'x-requested-with': 'xhr' } } as const;
 /**
  * Data source implementation
  */
-const buildSource = <TPage>(endpoint: string, beforeLoad: () => void, afterLoad: (data: TPage[]) => void): ISource => {
+const buildSource = <TPage>(endpoint: string, beforeLoad: () => void, afterLoad: (data: TPage[]) => void): Source => {
   return {
     /**
      * Load all data items
@@ -58,7 +58,7 @@ const create = <TPage>(): ISourceBuilder<TPage> => {
       after = value;
       return this;
     },
-    build(): ISource {
+    build(): Source {
       return buildSource<TPage>(end, before, after);
     },
   };

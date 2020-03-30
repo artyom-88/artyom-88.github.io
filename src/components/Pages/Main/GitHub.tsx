@@ -55,9 +55,9 @@ const contributionEffectWrapper = (
 const extractSvg = (contribution: string): void => {
   const wrapper = document.createElement('div');
   wrapper.innerHTML = contribution;
-  const svg = wrapper.querySelector<HTMLDivElement>('svg.js-calendar-graph-svg');
+  const svgContainer = wrapper.querySelector<HTMLDivElement>('.js-calendar-graph');
   if (svgRef.current) {
-    svgRef.current.innerHTML = svg ? svg.outerHTML : '';
+    svgRef.current.innerHTML = svgContainer ? svgContainer.innerHTML : '';
   }
 };
 

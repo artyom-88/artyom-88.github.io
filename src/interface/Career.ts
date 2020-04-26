@@ -3,7 +3,7 @@ import { CareerModel } from 'src/model';
 export interface ICareerRawData {
   description: string;
   endDate: Date;
-  id: string;
+  _id: string;
   post: string;
   site: string;
   startDate: Date;

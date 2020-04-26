@@ -16,8 +16,7 @@ interface IDispatchProps {
 
 type Props = IDataProps<BlogModel> & IDispatchProps;
 
-const DATE_COMPARATOR = (item1: BlogModel, item2: BlogModel): number => (item1.date.isBefore(item2.date) ? 1 : -1);
-
+// TODO: replace with redux-saga and useSelector hook
 const mapStateToProps = (state: IState): IDataProps<BlogModel> => ({ items: blogItemsSelector(state) });
 
 const mapDispatch: IDispatchProps = {
@@ -31,16 +30,14 @@ const mapDispatch: IDispatchProps = {
   }),
 };
 
-const createModel = ({ id, day, month, year, link, linkCaption, title }: IRawBlogData): BlogModel =>
+const createModel = ({ _id, date, link, linkCaption, title }: IRawBlogData): BlogModel =>
   // prettier-ignore
   BlogModel.create()
-    .year(year)
-    .month(month)
-    .day(day)
+    .date(date)
     .link(link)
     .linkCaption(linkCaption)
     .title(title)
-    .id(id)
+    .id(_id)
     .build();
 
 /**
@@ -62,7 +59,7 @@ class Blog extends AbstractDataContainer<BlogModel, Props> {
   protected getSource = (): Source => this.source;
 
   protected getContent = (blogList: BlogModel[]): ReactNode[] =>
-    blogList.sort(DATE_COMPARATOR).map((item: BlogModel) => {
+    blogList.map((item: BlogModel) => {
       const { id, title, link, linkCaption } = item;
       return (
         <div key={id} className={styles.itemContainer}>

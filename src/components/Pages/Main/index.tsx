@@ -7,7 +7,7 @@ import GitHub from './GitHub';
 import styles from './Main.module.scss';
 
 const LINKS = {
-  Back: 'https://github.com/Artyom-Ganev/artyom-ganev-server',
+  Back: 'https://github.com/Artyom-Ganev/artyom-ganev-node',
   Front: 'https://github.com/Artyom-Ganev/artyom-ganev-site',
   Rybinsk: 'https://en.wikipedia.org/wiki/Rybinsk',
 };
@@ -28,7 +28,7 @@ const CONTENT = (
       still working on it.
     </div>
     <div className={styles.contentBlock}>
-      Frontend of this site is based on React, Redux, TypeScript and Sass, the sources of this part are located on
+      Front-end of this site is based on React, Redux, TypeScript and Sass, the sources of this part are located on
       GitHub&nbsp;
       <a href={LINKS.Front} target={BLANK} rel={REL}>
         here
@@ -36,7 +36,7 @@ const CONTENT = (
       .
     </div>
     <div className={styles.contentBlock}>
-      Backend uses Spring Boot, Maven, Heroku and PostgreSQL and is located&nbsp;
+      Back-end uses Nest.js, Mongo DB, Heroku and is located&nbsp;
       <a href={LINKS.Back} target={BLANK} rel={REL}>
         here
       </a>

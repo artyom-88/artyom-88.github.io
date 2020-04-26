@@ -9,7 +9,7 @@
 * *npm run build* - create an optimized production build before deploy to the site
 * *npm run test* - run tests  
 - - - -
-Backend sources of https://artyom-ganev.github.io/ site are here https://github.com/Artyom-Ganev/artyom-ganev-server
+Backend sources of https://artyom-ganev.github.io/ site are here https://github.com/Artyom-Ganev/artyom-ganev-node
 - - - -
 **Made with:**
 * [axios](https://github.com/axios/axios/)

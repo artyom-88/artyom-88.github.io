@@ -1,11 +1,9 @@
 import { BlogModel } from 'src/model';
 
 export interface IRawBlogData {
-  id: string;
+  _id: string;
   title: string;
-  year: number;
-  month: number;
-  day: number;
+  date: string;
   link: string;
   linkCaption: string;
 }

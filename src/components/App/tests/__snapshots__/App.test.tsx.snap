@@ -96,7 +96,7 @@ exports[`App 1`] = `
         <div
           className="contentBlock"
         >
-          Frontend of this site is based on React, Redux, TypeScript and Sass, the sources of this part are located on GitHub 
+          Front-end of this site is based on React, Redux, TypeScript and Sass, the sources of this part are located on GitHub 
           <a
             href="https://github.com/Artyom-Ganev/artyom-ganev-site"
             rel="noopener noreferrer"
@@ -109,9 +109,9 @@ exports[`App 1`] = `
         <div
           className="contentBlock"
         >
-          Backend uses Spring Boot, Maven, Heroku and PostgreSQL and is located 
+          Back-end uses Nest.js, Mongo DB, Heroku and is located 
           <a
-            href="https://github.com/Artyom-Ganev/artyom-ganev-server"
+            href="https://github.com/Artyom-Ganev/artyom-ganev-node"
             rel="noopener noreferrer"
             target="_blank"
           >

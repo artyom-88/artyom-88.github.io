@@ -29,7 +29,7 @@ const mapDispatch: IDispatchProps = {
   }),
 };
 
-const createModel = ({ id, title, description, post, site, tools, startDate, endDate }: ICareerRawData): CareerModel =>
+const createModel = ({ _id, title, description, post, site, tools, startDate, endDate }: ICareerRawData): CareerModel =>
   // prettier-ignore
   CareerModel.create()
     .description(description)
@@ -39,7 +39,7 @@ const createModel = ({ id, title, description, post, site, tools, startDate, end
     .startDate(startDate)
     .endDate(endDate)
     .title(title)
-    .id(id)
+    .id(_id)
     .build();
 
 /**

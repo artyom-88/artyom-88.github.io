@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { ISourceBuilder, Source } from 'src/interface';
 
-const API_URL = 'https://shielded-brushlands-46595.herokuapp.com';
+const API_URL = 'https://artyom-ganev-node.herokuapp.com/api';
 const REQUEST_CONFIG = { headers: { 'x-requested-with': 'xhr' } } as const;
 
 /**

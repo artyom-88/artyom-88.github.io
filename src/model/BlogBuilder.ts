@@ -1,26 +1,14 @@
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { BlogModel } from 'src/model';
 import AbstractBuilder from './AbstractBuilder';
 
 class BlogBuilder extends AbstractBuilder<BlogModel> {
-  private _year = 0;
-  private _month = 0;
-  private _day = 0;
   private _link = '';
   private _linkCaption = '';
+  private _date: Moment = moment();
 
-  year(year: number): BlogBuilder {
-    this._year = year;
-    return this;
-  }
-
-  month(month: number): BlogBuilder {
-    this._month = month;
-    return this;
-  }
-
-  day(day: number): BlogBuilder {
-    this._day = day;
+  date(date: string): BlogBuilder {
+    this._date = moment.utc(date, 'YYYY-MM-DD');
     return this;
   }
 
@@ -35,8 +23,7 @@ class BlogBuilder extends AbstractBuilder<BlogModel> {
   }
 
   build(): BlogModel {
-    const date = moment.utc(`${this._year}-${this._month}-${this._day}`, 'YYYY-MM-DD');
-    return new BlogModel(this._id, this._title, date, this._link, this._linkCaption);
+    return new BlogModel(this._id, this._title, this._date, this._link, this._linkCaption);
   }
 }
 

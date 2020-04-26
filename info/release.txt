@@ -1,3 +1,4 @@
+2020-04-26: Migrate to new back-end API.
 2020-03-30: Add GitHub contribution chart and moment.js, total refactoring, remove redux-actions.
 2020-02-03: Add Redux reselect library && Fix IE11 Object.values support
 2020-01-31: Add Redux store to application

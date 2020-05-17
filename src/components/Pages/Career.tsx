@@ -19,7 +19,7 @@ const prepareTitle = (site: string, title: string): ReactNode => {
   );
 };
 
-const Career: FunctionComponent = () => {
+const useCareerItems = (): CareerModel[] => {
   const items = useSelector<IState, CareerModel[]>(getCareerListItems, shallowEqual);
   const dispatch = useDispatch();
 
@@ -27,6 +27,11 @@ const Career: FunctionComponent = () => {
     dispatch(careerLoadList());
   }, [dispatch]);
 
+  return items;
+};
+
+const Career: FunctionComponent = () => {
+  const items: CareerModel[] = useCareerItems();
   return (
     <PageContainer>
       {items.map((item: CareerModel) => {

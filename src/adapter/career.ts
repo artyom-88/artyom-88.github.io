@@ -1,16 +1,8 @@
 import { CareerModel } from 'src/model';
 import { ICareerRawData } from 'src/types';
 
-export const careerModelAdapter = ({
-  _id,
-  title,
-  description,
-  post,
-  site,
-  tools,
-  startDate,
-  endDate,
-}: ICareerRawData): CareerModel => {
+export const careerModelAdapter = (data: ICareerRawData): CareerModel => {
+  const { _id, title, description, post, site, tools, startDate, endDate } = data;
   // prettier-ignore
   return CareerModel.create()
     .description(description)

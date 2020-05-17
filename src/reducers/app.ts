@@ -22,21 +22,13 @@ const app = (state: IAppState = initialState, action: AppActionTypes): IAppState
       const { loading } = action;
       return { ...state, loading };
     }
-    case BLOG_LOAD_LIST: {
-      return { ...state, loading: true };
-    }
-    case BLOG_LOAD_LIST_SUCCESS: {
-      return { ...state, loading: false };
-    }
-    case BLOG_LOAD_LIST_ERROR: {
-      return { ...state, loading: false };
-    }
+    case BLOG_LOAD_LIST:
     case CAREER_LOAD_LIST: {
       return { ...state, loading: true };
     }
-    case CAREER_LOAD_LIST_SUCCESS: {
-      return { ...state, loading: false };
-    }
+    case BLOG_LOAD_LIST_SUCCESS:
+    case BLOG_LOAD_LIST_ERROR:
+    case CAREER_LOAD_LIST_SUCCESS:
     case CAREER_LOAD_LIST_ERROR: {
       return { ...state, loading: false };
     }

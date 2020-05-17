@@ -8,7 +8,7 @@ import { getBlogListItems } from 'src/selectors';
 import { IState } from 'src/types';
 import styles from './Blog.module.scss';
 
-const Blog: FunctionComponent = () => {
+const useBlogItems = (): BlogModel[] => {
   const items = useSelector<IState, BlogModel[]>(getBlogListItems, shallowEqual);
   const dispatch = useDispatch();
 
@@ -16,6 +16,11 @@ const Blog: FunctionComponent = () => {
     dispatch(blogLoadList());
   }, [dispatch]);
 
+  return items;
+};
+
+const Blog: FunctionComponent = () => {
+  const items: BlogModel[] = useBlogItems();
   return (
     <PageContainer>
       {items.map((item: BlogModel) => {

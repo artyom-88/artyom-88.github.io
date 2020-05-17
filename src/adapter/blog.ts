@@ -1,7 +1,8 @@
 import { BlogModel } from 'src/model';
 import { IBlogRawData } from 'src/types';
 
-export const blogModelAdapter = ({ _id, date, link, linkCaption, title }: IBlogRawData): BlogModel => {
+export const blogModelAdapter = (data: IBlogRawData): BlogModel => {
+  const { _id, date, link, linkCaption, title } = data;
   // prettier-ignore
   return BlogModel.create()
     .date(date)

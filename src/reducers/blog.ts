@@ -1,9 +1,10 @@
-import { BLOG_LOAD_LIST } from 'src/actions';
-import { BlogActionsType, IBlogState } from 'src/interface';
+import { BLOG_LOAD_LIST_ERROR, BLOG_LOAD_LIST_SUCCESS } from 'src/actions';
+import { BlogActionsType, IBlogState, ILoadBlogListSuccessAction } from 'src/types';
 
 const initialState: IBlogState = {
-  items: {},
+  items: [],
   detail: {},
+  error: '',
 };
 
 /**
@@ -11,13 +12,13 @@ const initialState: IBlogState = {
  */
 const blog = (state: IBlogState = initialState, action: BlogActionsType): IBlogState => {
   switch (action.type) {
-    case BLOG_LOAD_LIST: {
-      const { payload } = action;
-      const items = state.items;
-      payload.items.forEach((item) => {
-        items[item.id] = item;
-      });
+    case BLOG_LOAD_LIST_SUCCESS: {
+      const { items } = action as ILoadBlogListSuccessAction;
       return { ...state, items };
+    }
+    case BLOG_LOAD_LIST_ERROR: {
+      const { error } = action;
+      return { ...state, error };
     }
     default: {
       return state;

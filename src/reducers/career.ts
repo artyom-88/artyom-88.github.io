@@ -1,23 +1,21 @@
-import { CAREER_LOAD_LIST } from 'src/actions';
-import { CareerActionsType, ICareerState } from 'src/interface';
+import { CAREER_LOAD_LIST_ERROR, CAREER_LOAD_LIST_SUCCESS } from 'src/actions';
+import { CareerActionsType, ICareerState, ILoadCareerListSuccessAction } from 'src/types';
 
 const initialState: ICareerState = {
-  items: {},
+  items: [],
   detail: {},
+  error: '',
 };
 
-/**
- * Career actions reducer
- */
 const career = (state: ICareerState = initialState, action: CareerActionsType): ICareerState => {
   switch (action.type) {
-    case CAREER_LOAD_LIST: {
-      const { payload } = action;
-      const items = state.items;
-      payload.items.forEach((item) => {
-        items[item.id] = item;
-      });
+    case CAREER_LOAD_LIST_SUCCESS: {
+      const { items } = action as ILoadCareerListSuccessAction;
       return { ...state, items };
+    }
+    case CAREER_LOAD_LIST_ERROR: {
+      const { error } = action;
+      return { ...state, error };
     }
     default: {
       return state;

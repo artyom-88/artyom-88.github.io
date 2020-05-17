@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadingIndicator Should match snapshot 1`] = `
+<div
+  className="flexBox flexGrow-1 flexShrink-1 justifyContentCenter"
+>
+  <div
+    className="container"
+  />
+</div>
+`;

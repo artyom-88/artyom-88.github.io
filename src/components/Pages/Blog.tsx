@@ -1,78 +1,44 @@
-import React, { ReactNode } from 'react';
-import { connect } from 'react-redux';
-import * as actions from 'src/actions';
-import { APP_LOADING, BLOG_LOAD_LIST } from 'src/actions';
+import React, { FunctionComponent, useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { blogLoadList } from 'src/actions';
 import { BLANK, REL } from 'src/const';
-import { AbstractDataContainer } from 'src/container';
-import { IAppLoading, IDataProps, ILoadBlogList, IRawBlogData, IState, Source } from 'src/interface';
-import { BlogModel, createSource } from 'src/model';
-import { blogItemsSelector } from 'src/selectors';
+import { PageContainer } from 'src/container';
+import { BlogModel } from 'src/model';
+import { getBlogListItems } from 'src/selectors';
+import { IState } from 'src/types';
 import styles from './Blog.module.scss';
 
-interface IDispatchProps {
-  appLoading: typeof actions.appLoading;
-  blogLoadList: typeof actions.blogLoadList;
-}
+const useBlogItems = (): BlogModel[] => {
+  const items = useSelector<IState, BlogModel[]>(getBlogListItems, shallowEqual);
+  const dispatch = useDispatch();
 
-type Props = IDataProps<BlogModel> & IDispatchProps;
+  useEffect(() => {
+    dispatch(blogLoadList());
+  }, [dispatch]);
 
-// TODO: replace with redux-saga and useSelector hook
-const mapStateToProps = (state: IState): IDataProps<BlogModel> => ({ items: blogItemsSelector(state) });
-
-const mapDispatch: IDispatchProps = {
-  appLoading: (loading: boolean): IAppLoading => ({
-    type: APP_LOADING,
-    payload: { loading },
-  }),
-  blogLoadList: (items: BlogModel[]): ILoadBlogList => ({
-    type: BLOG_LOAD_LIST,
-    payload: { items },
-  }),
+  return items;
 };
 
-const createModel = ({ _id, date, link, linkCaption, title }: IRawBlogData): BlogModel =>
-  // prettier-ignore
-  BlogModel.create()
-    .date(date)
-    .link(link)
-    .linkCaption(linkCaption)
-    .title(title)
-    .id(_id)
-    .build();
+const Blog: FunctionComponent = () => {
+  const items: BlogModel[] = useBlogItems();
+  return (
+    <PageContainer>
+      {items.map((item: BlogModel) => {
+        const { id, title, link, linkCaption } = item;
+        return (
+          <div key={id} className={styles.itemContainer}>
+            <div className={styles.title}>{item.formatDate()}</div>
+            <div className={styles.item}>{title}</div>
+            {link && (
+              <a href={link} target={BLANK} rel={REL} title='Click for details'>
+                {linkCaption}
+              </a>
+            )}
+          </div>
+        );
+      })}
+    </PageContainer>
+  );
+};
 
-/**
- * Blog page
- */
-class Blog extends AbstractDataContainer<BlogModel, Props> {
-  private readonly source: Source;
-
-  constructor(props: Props) {
-    super(props);
-    const { appLoading, blogLoadList } = props;
-    this.source = createSource<IRawBlogData>()
-      .endpoint('blog')
-      .beforeLoad(() => appLoading(true))
-      .afterLoad((data: IRawBlogData[]) => blogLoadList(data.map(createModel)))
-      .build();
-  }
-
-  protected getSource = (): Source => this.source;
-
-  protected getContent = (blogList: BlogModel[]): ReactNode[] =>
-    blogList.map((item: BlogModel) => {
-      const { id, title, link, linkCaption } = item;
-      return (
-        <div key={id} className={styles.itemContainer}>
-          <div className={styles.title}>{item.formatDate()}</div>
-          <div className={styles.item}>{title}</div>
-          {link && (
-            <a href={link} target={BLANK} rel={REL} title='Click for details'>
-              {linkCaption}
-            </a>
-          )}
-        </div>
-      );
-    });
-}
-
-export default connect<IDataProps<BlogModel>, IDispatchProps, {}, IState>(mapStateToProps, mapDispatch)(Blog);
+export default Blog;

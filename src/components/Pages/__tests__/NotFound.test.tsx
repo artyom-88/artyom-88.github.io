@@ -1,9 +1,8 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Link, Router } from 'react-router-dom';
+import { HashRouter, Link } from 'react-router-dom';
 import { combineReducers, createStore } from 'redux';
-import { history } from 'src/components/App';
 import NotFound from 'src/components/Pages/NotFound';
 import { PageContainer } from 'src/container';
 import { IAppState } from 'src/types';
@@ -15,9 +14,9 @@ describe('NotFound', () => {
 
   const component = mount(
     <Provider store={store}>
-      <Router history={history}>
+      <HashRouter>
         <NotFound />
-      </Router>
+      </HashRouter>
     </Provider>
   );
 

@@ -1,6 +1,5 @@
-import { createBrowserHistory } from 'history';
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Router } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Content, Footer, Header } from 'src/components/Layout';
 
 /**
@@ -23,13 +22,11 @@ const useResize = (): boolean => {
 
 export const NarrowContext = React.createContext(isNarrow());
 
-export const history = createBrowserHistory();
-
 /**
  * Main application component
  */
 const App: FunctionComponent = () => (
-  <Router history={history}>
+  <HashRouter>
     <div className='flexBox flexColumn'>
       <Header />
       <NarrowContext.Provider value={useResize()}>
@@ -37,7 +34,7 @@ const App: FunctionComponent = () => (
       </NarrowContext.Provider>
       <Footer />
     </div>
-  </Router>
+  </HashRouter>
 );
 
 export default App;

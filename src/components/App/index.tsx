@@ -1,6 +1,7 @@
+import { createBrowserHistory } from 'history';
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { HashRouter } from 'react-router-dom';
-import { Content, Header, Footer } from 'src/components/Layout';
+import { Router } from 'react-router-dom';
+import { Content, Footer, Header } from 'src/components/Layout';
 
 /**
  * Check if the page is narrow
@@ -22,11 +23,13 @@ const useResize = (): boolean => {
 
 export const NarrowContext = React.createContext(isNarrow());
 
+export const history = createBrowserHistory();
+
 /**
  * Main application component
  */
 const App: FunctionComponent = () => (
-  <HashRouter>
+  <Router history={history}>
     <div className='flexBox flexColumn'>
       <Header />
       <NarrowContext.Provider value={useResize()}>
@@ -34,7 +37,7 @@ const App: FunctionComponent = () => (
       </NarrowContext.Provider>
       <Footer />
     </div>
-  </HashRouter>
+  </Router>
 );
 
 export default App;

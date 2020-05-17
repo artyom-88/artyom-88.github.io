@@ -1,9 +1,9 @@
-import React, { FunctionComponent, ReactNode, useContext } from 'react';
-import { connect } from 'react-redux';
-import * as actions from 'src/actions';
+import React, { FunctionComponent, PropsWithChildren, useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { NarrowContext } from 'src/components';
 import { LoadingIndicator } from 'src/components/Navigation';
-import { IAppState, IState } from 'src/interface';
+import { isLoading } from 'src/selectors';
+import { IState } from 'src/types';
 import styles from './Container.module.scss';
 
 /**
@@ -11,21 +11,16 @@ import styles from './Container.module.scss';
  */
 interface IProperties {
   title?: string;
-  children?: ReactNode | ReactNode[];
-  loading?: boolean;
 }
-
-const mapStateToProps = ({ app: { loading } }: IState): IAppState => ({ loading });
-
-const actionCreators = {
-  appLoading: actions.appLoading,
-};
 
 /**
  * Page container with title
  */
-const Container: FunctionComponent = (props: IProperties) => {
-  const { children, loading, title } = props;
+const Container: FunctionComponent<PropsWithChildren<IProperties>> = ({
+  children,
+  title,
+}: PropsWithChildren<IProperties>) => {
+  const loading = useSelector<IState, boolean>(isLoading);
   const narrow = useContext(NarrowContext);
   const contentClass = `flexBox flexColumn ${styles.container} ${narrow ? styles.narrow : styles.wide}`;
   return loading ? (
@@ -40,4 +35,4 @@ const Container: FunctionComponent = (props: IProperties) => {
   );
 };
 
-export default connect<IAppState, {}, IProperties, IState>(mapStateToProps, actionCreators)(Container);
+export default Container;

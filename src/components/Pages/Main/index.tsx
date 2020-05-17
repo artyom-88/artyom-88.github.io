@@ -1,9 +1,7 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FunctionComponent } from 'react';
 import { artyom } from 'src/assets';
-import { NarrowContext } from 'src/components';
 import { BLANK, REL } from 'src/const';
 import { PageContainer } from 'src/container';
-import GitHub from './GitHub';
 import styles from './Main.module.scss';
 
 const LINKS = {
@@ -48,14 +46,6 @@ const CONTENT = (
 /**
  * Main page component
  */
-const Main: FunctionComponent = () => {
-  const narrow = useContext(NarrowContext);
-  return (
-    <PageContainer>
-      {CONTENT}
-      {!narrow && <GitHub />}
-    </PageContainer>
-  );
-};
+const Main: FunctionComponent = () => <PageContainer>{CONTENT}</PageContainer>;
 
 export default Main;

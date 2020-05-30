@@ -17,14 +17,10 @@ jobs:
         name: Install dependencies
         with:
           cmd: install --frozen-lockfile
-          env:
-            CI: true
       - uses: borales/actions-yarn@v2.0.0
         name: Run tests
         with:
-          cmd: test
-          env:
-            CI: true
+          cmd: testCI
       - uses: borales/actions-yarn@v2.0.0
         name: Run build
         with:

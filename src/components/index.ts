@@ -1,1 +1,1 @@
-export { default as App, NarrowContext } from './App';
+export { default as App } from './App';

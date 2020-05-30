@@ -1,13 +1,15 @@
+import AppBar from '@material-ui/core/AppBar';
 import React, { FunctionComponent } from 'react';
-import { Menu } from 'src/components/Navigation';
+import { NavigationMenu } from 'src/components/Navigation';
+import { IClassName } from 'src/components/types';
 
 /**
  * Header component
  */
-const Header: FunctionComponent = () => (
-  <header className='flexBox'>
-    <Menu />
-  </header>
+const Header: FunctionComponent<IClassName> = ({ className = '' }: IClassName) => (
+  <AppBar className={className}>
+    <NavigationMenu />
+  </AppBar>
 );
 
 export default Header;

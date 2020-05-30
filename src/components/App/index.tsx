@@ -1,40 +1,29 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
+import React, { FunctionComponent } from 'react';
 import { HashRouter } from 'react-router-dom';
-import { Content, Footer, Header } from 'src/components/Layout';
-
-/**
- * Check if the page is narrow
- */
-const isNarrow = (): boolean => window.innerWidth <= 800;
-
-/**
- * Resize hook
- */
-const useResize = (): boolean => {
-  const [narrow, setNarrow] = useState<boolean>(isNarrow());
-  useEffect(() => {
-    const onResize = (): void => setNarrow(isNarrow());
-    window.addEventListener('resize', onResize);
-    return (): void => window.removeEventListener('resize', onResize);
-  });
-  return narrow;
-};
-
-export const NarrowContext = React.createContext(isNarrow());
+import { Footer, Header } from 'src/components/Layout';
+import { Routes } from 'src/components/Navigation';
+import useStyles from './styles';
 
 /**
  * Main application component
  */
-const App: FunctionComponent = () => (
-  <HashRouter>
-    <div className='flexBox flexColumn'>
-      <Header />
-      <NarrowContext.Provider value={useResize()}>
-        <Content />
-      </NarrowContext.Provider>
-      <Footer />
-    </div>
-  </HashRouter>
-);
+const App: FunctionComponent = () => {
+  const classes = useStyles();
+  return (
+    <Box className={classes.app} display='flex' flexDirection='column'>
+      <Container className={classes.appContainer}>
+        <HashRouter>
+          <Header className={classes.appHeader} />
+          <div className={classes.appContent}>
+            <Routes />
+          </div>
+          <Footer className={classes.appFooter} />
+        </HashRouter>
+      </Container>
+    </Box>
+  );
+};
 
 export default App;

@@ -1,3 +1,4 @@
+2020-05-30: Migrate Front-end project to Yarn, add tests.
 2020-05-17: Add Redux Saga and Enzyme.
 2020-04-26: Migrate to new back-end API.
 2020-03-30: Add GitHub contribution chart and moment.js, total refactoring, remove redux-actions.

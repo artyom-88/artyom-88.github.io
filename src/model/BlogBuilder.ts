@@ -3,9 +3,9 @@ import { BlogModel } from 'src/model';
 import AbstractBuilder from './AbstractBuilder';
 
 class BlogBuilder extends AbstractBuilder<BlogModel> {
+  private _date: Moment = moment();
   private _link = '';
   private _linkCaption = '';
-  private _date: Moment = moment();
 
   date(date: string): BlogBuilder {
     this._date = moment.utc(date, 'YYYY-MM-DD');

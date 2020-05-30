@@ -3,10 +3,10 @@ import { IErrorState } from 'src/types';
 
 export interface IBlogRawData {
   _id: string;
-  title: string;
   date: string;
   link: string;
   linkCaption: string;
+  title: string;
 }
 
 export interface IBlogDetail {

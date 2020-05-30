@@ -1,22 +1,27 @@
-import moment from 'moment';
+import moment, { utc } from 'moment';
 import { CareerModel } from 'src/model';
 import AbstractBuilder from './AbstractBuilder';
 
 class CareerBuilder extends AbstractBuilder<CareerModel> {
   private _description = '';
+  private _endDate = moment();
   private _post = '';
   private _site = '';
-  private _tools = '';
   private _startDate = moment();
-  private _endDate = moment();
-
-  post(post: string): CareerBuilder {
-    this._post = post;
-    return this;
-  }
+  private _tools = '';
 
   description(description: string): CareerBuilder {
     this._description = description;
+    return this;
+  }
+
+  endDate(endDate: string | null): CareerBuilder {
+    this._endDate = utc(endDate);
+    return this;
+  }
+
+  post(post: string): CareerBuilder {
+    this._post = post;
     return this;
   }
 
@@ -25,18 +30,13 @@ class CareerBuilder extends AbstractBuilder<CareerModel> {
     return this;
   }
 
+  startDate(startDate: string): CareerBuilder {
+    this._startDate = utc(startDate);
+    return this;
+  }
+
   tools(tools: string): CareerBuilder {
     this._tools = tools;
-    return this;
-  }
-
-  startDate(startDate: Date): CareerBuilder {
-    this._startDate = moment.utc(startDate);
-    return this;
-  }
-
-  endDate(endDate: Date): CareerBuilder {
-    this._endDate = moment.utc(endDate);
     return this;
   }
 

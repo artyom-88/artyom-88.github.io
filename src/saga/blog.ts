@@ -5,11 +5,11 @@ import { blogListAdapter } from 'src/adapter/blog';
 import { loadBlogList as loadBlogListApi } from 'src/api/blog';
 import { IBlogRawData } from 'src/types';
 
-function* loadBlogList(): Generator<PutEffect | CallEffect> {
+export function* loadBlogList(): Generator<PutEffect | CallEffect> {
   try {
     const response = yield call(loadBlogListApi);
     const { data } = response as AxiosResponse<IBlogRawData[]>;
-    const items = blogListAdapter(data);
+    const items = yield call(blogListAdapter, data);
     yield put(blogLoadListSuccess(items));
   } catch (e) {
     const { message } = e;

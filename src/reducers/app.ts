@@ -7,9 +7,9 @@ import {
   CAREER_LOAD_LIST_ERROR,
   CAREER_LOAD_LIST_SUCCESS,
 } from 'src/actions';
-import { AppActionTypes, IAppState } from 'src/types';
+import { AppActionTypes, IAppLoadingAction, IAppState } from 'src/types';
 
-const initialState: IAppState = {
+export const initialState: IAppState = {
   loading: false,
 };
 
@@ -19,7 +19,7 @@ const initialState: IAppState = {
 const app = (state: IAppState = initialState, action: AppActionTypes): IAppState => {
   switch (action.type) {
     case APP_LOADING: {
-      const { loading } = action;
+      const { loading } = action as IAppLoadingAction;
       return { ...state, loading };
     }
     case BLOG_LOAD_LIST:

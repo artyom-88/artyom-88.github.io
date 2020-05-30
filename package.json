@@ -19,6 +19,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "testCI": "CI=true react-scripts test",
+    "testCoverage": "react-scripts test --coverage",
     "prettier": "prettier -c --write \"src/**/*.ts?\"",
     "lint": "eslint --fix \"src/**/*.ts?\""
   },
@@ -47,7 +48,6 @@
     "@types/react-redux": "7.1.9",
     "@types/redux-actions": "2.6.1",
     "@types/redux-saga": "0.10.5",
-    "@types/reselect": "2.2.0",
     "@typescript-eslint/parser": "3.0.2",
     "@typescript-eslint/eslint-plugin": "3.0.2",
     "enzyme": "3.11.0",
@@ -66,8 +66,13 @@
     "node-sass": "4.14.1",
     "prettier": "2.0.5",
     "react-scripts": "3.4.1",
+    "redux-saga-test-plan": "4.0.0-rc.3",
     "sass": "1.26.7",
     "typescript": "3.9.3"
+  },
+  "resolutions": {
+    "**/**/minimist": "^1.2.2",
+    "**/**/yargs-parser": "^18.1.2"
   },
   "browserslist": {
     "production": [
@@ -86,6 +91,20 @@
     "*.{ts,tsx}": [
       "eslint --fix",
       "prettier --write"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/actions/**/*.{js,jsx,ts,tsx}",
+      "src/adapter/**/*.{js,jsx,ts,tsx}",
+      "src/api/**/*.{js,jsx,ts,tsx}",
+      "src/components/**/*.{js,jsx,ts,tsx}",
+      "src/container/**/*.{js,jsx,ts,tsx}",
+      "src/model/**/*.{js,jsx,ts,tsx}",
+      "src/reducers/**/*.{js,jsx,ts,tsx}",
+      "src/saga/**/*.{js,jsx,ts,tsx}",
+      "src/selectors/**/*.{js,jsx,ts,tsx}",
+      "src/api/**/*.{js,jsx,ts,tsx}"
     ]
   }
 }

@@ -5,11 +5,11 @@ import { careerListAdapter } from 'src/adapter/career';
 import { loadCareerList as loadCareerListApi } from 'src/api/career';
 import { ICareerRawData } from 'src/types';
 
-function* loadCareerList(): Generator<PutEffect | CallEffect> {
+export function* loadCareerList(): Generator<PutEffect | CallEffect> {
   try {
     const response = yield call(loadCareerListApi);
     const { data } = response as AxiosResponse<ICareerRawData[]>;
-    const items = careerListAdapter(data);
+    const items = yield call(careerListAdapter, data);
     yield put(careerLoadListSuccess(items));
   } catch (e) {
     const { message } = e;
@@ -18,7 +18,7 @@ function* loadCareerList(): Generator<PutEffect | CallEffect> {
   }
 }
 
-function* watchActions(): Generator<ForkEffect> {
+export function* watchActions(): Generator<ForkEffect> {
   yield takeEvery(CAREER_LOAD_LIST, loadCareerList);
 }
 

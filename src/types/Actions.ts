@@ -17,8 +17,8 @@ export interface ILoadCareerListSuccessAction extends AnyAction {
   items: CareerModel[];
 }
 
-export type AppActionTypes = IAppLoadingAction | ILoadBlogListSuccessAction | ILoadCareerListSuccessAction;
+export type AppActionTypes = IAppLoadingAction | ILoadBlogListSuccessAction | ILoadCareerListSuccessAction | AnyAction;
 
-export type BlogActionsType = ILoadBlogListSuccessAction | IErrorAction;
+export type BlogActionsType = ILoadBlogListSuccessAction | IErrorAction | AnyAction;
 
-export type CareerActionsType = ILoadCareerListSuccessAction | IErrorAction;
+export type CareerActionsType = ILoadCareerListSuccessAction | IErrorAction | AnyAction;

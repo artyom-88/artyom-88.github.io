@@ -1,10 +1,10 @@
 import { BLOG_LOAD_LIST_ERROR, BLOG_LOAD_LIST_SUCCESS } from 'src/actions';
-import { BlogActionsType, IBlogState, ILoadBlogListSuccessAction } from 'src/types';
+import { BlogActionsType, IBlogState, IErrorAction, ILoadBlogListSuccessAction } from 'src/types';
 
-const initialState: IBlogState = {
-  items: [],
+export const initialState: IBlogState = {
   detail: {},
   error: '',
+  items: [],
 };
 
 /**
@@ -17,7 +17,7 @@ const blog = (state: IBlogState = initialState, action: BlogActionsType): IBlogS
       return { ...state, items };
     }
     case BLOG_LOAD_LIST_ERROR: {
-      const { error } = action;
+      const { error } = action as IErrorAction;
       return { ...state, error };
     }
     default: {

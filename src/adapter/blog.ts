@@ -13,4 +13,4 @@ export const blogModelAdapter = (data: IBlogRawData): BlogModel => {
     .build();
 };
 
-export const blogListAdapter = (items: IBlogRawData[]): BlogModel[] => items.map(blogModelAdapter);
+export const blogListAdapter = (items: readonly IBlogRawData[]): BlogModel[] => items.map(blogModelAdapter);

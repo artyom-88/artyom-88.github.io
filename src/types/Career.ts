@@ -2,12 +2,12 @@ import { CareerModel } from 'src/model';
 import { IErrorState } from 'src/types';
 
 export interface ICareerRawData {
-  description: string;
-  endDate: Date;
   _id: string;
+  description: string;
+  endDate: string | null;
   post: string;
   site: string;
-  startDate: Date;
+  startDate: string;
   title: string;
   tools: string;
 }

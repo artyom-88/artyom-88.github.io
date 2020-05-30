@@ -16,4 +16,4 @@ export const careerModelAdapter = (data: ICareerRawData): CareerModel => {
     .build();
 };
 
-export const careerListAdapter = (items: ICareerRawData[]): CareerModel[] => items.map(careerModelAdapter);
+export const careerListAdapter = (items: readonly ICareerRawData[]): CareerModel[] => items.map(careerModelAdapter);

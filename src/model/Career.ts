@@ -6,11 +6,11 @@ const DATE_FORMAT = 'MMMM YYYY';
 
 class Career extends SimpleModel {
   private _description: string;
+  private _endDate: Moment;
   private _post: string;
   private _site: string;
-  private _tools: string;
   private _startDate: Moment;
-  private _endDate: Moment;
+  private _tools: string;
 
   constructor(
     id: string,
@@ -24,11 +24,11 @@ class Career extends SimpleModel {
   ) {
     super(id, title);
     this._description = description;
+    this._endDate = endDate;
     this._post = post;
     this._site = site;
-    this._tools = tools;
     this._startDate = startDate;
-    this._endDate = endDate;
+    this._tools = tools;
   }
 
   get post(): string {

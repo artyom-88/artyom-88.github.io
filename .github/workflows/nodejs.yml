@@ -13,19 +13,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Install dependencies
       - uses: borales/actions-yarn@v2.0.0
+        name: Install dependencies
         with:
           cmd: install --frozen-lockfile
           env:
             CI: true
-      - name: Run tests
       - uses: borales/actions-yarn@v2.0.0
+        name: Run tests
         with:
           cmd: test
           env:
             CI: true
-      - name: Run build
       - uses: borales/actions-yarn@v2.0.0
+        name: Run build
         with:
           cmd: build

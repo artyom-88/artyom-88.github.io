@@ -2,7 +2,7 @@ import React, { FunctionComponent, ReactNode, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { careerLoadList } from 'src/actions';
 import { PageContainer } from 'src/components/Pages';
-import { BLANK, REL } from 'src/const';
+import { BLANK, CAREER, REL } from 'src/const';
 import { CareerModel } from 'src/model';
 import { getCareerListItems } from 'src/selectors';
 import { IState } from 'src/types';
@@ -33,7 +33,7 @@ const useCareerItems = (): CareerModel[] => {
 const Career: FunctionComponent = () => {
   const items: CareerModel[] = useCareerItems();
   return (
-    <PageContainer title='Career'>
+    <PageContainer title={CAREER.name} Icon={CAREER.Icon}>
       {items.map((item: CareerModel) => {
         const { id, site, title, post, description, tools } = item;
         return (

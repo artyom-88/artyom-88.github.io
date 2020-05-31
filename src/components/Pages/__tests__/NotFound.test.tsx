@@ -1,31 +1,23 @@
-import { mount } from 'enzyme';
+import Typography from '@material-ui/core/Typography';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { HashRouter, Link } from 'react-router-dom';
-import { combineReducers, createStore } from 'redux';
-import { PageContainer } from 'src/components/Pages';
-import NotFound from 'src/components/Pages/NotFound';
-import { IAppState } from 'src/types';
+import { Link } from 'react-router-dom';
+import { NotFound, PageContainer } from 'src/components/Pages';
 
 describe('NotFound', () => {
-  const app = (): IAppState => ({ loading: false });
-
-  const store = createStore(combineReducers({ app }));
-
-  const component = mount(
-    <Provider store={store}>
-      <HashRouter>
-        <NotFound />
-      </HashRouter>
-    </Provider>
-  );
+  const wrapper: ShallowWrapper = shallow(<NotFound />);
 
   it('Should render PageContainer', () => {
-    expect(component.find(PageContainer)).toHaveLength(1);
+    expect(wrapper.find(PageContainer)).toHaveLength(1);
+  });
+
+  it('Should render Typography', () => {
+    expect(wrapper.find(Typography)).toHaveLength(1);
   });
 
   it('Should render Link', () => {
-    const link = component.find(Link);
+    const link = wrapper.find(Link);
     expect(link).toHaveLength(1);
+    expect(link.prop('to')).toEqual('/');
   });
 });

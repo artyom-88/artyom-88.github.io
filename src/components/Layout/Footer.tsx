@@ -2,7 +2,7 @@ import Container from '@material-ui/core/Container';
 import React, { FunctionComponent } from 'react';
 import { IClassName } from 'src/components/types';
 
-export const RIGHTS_TEXT = '© 2019 All rights reserved';
+export const RIGHTS_TEXT = '© 2020 All rights reserved';
 
 /**
  * Footer component

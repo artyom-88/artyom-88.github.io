@@ -1,10 +1,9 @@
 import Typography from '@material-ui/core/Typography';
 import { shallow, ShallowWrapper } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 import { LoadingIndicator } from 'src/components/Navigation';
-import { PageContainer } from 'src/container';
+import { PageContainer } from 'src/components/Pages';
 
 jest.mock('react-redux');
 

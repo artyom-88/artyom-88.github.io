@@ -1,5 +1,11 @@
-import { CAREER_LOAD_LIST_ERROR, CAREER_LOAD_LIST_SUCCESS } from 'src/actions';
-import { CareerActionsType, ICareerState, IErrorAction, ILoadCareerListSuccessAction } from 'src/types';
+import {
+  CAREER_LOAD_LIST_ERROR,
+  CAREER_LOAD_LIST_SUCCESS,
+  CareerActionsType,
+  IErrorAction,
+  ILoadCareerListSuccessAction,
+} from 'src/actions';
+import { ICareerState } from 'src/types';
 
 export const initialState: ICareerState = {
   detail: {},

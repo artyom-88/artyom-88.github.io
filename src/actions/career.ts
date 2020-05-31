@@ -1,6 +1,6 @@
 import { ActionCreator, AnyAction } from 'redux';
+import { IErrorAction, ILoadCareerListSuccessAction } from 'src/actions';
 import { CareerModel } from 'src/model';
-import { IErrorAction, ILoadCareerListSuccessAction } from 'src/types';
 
 export const CAREER_LOAD_LIST = 'CAREER_LOAD_LIST';
 export const CAREER_LOAD_LIST_SUCCESS = `${CAREER_LOAD_LIST}_SUCCESS`;

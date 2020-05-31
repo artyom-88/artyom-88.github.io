@@ -1,5 +1,11 @@
-import { BLOG_LOAD_LIST_ERROR, BLOG_LOAD_LIST_SUCCESS } from 'src/actions';
-import { BlogActionsType, IBlogState, IErrorAction, ILoadBlogListSuccessAction } from 'src/types';
+import {
+  BLOG_LOAD_LIST_ERROR,
+  BLOG_LOAD_LIST_SUCCESS,
+  BlogActionsType,
+  IErrorAction,
+  ILoadBlogListSuccessAction,
+} from 'src/actions';
+import { IBlogState } from 'src/types';
 
 export const initialState: IBlogState = {
   detail: {},

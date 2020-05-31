@@ -1,8 +1,14 @@
 import { AnyAction } from 'redux';
 import { ANY_ACTION_MOCK, CAREER_ITEMS_MOCK, ERROR_MOCK } from 'src/__mocks__';
-import { careerLoadList, careerLoadListError, careerLoadListSuccess } from 'src/actions';
+import {
+  careerLoadList,
+  careerLoadListError,
+  careerLoadListSuccess,
+  IErrorAction,
+  ILoadCareerListSuccessAction,
+} from 'src/actions';
 import career, { initialState } from 'src/reducers/career';
-import { ICareerState, IErrorAction, ILoadCareerListSuccessAction } from 'src/types';
+import { ICareerState } from 'src/types';
 
 describe('reducers', () => {
   describe('career', () => {

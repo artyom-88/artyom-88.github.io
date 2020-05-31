@@ -7,7 +7,7 @@ import { PageContainer } from 'src/components/Pages';
 
 jest.mock('react-redux');
 
-describe('Container', () => {
+describe('PageContainer', () => {
   const titleMock = 'title 1';
   const Content: FunctionComponent = () => <div>text1</div>;
 

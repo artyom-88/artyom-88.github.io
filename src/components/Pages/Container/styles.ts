@@ -9,5 +9,12 @@ export default makeStyles((theme: Theme) =>
       paddingTop: theme.spacing(2),
       opacity: '0.8',
     },
+    pageContainerIcon: {
+      marginBottom: theme.spacing(2),
+    },
+    pageContainerTitle: {
+      marginLeft: theme.spacing(1),
+      marginBottom: theme.spacing(2),
+    },
   })
 );

@@ -1,5 +1,4 @@
 import { shallow, ShallowWrapper } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import React from 'react';
 import { NavigationMenu } from 'src/components/Navigation';
 import Header from '../Header';
@@ -22,9 +21,5 @@ describe('Header', () => {
     wrapper.setProps({ className });
     const header = wrapper.find('header');
     expect(header.prop('className')).toEqual(className);
-  });
-
-  it('Should match snapshot', () => {
-    expect(toJson(wrapper)).toMatchSnapshot();
   });
 });

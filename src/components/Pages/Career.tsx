@@ -33,7 +33,7 @@ const useCareerItems = (): CareerModel[] => {
 const Career: FunctionComponent = () => {
   const items: CareerModel[] = useCareerItems();
   return (
-    <PageContainer>
+    <PageContainer title='Career'>
       {items.map((item: CareerModel) => {
         const { id, site, title, post, description, tools } = item;
         return (

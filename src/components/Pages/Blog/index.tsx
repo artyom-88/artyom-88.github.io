@@ -6,7 +6,7 @@ import { PageContainer } from 'src/container';
 import { BlogModel } from 'src/model';
 import { getBlogListItems } from 'src/selectors';
 import { IState } from 'src/types';
-import styles from './Blog.module.scss';
+import useStyles from './styles';
 
 const useBlogItems = (): BlogModel[] => {
   const items = useSelector<IState, BlogModel[]>(getBlogListItems, shallowEqual);
@@ -20,15 +20,16 @@ const useBlogItems = (): BlogModel[] => {
 };
 
 const Blog: FunctionComponent = () => {
+  const classes = useStyles();
   const items: BlogModel[] = useBlogItems();
   return (
-    <PageContainer>
+    <PageContainer title='Blog'>
       {items.map((item: BlogModel) => {
         const { id, title, link, linkCaption } = item;
         return (
-          <div key={id} className={styles.itemContainer}>
-            <div className={styles.title}>{item.formatDate()}</div>
-            <div className={styles.item}>{title}</div>
+          <div key={id} className={classes.blogListItem}>
+            <div className=''>{item.formatDate()}</div>
+            <div className=''>{title}</div>
             {link && (
               <a href={link} target={BLANK} rel={REL} title='Click for details'>
                 {linkCaption}

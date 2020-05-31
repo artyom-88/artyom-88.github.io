@@ -8,15 +8,13 @@ import {
   careerLoadList,
   careerLoadListError,
   careerLoadListSuccess,
-} from 'src/actions';
-import app, { initialState } from 'src/reducers/app';
-import {
   IAppLoadingAction,
-  IAppState,
   IErrorAction,
   ILoadBlogListSuccessAction,
   ILoadCareerListSuccessAction,
-} from 'src/types';
+} from 'src/actions';
+import app, { initialState } from 'src/reducers/app';
+import { IAppState } from 'src/types';
 
 describe('reducers', () => {
   describe('app', () => {

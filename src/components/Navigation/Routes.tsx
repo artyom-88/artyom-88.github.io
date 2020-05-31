@@ -1,7 +1,7 @@
 import React, { FunctionComponent, lazy, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { LoadingIndicator } from 'src/components/Navigation';
-import { PageContainer } from 'src/container';
+import { PageContainer } from 'src/components/Pages';
 
 const Main = lazy(() => import('src/components/Pages/Main'));
 const About = lazy(() => import('src/components/Pages/About'));

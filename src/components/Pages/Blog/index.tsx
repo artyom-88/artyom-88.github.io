@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { blogLoadList } from 'src/actions';
+import { PageContainer } from 'src/components/Pages';
 import { BLANK, REL } from 'src/const';
-import { PageContainer } from 'src/container';
 import { BlogModel } from 'src/model';
 import { getBlogListItems } from 'src/selectors';
 import { IState } from 'src/types';

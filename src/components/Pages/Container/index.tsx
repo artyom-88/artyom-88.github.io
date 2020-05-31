@@ -26,7 +26,11 @@ const Container: FunctionComponent<IProperties> = ({ children, title }: PropsWit
         <LoadingIndicator />
       ) : (
         <>
-          {title && <Typography variant='h4'>{title}</Typography>}
+          {title && (
+            <Typography variant='h4' paragraph>
+              {title}
+            </Typography>
+          )}
           {children}
         </>
       )}

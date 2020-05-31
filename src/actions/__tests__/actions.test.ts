@@ -14,8 +14,10 @@ import {
   careerLoadList,
   careerLoadListError,
   careerLoadListSuccess,
+  IErrorAction,
+  ILoadBlogListSuccessAction,
+  ILoadCareerListSuccessAction,
 } from 'src/actions';
-import { IErrorAction, ILoadBlogListSuccessAction, ILoadCareerListSuccessAction } from 'src/types';
 
 describe('actions', () => {
   describe('app', () => {

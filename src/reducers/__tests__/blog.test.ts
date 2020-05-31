@@ -1,8 +1,14 @@
 import { AnyAction } from 'redux';
 import { ANY_ACTION_MOCK, BLOG_ITEMS_MOCK, ERROR_MOCK } from 'src/__mocks__';
-import { blogLoadList, blogLoadListError, blogLoadListSuccess } from 'src/actions';
+import {
+  blogLoadList,
+  blogLoadListError,
+  blogLoadListSuccess,
+  IErrorAction,
+  ILoadBlogListSuccessAction,
+} from 'src/actions';
 import blog, { initialState } from 'src/reducers/blog';
-import { IBlogState, IErrorAction, ILoadBlogListSuccessAction } from 'src/types';
+import { IBlogState } from 'src/types';
 
 describe('reducers', () => {
   describe('blog', () => {

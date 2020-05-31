@@ -1,13 +1,15 @@
 import {
   APP_LOADING,
+  AppActionTypes,
   BLOG_LOAD_LIST,
   BLOG_LOAD_LIST_ERROR,
   BLOG_LOAD_LIST_SUCCESS,
   CAREER_LOAD_LIST,
   CAREER_LOAD_LIST_ERROR,
   CAREER_LOAD_LIST_SUCCESS,
+  IAppLoadingAction,
 } from 'src/actions';
-import { AppActionTypes, IAppLoadingAction, IAppState } from 'src/types';
+import { IAppState } from 'src/types';
 
 export const initialState: IAppState = {
   loading: false,

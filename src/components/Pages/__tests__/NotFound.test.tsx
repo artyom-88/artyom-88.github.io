@@ -3,8 +3,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { HashRouter, Link } from 'react-router-dom';
 import { combineReducers, createStore } from 'redux';
+import { PageContainer } from 'src/components/Pages';
 import NotFound from 'src/components/Pages/NotFound';
-import { PageContainer } from 'src/container';
 import { IAppState } from 'src/types';
 
 describe('NotFound', () => {

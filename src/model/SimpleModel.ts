@@ -1,4 +1,4 @@
-import { IModel } from 'src/types/IModel';
+import { IModel } from 'src/types';
 
 class SimpleModel implements IModel {
   protected _id = '';

@@ -8,7 +8,7 @@ exports[`Footer Should match snapshot 1`] = `
   fixed={true}
 >
   <span>
-    © 2019 All rights reserved
+    © 2020 All rights reserved
   </span>
 </WithStyles(ForwardRef(Container))>
 `;

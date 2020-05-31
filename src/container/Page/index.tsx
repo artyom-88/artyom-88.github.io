@@ -1,3 +1,4 @@
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import React, { FunctionComponent, PropsWithChildren } from 'react';
 import { useSelector } from 'react-redux';
@@ -20,7 +21,7 @@ const Container: FunctionComponent<IProperties> = ({ children, title }: PropsWit
   const classes = useStyles();
   const loading = useSelector<IState, boolean>(isLoading);
   return (
-    <div className={classes.pageContainer}>
+    <Paper className={classes.pageContainer} square>
       {loading ? (
         <LoadingIndicator />
       ) : (
@@ -29,7 +30,7 @@ const Container: FunctionComponent<IProperties> = ({ children, title }: PropsWit
           {children}
         </>
       )}
-    </div>
+    </Paper>
   );
 };
 

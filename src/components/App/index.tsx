@@ -13,15 +13,13 @@ const App: FunctionComponent = () => {
   const classes = useStyles();
   return (
     <Box className={classes.app} display='flex' flexDirection='column'>
-      <Container className={classes.appContainer}>
-        <HashRouter>
-          <Header className={classes.appHeader} />
-          <div className={classes.appContent}>
-            <Routes />
-          </div>
-          <Footer className={classes.appFooter} />
-        </HashRouter>
-      </Container>
+      <HashRouter>
+        <Header className={classes.appHeader} />
+        <Container className={classes.appContainer} disableGutters fixed>
+          <Routes />
+        </Container>
+        <Footer className={classes.appFooter} />
+      </HashRouter>
     </Box>
   );
 };

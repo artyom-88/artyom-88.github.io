@@ -1,10 +1,13 @@
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { PopoverOrigin } from '@material-ui/core/Popover/Popover';
+import AppsTwoToneIcon from '@material-ui/icons/AppsTwoTone';
 import React, { FunctionComponent, MouseEvent, ReactNode, useCallback, useState } from 'react';
 import NavigationMenuItem from 'src/components/Navigation/Menu/Item';
 import { PAGES } from 'src/const';
+import useStyles from './styles';
 
 export const ANCHOR_ORIGIN: PopoverOrigin = {
   vertical: 'bottom',
@@ -16,13 +19,13 @@ export const TRANSFORM_ORIGIN: PopoverOrigin = {
   horizontal: 'left',
 } as const;
 
-export const MENU_TITLE = 'Open Menu';
+export const MENU_TITLE = 'Menu';
 
 /**
- * /**
  * Navigation menu component
  */
 const NavigationMenu: FunctionComponent = () => {
+  const classes = useStyles();
   const [anchor, setAnchor] = useState<null | HTMLElement>(null);
 
   const open = useCallback(
@@ -37,8 +40,15 @@ const NavigationMenu: FunctionComponent = () => {
   }, [setAnchor]);
 
   return (
-    <nav>
-      <Button variant='contained' color='primary' onClick={open}>
+    <Container disableGutters fixed className={classes.navigationMenu} component='nav'>
+      <Button
+        variant='contained'
+        color='primary'
+        className={classes.navigationMenuButton}
+        onClick={open}
+        size='large'
+        startIcon={<AppsTwoToneIcon />}
+      >
         {MENU_TITLE}
       </Button>
       <Menu
@@ -53,14 +63,17 @@ const NavigationMenu: FunctionComponent = () => {
         transformOrigin={TRANSFORM_ORIGIN}
       >
         {PAGES.map(
-          ({ id, name, url }): ReactNode => (
-            <MenuItem disableGutters key={id}>
-              <NavigationMenuItem name={name} onClick={close} url={url} />
-            </MenuItem>
-          )
+          (props): ReactNode => {
+            const { id } = props;
+            return (
+              <MenuItem disableGutters key={id}>
+                <NavigationMenuItem {...props} onClick={close} />
+              </MenuItem>
+            );
+          }
         )}
       </Menu>
-    </nav>
+    </Container>
   );
 };
 

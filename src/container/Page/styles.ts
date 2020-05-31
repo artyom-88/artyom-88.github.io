@@ -1,11 +1,13 @@
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-export default makeStyles(() =>
+export default makeStyles((theme: Theme) =>
   createStyles({
     pageContainer: {
-      height: '100%',
+      height: `calc(100% - ${theme.spacing(2)}px)`,
       overflow: 'auto',
-      width: '100%',
+      paddingLeft: theme.spacing(2),
+      paddingTop: theme.spacing(2),
+      opacity: '0.8',
     },
   })
 );

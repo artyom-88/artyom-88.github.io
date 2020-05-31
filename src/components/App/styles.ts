@@ -1,11 +1,11 @@
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { rybinsk } from '../../assets';
 
-const APP_HEADER_HEIGHT = '37px';
-const APP_FOOTER_HEIGHT = '20px';
+const APP_HEADER_HEIGHT = 42;
 
-export default makeStyles(() =>
-  createStyles({
+export default makeStyles((theme: Theme) => {
+  const footerHeight = theme.spacing(4);
+  return createStyles({
     app: {
       backgroundImage: `url('${rybinsk}')`,
       backgroundSize: 'cover',
@@ -16,28 +16,27 @@ export default makeStyles(() =>
       top: 0,
     },
     appContainer: {
-      backgroundColor: 'white',
-      height: '100vh',
-      opacity: '0.7',
-      '&:hover': {
-        opacity: '0.8',
-      },
-    },
-    appContent: {
-      bottom: APP_FOOTER_HEIGHT,
-      position: 'absolute',
-      top: APP_HEADER_HEIGHT,
+      height: `calc(100% - ${footerHeight}px)`,
+      paddingTop: `${APP_HEADER_HEIGHT}px`,
+      marginBottom: `${footerHeight}px`,
     },
     appFooter: {
+      alignItems: 'center',
+      backgroundColor: theme.palette.primary.main,
       bottom: 0,
-      height: APP_FOOTER_HEIGHT,
+      color: theme.palette.common.white,
+      display: 'flex',
+      height: `${footerHeight}px`,
+      justifyContent: 'center',
       left: 0,
       position: 'fixed',
       right: 0,
-      textAlign: 'center',
     },
     appHeader: {
-      height: APP_HEADER_HEIGHT,
+      height: `${APP_HEADER_HEIGHT}px`,
+      left: 0,
+      position: 'fixed',
+      right: 0,
     },
-  })
-);
+  });
+});

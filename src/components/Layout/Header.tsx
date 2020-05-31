@@ -1,4 +1,3 @@
-import AppBar from '@material-ui/core/AppBar';
 import React, { FunctionComponent } from 'react';
 import { NavigationMenu } from 'src/components/Navigation';
 import { IClassName } from 'src/components/types';
@@ -7,9 +6,9 @@ import { IClassName } from 'src/components/types';
  * Header component
  */
 const Header: FunctionComponent<IClassName> = ({ className = '' }: IClassName) => (
-  <AppBar className={className}>
+  <header className={className}>
     <NavigationMenu />
-  </AppBar>
+  </header>
 );
 
 export default Header;

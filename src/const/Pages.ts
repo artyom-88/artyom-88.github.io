@@ -1,10 +1,17 @@
-export const ABOUT = { id: 'about', name: 'About', url: 'about' };
-export const BLOG = { id: 'blog', name: 'Blog', url: 'blog' };
-export const CAREER = { id: 'career', name: 'Career', url: 'career' };
-export const CONTACTS = { id: 'contacts', name: 'Contacts', url: 'contacts' };
-export const MAIN = { id: 'main', name: 'Main', url: '' };
+import DomainTwoToneIcon from '@material-ui/icons/DomainTwoTone';
+import HelpTwoToneIcon from '@material-ui/icons/HelpTwoTone';
+import HomeTwoTone from '@material-ui/icons/HomeTwoTone';
+import MailTwoToneIcon from '@material-ui/icons/MailTwoTone';
+import MenuBookTwoToneIcon from '@material-ui/icons/MenuBookTwoTone';
+import { IPageProps } from 'src/container';
+
+export const ABOUT: IPageProps = { id: 'about', Icon: HelpTwoToneIcon, name: 'About', url: 'about' };
+export const BLOG: IPageProps = { id: 'blog', Icon: MenuBookTwoToneIcon, name: 'Blog', url: 'blog' };
+export const CAREER: IPageProps = { id: 'career', Icon: DomainTwoToneIcon, name: 'Career', url: 'career' };
+export const CONTACTS: IPageProps = { id: 'contacts', Icon: MailTwoToneIcon, name: 'Contacts', url: 'contacts' };
+export const MAIN: IPageProps = { id: 'main', Icon: HomeTwoTone, name: 'Main', url: '' };
 
 /**
  * Pages settings
  */
-export const PAGES = [MAIN, ABOUT, BLOG, CAREER, CONTACTS];
+export const PAGES: IPageProps[] = [MAIN, ABOUT, BLOG, CAREER, CONTACTS];

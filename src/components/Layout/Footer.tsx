@@ -1,3 +1,4 @@
+import Container from '@material-ui/core/Container';
 import React, { FunctionComponent } from 'react';
 import { IClassName } from 'src/components/types';
 
@@ -7,9 +8,9 @@ export const RIGHTS_TEXT = '© 2019 All rights reserved';
  * Footer component
  */
 const Footer: FunctionComponent<IClassName> = ({ className }: IClassName) => (
-  <footer className={className}>
+  <Container className={className} disableGutters fixed component='footer'>
     <span>{RIGHTS_TEXT}</span>
-  </footer>
+  </Container>
 );
 
 export default Footer;

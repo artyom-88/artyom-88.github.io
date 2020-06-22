@@ -70,7 +70,7 @@
     "react-scripts": "3.4.1",
     "redux-saga-test-plan": "4.0.0-rc.3",
     "sass": "1.26.8",
-    "typescript": "3.9.3"
+    "typescript": "3.9.5"
   },
   "resolutions": {
     "**/**/minimist": "^1.2.2",

@@ -1,4 +1,4 @@
-import { BLOG_ITEMS_MOCK, CAREER_ITEMS_MOCK } from 'src/__mocks__';
+import { BLOG_ITEMS_MOCK, CAREER_ITEMS_MOCK } from '__mocks__';
 import {
   APP_LOADING,
   appLoading,
@@ -17,7 +17,7 @@ import {
   IErrorAction,
   ILoadBlogListSuccessAction,
   ILoadCareerListSuccessAction,
-} from 'src/actions';
+} from 'actions';
 
 describe('actions', () => {
   describe('app', () => {

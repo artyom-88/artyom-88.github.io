@@ -1,14 +1,14 @@
 import Typography from '@material-ui/core/Typography';
-import React, { FunctionComponent } from 'react';
+import { PageContainer } from 'components/Pages';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { PageContainer } from 'src/components/Pages';
 
 const TITLE = 'Page Not Found';
 
 /**
  * 404 page not component
  */
-const NotFound: FunctionComponent = () => {
+const NotFound: FC = () => {
   return (
     <PageContainer title={TITLE}>
       <Typography paragraph variant='h4'>

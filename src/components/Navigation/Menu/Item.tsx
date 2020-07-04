@@ -1,16 +1,11 @@
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import React, { FunctionComponent } from 'react';
+import { INavigationMenuItem } from 'components/Navigation/Menu/types';
+import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
-import { INavigationMenuItem } from 'src/components/Navigation/Menu/types';
 import useStyles from './styles';
 
-const NavigationMenuItem: FunctionComponent<INavigationMenuItem> = ({
-  Icon,
-  name,
-  onClick,
-  url,
-}: INavigationMenuItem) => {
+const NavigationMenuItem: FC<INavigationMenuItem> = ({ Icon, name, onClick, url }: INavigationMenuItem) => {
   const classes = useStyles();
   return (
     <NavLink

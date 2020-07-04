@@ -7,10 +7,10 @@ import {
   CAREER_ITEMS_MOCK,
   CAREER_RAW_ITEM_MOCK,
   CAREER_RAW_ITEMS_MOCK,
-} from 'src/__mocks__';
-import { blogListAdapter, blogModelAdapter } from 'src/adapter/blog';
-import { careerListAdapter, careerModelAdapter } from 'src/adapter/career';
-import { BlogModel, CareerModel } from 'src/model';
+} from '__mocks__';
+import { blogListAdapter, blogModelAdapter } from 'adapter/blog';
+import { careerListAdapter, careerModelAdapter } from 'adapter/career';
+import { BlogModel, CareerModel } from 'model';
 
 describe('adapter', () => {
   describe('blog', () => {

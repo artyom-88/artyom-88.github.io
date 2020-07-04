@@ -1,3 +1,3 @@
-import { IState } from 'src/types';
+import { IState } from 'types';
 
 export const isLoading = ({ app }: IState): boolean => app.loading;

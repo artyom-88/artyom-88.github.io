@@ -1,5 +1,5 @@
-import { BlogModel } from 'src/model';
-import { IErrorState } from 'src/types';
+import { BlogModel } from 'model';
+import { IErrorState } from 'types';
 
 export interface IBlogRawData {
   _id: string;

@@ -1,11 +1,11 @@
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { NavigationMenuItem } from 'components/Navigation';
+import { PAGES } from 'const';
+import { IPageProps } from 'container';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { NavigationMenuItem } from 'src/components/Navigation';
-import { PAGES } from 'src/const';
-import { IPageProps } from 'src/container';
 
 describe('NavigationMenuItem', () => {
   const onClick = jest.fn();

@@ -1,6 +1,6 @@
 import Box from '@material-ui/core/Box';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import { loadingIndicator } from '../../assets';
 
 const INDICATOR_SIZE = '120px';
@@ -21,7 +21,7 @@ const useStyles = makeStyles(() =>
 /**
  * Simple loading indicator based on SVG-image
  */
-const LoadingIndicator: FunctionComponent = () => {
+const LoadingIndicator: FC = () => {
   const classes = useStyles();
   return (
     <Box

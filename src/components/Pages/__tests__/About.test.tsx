@@ -1,10 +1,10 @@
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import { bio } from 'assets';
+import { About, PageContainer } from 'components/Pages';
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import { bio } from 'src/assets';
-import { About, PageContainer } from 'src/components/Pages';
 
 describe('About page', () => {
   const wrapper: ShallowWrapper = shallow(<About />);

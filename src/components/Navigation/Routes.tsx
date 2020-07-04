@@ -1,16 +1,16 @@
-import React, { FunctionComponent, lazy, Suspense } from 'react';
+import { LoadingIndicator } from 'components/Navigation';
+import { PageContainer } from 'components/Pages';
+import React, { FC, lazy, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { LoadingIndicator } from 'src/components/Navigation';
-import { PageContainer } from 'src/components/Pages';
 
-const Main = lazy(() => import('src/components/Pages/Main'));
-const About = lazy(() => import('src/components/Pages/About'));
-const Blog = lazy(() => import('src/components/Pages/Blog'));
-const Career = lazy(() => import('src/components/Pages/Career'));
-const Contacts = lazy(() => import('src/components/Pages/Contacts'));
-const NotFound = lazy(() => import('src/components/Pages/NotFound'));
+const Main = lazy(() => import('components/Pages/Main'));
+const About = lazy(() => import('components/Pages/About'));
+const Blog = lazy(() => import('components/Pages/Blog'));
+const Career = lazy(() => import('components/Pages/Career'));
+const Contacts = lazy(() => import('components/Pages/Contacts'));
+const NotFound = lazy(() => import('components/Pages/NotFound'));
 
-const Indicator: FunctionComponent = () => (
+const Indicator: FC = () => (
   <PageContainer>
     <LoadingIndicator />
   </PageContainer>
@@ -19,7 +19,7 @@ const Indicator: FunctionComponent = () => (
 /**
  * Application routes component
  */
-const Routes: FunctionComponent = () => (
+const Routes: FC = () => (
   <Suspense fallback={<Indicator />}>
     <Switch>
       <Redirect from='/main' to='/' />

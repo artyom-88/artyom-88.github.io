@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import { API_PATH } from 'src/const';
-import { IBlogRawData } from 'src/types';
+import { API_PATH } from 'const';
+import { IBlogRawData } from 'types';
 
 export const loadBlogList = async (): Promise<AxiosResponse<IBlogRawData[]>> => axios.get(`${API_PATH}/blog`);
 

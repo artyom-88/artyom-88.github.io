@@ -8,8 +8,8 @@ import {
   CAREER_LOAD_LIST_ERROR,
   CAREER_LOAD_LIST_SUCCESS,
   IAppLoadingAction,
-} from 'src/actions';
-import { IAppState } from 'src/types';
+} from 'actions';
+import { IAppState } from 'types';
 
 export const initialState: IAppState = {
   loading: false,

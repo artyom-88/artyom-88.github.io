@@ -1,4 +1,4 @@
-import { SimpleModel } from 'src/model';
+import { SimpleModel } from 'model';
 
 abstract class AbstractBuilder<TModel extends SimpleModel> {
   protected _id = '';

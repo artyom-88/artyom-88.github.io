@@ -4,8 +4,8 @@ import {
   BlogActionsType,
   IErrorAction,
   ILoadBlogListSuccessAction,
-} from 'src/actions';
-import { IBlogState } from 'src/types';
+} from 'actions';
+import { IBlogState } from 'types';
 
 export const initialState: IBlogState = {
   detail: {},

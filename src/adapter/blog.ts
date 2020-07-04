@@ -1,5 +1,5 @@
-import { BlogModel } from 'src/model';
-import { IBlogRawData } from 'src/types';
+import { BlogModel } from 'model';
+import { IBlogRawData } from 'types';
 
 export const blogModelAdapter = (data: IBlogRawData): BlogModel => {
   const { _id, date, link, linkCaption, title } = data;

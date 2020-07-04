@@ -1,4 +1,4 @@
-import { IPageProps } from 'src/components/Pages';
-import { IClickable } from 'src/types';
+import { IPageProps } from 'components/Pages';
+import { IClickable } from 'types';
 
 export interface INavigationMenuItem extends IPageProps, IClickable {}

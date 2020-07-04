@@ -1,10 +1,10 @@
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import React, { FunctionComponent } from 'react';
-import { bio } from 'src/assets';
-import { PageContainer } from 'src/components/Pages';
-import { ABOUT } from 'src/const';
+import { bio } from 'assets';
+import { PageContainer } from 'components/Pages';
+import { ABOUT } from 'const';
+import React, { FC } from 'react';
 import useStyles from './styles';
 
 export const TITLE = 'Artem Ganev';
@@ -12,7 +12,7 @@ export const TITLE = 'Artem Ganev';
 /**
  * About page component
  */
-const About: FunctionComponent = () => {
+const About: FC = () => {
   const classes = useStyles();
   return (
     <PageContainer title={ABOUT.name} Icon={ABOUT.Icon}>

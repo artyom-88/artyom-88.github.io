@@ -1,5 +1,5 @@
+import { BlogModel, CareerModel } from 'model';
 import { AnyAction } from 'redux';
-import { BlogModel, CareerModel } from 'src/model';
 
 export interface IAppLoadingAction extends AnyAction {
   loading: boolean;

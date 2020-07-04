@@ -1,11 +1,11 @@
+import { App } from 'components';
+import { Footer, Header } from 'components/Layout';
+import { Routes } from 'components/Navigation';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
-import { App } from 'src/components';
-import { Footer, Header } from 'src/components/Layout';
-import { Routes } from 'src/components/Navigation';
-import store from 'src/store';
+import store from 'store';
 
 describe('App', () => {
   const component = mount(

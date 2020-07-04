@@ -1,6 +1,6 @@
+import { IErrorAction, ILoadBlogListSuccessAction } from 'actions';
+import { BlogModel } from 'model';
 import { ActionCreator, AnyAction } from 'redux';
-import { IErrorAction, ILoadBlogListSuccessAction } from 'src/actions';
-import { BlogModel } from 'src/model';
 
 export const BLOG_LOAD_LIST = 'BLOG_LOAD_LIST';
 export const BLOG_LOAD_LIST_SUCCESS = `${BLOG_LOAD_LIST}_SUCCESS`;

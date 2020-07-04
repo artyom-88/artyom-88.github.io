@@ -1,3 +1,4 @@
+import Card from '@material-ui/core/Card';
 import { PageContainer } from 'components/Pages';
 import Main from 'components/Pages/Main';
 import MainPageContent from 'components/Pages/MainPageContent';
@@ -9,6 +10,10 @@ describe('Main page', () => {
 
   it('Should render PageContainer', () => {
     expect(wrapper.find(PageContainer)).toHaveLength(1);
+  });
+
+  it('Should render Card', () => {
+    expect(wrapper.find(Card)).toHaveLength(1);
   });
 
   it('Should render content', () => {

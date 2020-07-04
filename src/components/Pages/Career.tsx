@@ -30,9 +30,9 @@ const Career: FC = () => {
       {items.map((item: CareerModel) => {
         const { id, site, title, post, description, tools } = item;
         return (
-          <Box key={id} mr={2} mb={2}>
+          <Box key={id} mb={2}>
             <Card raised>
-              <Box className={classes.careerItem} px={2} pt={2}>
+              <Box className={classes.careerItem} p={2}>
                 {prepareTitle(site, title, classes.careerTitle)}
                 <Typography variant='h6' paragraph className={classes.careerDates}>
                   {item.formatDates()}

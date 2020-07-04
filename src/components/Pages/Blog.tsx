@@ -17,9 +17,9 @@ const Blog: FC = () => {
           const { id, title, link, linkCaption } = item;
           // TODO: move to separate component
           return (
-            <Box key={id} mr={2} mb={2}>
+            <Box key={id} mb={2}>
               <Card raised>
-                <Box mr={2} mb={2} px={2} pt={2} flexGrow={1}>
+                <Box p={2} flexGrow={1}>
                   <Typography variant='h5' paragraph className={classes.blogListDate}>
                     {item.formatDate()}
                   </Typography>

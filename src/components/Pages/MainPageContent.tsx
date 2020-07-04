@@ -16,8 +16,9 @@ const LINKS = {
 const MainPageContent: FC = () => {
   const classes = useStyles();
   return (
-    <Card className={classes.mainPage} raised>
+    <Card raised>
       <CardContent className={classes.mainPageContent}>
+        <CardMedia className={classes.mainPageImage} image={artyom} title='Artyom' />
         <Typography variant='h4' paragraph>
           Hi! My name is Artyom.
         </Typography>
@@ -48,7 +49,6 @@ const MainPageContent: FC = () => {
           I&apos;m still working on it.
         </Typography>
       </CardContent>
-      <CardMedia className={classes.mainPageImage} image={artyom} title='Artyom' />
     </Card>
   );
 };

@@ -1,0 +1,25 @@
+a {
+    color: #70719b;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #70719b;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    height: 100%;
+    width: 100%;
+}
+
+h1, h2, h3 {
+    color: #343648;
+    margin: 0
+}

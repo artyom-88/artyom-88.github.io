@@ -5,7 +5,8 @@ export default makeStyles((theme: Theme) =>
     pageContainer: {
       height: `calc(100% - ${theme.spacing(2)}px)`,
       overflow: 'auto',
-      paddingLeft: theme.spacing(2),
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(2),
       paddingTop: theme.spacing(2),
       opacity: '0.8',
     },

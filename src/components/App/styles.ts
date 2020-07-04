@@ -4,7 +4,7 @@ import { rybinsk } from '../../assets';
 const APP_HEADER_HEIGHT = 42;
 
 export default makeStyles((theme: Theme) => {
-  const footerHeight = theme.spacing(4);
+  const footerHeight = theme.spacing(5);
   return createStyles({
     app: {
       backgroundImage: `url('${rybinsk}')`,

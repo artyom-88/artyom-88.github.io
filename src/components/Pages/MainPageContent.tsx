@@ -3,9 +3,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { artyom } from 'assets';
+import useStyles from 'components/Pages/Main.styles';
 import { BLANK, REL } from 'const';
 import React, { FC } from 'react';
-import useStyles from './styles';
 
 const LINKS = {
   Back: 'https://github.com/Artyom-Ganev/artyom-ganev-node',
@@ -13,7 +13,7 @@ const LINKS = {
   Rybinsk: 'https://en.wikipedia.org/wiki/Rybinsk',
 };
 
-const Content: FC = () => {
+const MainPageContent: FC = () => {
   const classes = useStyles();
   return (
     <Card className={classes.mainPage} raised>
@@ -53,4 +53,4 @@ const Content: FC = () => {
   );
 };
 
-export default Content;
+export default MainPageContent;

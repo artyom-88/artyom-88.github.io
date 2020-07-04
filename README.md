@@ -13,7 +13,8 @@ Backend sources of https://artyom-ganev.github.io/ site are here https://github.
 **Made with:**
 * [ESLint](https://eslint.org/)
 * [Jest](https://jestjs.io/)
-* [Moment.js](https://momentjs.com//)
+* [Material UI](https://material-ui.com/)
+* [Moment.js](https://momentjs.com/)
 * [Prettier](https://prettier.io/)
 * [React](https://reactjs.org/)
 * [Redux-Saga](https://redux-saga.js.org/)

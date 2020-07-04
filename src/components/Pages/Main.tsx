@@ -1,4 +1,5 @@
-import { MainPageContent, PageContainer } from 'components/Pages';
+import { PageContainer } from 'components/Pages';
+import MainPageContent from 'components/Pages/MainPageContent';
 import { MAIN } from 'const';
 import React, { FC } from 'react';
 

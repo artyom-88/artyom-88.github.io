@@ -2,7 +2,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { bio } from 'assets';
-import { About, PageContainer } from 'components/Pages';
+import { PageContainer } from 'components/Pages';
+import About from 'components/Pages/About';
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 

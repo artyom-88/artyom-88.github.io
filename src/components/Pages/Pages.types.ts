@@ -13,4 +13,5 @@ export interface IPageProps extends IComponentWithIcon {
 
 export interface IPageContainer extends IComponentWithIcon {
   title?: string;
+  centerTitle?: boolean;
 }

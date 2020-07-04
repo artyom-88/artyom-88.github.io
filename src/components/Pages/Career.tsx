@@ -1,51 +1,54 @@
-import { careerLoadList } from 'actions';
-import { PageContainer } from 'components/Pages';
+import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
+import Typography from '@material-ui/core/Typography';
+import { PageContainer, useCareerItems } from 'components/Pages';
+import useStyles from 'components/Pages/Career.styles';
 import { BLANK, CAREER, REL } from 'const';
 import { CareerModel } from 'model';
-import React, { FC, ReactNode, useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { getCareerListItems } from 'selectors';
-import { IState } from 'types';
-import styles from './Career.module.scss';
+import React, { FC, ReactNode } from 'react';
 
-const prepareTitle = (site: string, title: string): ReactNode => {
-  const header = <h3>{title}</h3>;
+const prepareTitle = (site: string, title: string, className: string): ReactNode => {
+  const header = (
+    <Typography variant='h5' className={className}>
+      {title}
+    </Typography>
+  );
   return site ? (
     <a href={site} target={BLANK} rel={REL} title='Click for details'>
       {header}
     </a>
   ) : (
-    <h3>{title}</h3>
+    header
   );
 };
 
-const useCareerItems = (): CareerModel[] => {
-  const items = useSelector<IState, CareerModel[]>(getCareerListItems, shallowEqual);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(careerLoadList());
-  }, [dispatch]);
-
-  return items;
-};
-
 const Career: FC = () => {
+  const classes = useStyles();
   const items: CareerModel[] = useCareerItems();
   return (
     <PageContainer title={CAREER.name} Icon={CAREER.Icon}>
       {items.map((item: CareerModel) => {
         const { id, site, title, post, description, tools } = item;
         return (
-          <div key={id} className={styles.item}>
-            {prepareTitle(site, title)}
-            <div className={styles.dates}>{item.formatDates()}</div>
-            <div>Post:&nbsp;{post}</div>
-            <div>{description}</div>
-            <div className='flexBox flexColumn'>
-              <div>Tools:&nbsp;{tools}</div>
-            </div>
-          </div>
+          <Box key={id} mr={2} mb={2}>
+            <Card raised>
+              <Box className={classes.careerItem} px={2} pt={2}>
+                {prepareTitle(site, title, classes.careerTitle)}
+                <Typography variant='h6' paragraph className={classes.careerDates}>
+                  {item.formatDates()}
+                </Typography>
+                <Typography variant='h6'>Post:&nbsp;{post}</Typography>
+                <Typography variant='h6' paragraph>
+                  {description}
+                </Typography>
+                <Box display='flex' flexDirection='column'>
+                  <Typography variant='h6' paragraph>
+                    Tools:&nbsp;{tools}
+                  </Typography>
+                </Box>
+              </Box>
+            </Card>
+          </Box>
         );
       })}
     </PageContainer>

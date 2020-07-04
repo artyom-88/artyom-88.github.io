@@ -2,7 +2,6 @@
 **Preparation:**
 1. Clone project with *git clone* command.
 2. Install all dependencies with *yarn install*.
-3. Enable TSLint.  
 - - - -
 **Commands:**
 * *yarn start* - run local development server at http://localhost:8081/

@@ -7,8 +7,5 @@ export default makeStyles(() =>
       letterSpacing: '1px',
       wordSpacing: '1px',
     },
-    contactsItem: {
-      textAlign: 'right',
-    },
   })
 );

@@ -1,12 +1,7 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 export default makeStyles((theme: Theme) => {
-  const margin = theme.spacing(2);
   return createStyles({
-    mainPage: {
-      display: 'flex',
-      marginRight: margin,
-    },
     mainPageContent: {
       flexShrink: 1,
     },
@@ -17,9 +12,9 @@ export default makeStyles((theme: Theme) => {
     },
     mainPageImage: {
       borderRadius: '50%',
-      flexShrink: 0,
+      float: 'right',
       height: '15vw',
-      margin,
+      marginBottom: theme.spacing(2),
       width: '15vw',
     },
   });

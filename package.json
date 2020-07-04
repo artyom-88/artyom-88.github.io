@@ -20,8 +20,8 @@
     "test": "react-scripts test",
     "testCI": "CI=true react-scripts test",
     "testCoverage": "react-scripts test --coverage",
-    "prettier": "prettier -c --write \"**/*.ts?\"",
-    "lint": "eslint --fix \"**/*.ts?\""
+    "prettier": "prettier -c --write \"src/**/*.ts?\"",
+    "lint": "eslint --fix \"src/**/*.ts?\""
   },
   "dependencies": {
     "@material-ui/core": "4.11.0",
@@ -97,16 +97,14 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "actions/**/*.{js,jsx,ts,tsx}",
-      "adapter/**/*.{js,jsx,ts,tsx}",
-      "api/**/*.{js,jsx,ts,tsx}",
-      "components/**/*.{js,jsx,ts,tsx}",
-      "container/**/*.{js,jsx,ts,tsx}",
-      "model/**/*.{js,jsx,ts,tsx}",
-      "reducers/**/*.{js,jsx,ts,tsx}",
-      "saga/**/*.{js,jsx,ts,tsx}",
-      "selectors/**/*.{js,jsx,ts,tsx}",
-      "api/**/*.{js,jsx,ts,tsx}"
+      "src/actions/**/*.{js,jsx,ts,tsx}",
+      "src/adapter/**/*.{js,jsx,ts,tsx}",
+      "src/api/**/*.{js,jsx,ts,tsx}",
+      "src/components/**/*.{js,jsx,ts,tsx}",
+      "src/model/**/*.{js,jsx,ts,tsx}",
+      "src/reducers/**/*.{js,jsx,ts,tsx}",
+      "src/saga/**/*.{js,jsx,ts,tsx}",
+      "src/selectors/**/*.{js,jsx,ts,tsx}"
     ]
   }
 }

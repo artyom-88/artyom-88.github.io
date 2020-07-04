@@ -1,4 +1,4 @@
-import 'assets/styles.scss';
+import 'assets/styles.css';
 import { App } from 'components';
 import React from 'react';
 import ReactDOM from 'react-dom';

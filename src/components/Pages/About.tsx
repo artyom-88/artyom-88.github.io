@@ -3,9 +3,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { bio } from 'assets';
 import { PageContainer } from 'components/Pages';
+import useStyles from 'components/Pages/About.styles';
 import { ABOUT } from 'const';
 import React, { FC } from 'react';
-import useStyles from './styles';
 
 export const TITLE = 'Artem Ganev';
 

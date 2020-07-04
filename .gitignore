@@ -4,7 +4,6 @@
 .idea
 
 # converted sources
-*.css
 *.map
 src/**/*.js
 

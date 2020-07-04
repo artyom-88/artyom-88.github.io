@@ -1,5 +1,5 @@
 import Typography from '@material-ui/core/Typography';
-import { PageContainer } from 'components/Pages';
+import { PageContainer } from 'components/Pages/index';
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 

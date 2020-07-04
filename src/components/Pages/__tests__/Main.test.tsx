@@ -1,4 +1,6 @@
-import { Main, MainPageContent, PageContainer } from 'components/Pages';
+import { PageContainer } from 'components/Pages';
+import Main from 'components/Pages/Main';
+import MainPageContent from 'components/Pages/MainPageContent';
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 

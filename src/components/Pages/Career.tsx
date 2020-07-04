@@ -1,11 +1,11 @@
-import React, { FunctionComponent, ReactNode, useEffect } from 'react';
+import { careerLoadList } from 'actions';
+import { PageContainer } from 'components/Pages';
+import { BLANK, CAREER, REL } from 'const';
+import { CareerModel } from 'model';
+import React, { FC, ReactNode, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { careerLoadList } from 'src/actions';
-import { PageContainer } from 'src/components/Pages';
-import { BLANK, CAREER, REL } from 'src/const';
-import { CareerModel } from 'src/model';
-import { getCareerListItems } from 'src/selectors';
-import { IState } from 'src/types';
+import { getCareerListItems } from 'selectors';
+import { IState } from 'types';
 import styles from './Career.module.scss';
 
 const prepareTitle = (site: string, title: string): ReactNode => {
@@ -30,7 +30,7 @@ const useCareerItems = (): CareerModel[] => {
   return items;
 };
 
-const Career: FunctionComponent = () => {
+const Career: FC = () => {
   const items: CareerModel[] = useCareerItems();
   return (
     <PageContainer title={CAREER.name} Icon={CAREER.Icon}>

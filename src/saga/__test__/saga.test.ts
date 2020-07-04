@@ -1,5 +1,3 @@
-import axios from 'axios';
-import { testSaga } from 'redux-saga-test-plan';
 import {
   BLOG_ITEMS_MOCK,
   BLOG_LIST_RESPONSE_MOCK,
@@ -7,14 +5,16 @@ import {
   CAREER_ITEMS_MOCK,
   CAREER_LIST_RESPONSE_MOCK,
   CAREER_RAW_ITEMS_MOCK,
-} from 'src/__mocks__';
-import { BLOG_LOAD_LIST, blogLoadListSuccess, CAREER_LOAD_LIST, careerLoadListSuccess } from 'src/actions';
-import { blogListAdapter } from 'src/adapter/blog';
-import { careerListAdapter } from 'src/adapter/career';
-import { loadBlogList as loadBlogListApi } from 'src/api/blog';
-import { loadCareerList as loadCareerListApi } from 'src/api/career';
-import { default as blogSaga, loadBlogList } from 'src/saga/blog';
-import { default as careerSaga, loadCareerList } from 'src/saga/career';
+} from '__mocks__';
+import { BLOG_LOAD_LIST, blogLoadListSuccess, CAREER_LOAD_LIST, careerLoadListSuccess } from 'actions';
+import { blogListAdapter } from 'adapter/blog';
+import { careerListAdapter } from 'adapter/career';
+import { loadBlogList as loadBlogListApi } from 'api/blog';
+import { loadCareerList as loadCareerListApi } from 'api/career';
+import axios from 'axios';
+import { testSaga } from 'redux-saga-test-plan';
+import { default as blogSaga, loadBlogList } from 'saga/blog';
+import { default as careerSaga, loadCareerList } from 'saga/career';
 
 jest.mock('axios', () => ({
   get: jest.fn(),

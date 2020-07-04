@@ -1,5 +1,4 @@
-import { AnyAction } from 'redux';
-import { ANY_ACTION_MOCK } from 'src/__mocks__';
+import { ANY_ACTION_MOCK } from '__mocks__';
 import {
   appLoading,
   blogLoadList,
@@ -12,9 +11,10 @@ import {
   IErrorAction,
   ILoadBlogListSuccessAction,
   ILoadCareerListSuccessAction,
-} from 'src/actions';
-import app, { initialState } from 'src/reducers/app';
-import { IAppState } from 'src/types';
+} from 'actions';
+import app, { initialState } from 'reducers/app';
+import { AnyAction } from 'redux';
+import { IAppState } from 'types';
 
 describe('reducers', () => {
   describe('app', () => {

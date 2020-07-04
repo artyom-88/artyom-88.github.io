@@ -1,9 +1,9 @@
+import { BLOG_LOAD_LIST, blogLoadListError, blogLoadListSuccess } from 'actions';
+import { blogListAdapter } from 'adapter/blog';
+import { loadBlogList as loadBlogListApi } from 'api/blog';
 import { AxiosResponse } from 'axios';
 import { call, CallEffect, ForkEffect, put, PutEffect, takeEvery } from 'redux-saga/effects';
-import { BLOG_LOAD_LIST, blogLoadListError, blogLoadListSuccess } from 'src/actions';
-import { blogListAdapter } from 'src/adapter/blog';
-import { loadBlogList as loadBlogListApi } from 'src/api/blog';
-import { IBlogRawData } from 'src/types';
+import { IBlogRawData } from 'types';
 
 export function* loadBlogList(): Generator<PutEffect | CallEffect> {
   try {

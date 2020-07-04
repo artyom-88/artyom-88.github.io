@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {
   BLOG_ID_MOCK,
   BLOG_ITEM_RESPONSE_MOCK,
@@ -10,9 +9,10 @@ import {
   CAREER_LIST_RESPONSE_MOCK,
   CAREER_RAW_ITEM_MOCK,
   CAREER_RAW_ITEMS_MOCK,
-} from 'src/__mocks__';
-import { loadBlog, loadBlogList } from 'src/api/blog';
-import { loadCareer, loadCareerList } from 'src/api/career';
+} from '__mocks__';
+import { loadBlog, loadBlogList } from 'api/blog';
+import { loadCareer, loadCareerList } from 'api/career';
+import axios from 'axios';
 
 jest.mock('axios', () => ({
   get: jest.fn(),

@@ -1,11 +1,11 @@
-import React, { FunctionComponent } from 'react';
-import { MainPageContent, PageContainer } from 'src/components/Pages';
-import { MAIN } from 'src/const';
+import { MainPageContent, PageContainer } from 'components/Pages';
+import { MAIN } from 'const';
+import React, { FC } from 'react';
 
 /**
  * Main page component
  */
-const Main: FunctionComponent = () => (
+const Main: FC = () => (
   <PageContainer Icon={MAIN.Icon}>
     <MainPageContent />
   </PageContainer>

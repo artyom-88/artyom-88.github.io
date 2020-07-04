@@ -1,5 +1,5 @@
+import { CareerModel } from 'model';
 import moment, { utc } from 'moment';
-import { CareerModel } from 'src/model';
 import AbstractBuilder from './AbstractBuilder';
 
 class CareerBuilder extends AbstractBuilder<CareerModel> {

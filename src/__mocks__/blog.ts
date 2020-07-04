@@ -1,6 +1,6 @@
-import { CURRENT_DATE_MOCK, DATE_STRING_MOCK } from 'src/__mocks__/date';
-import { BlogModel } from 'src/model';
-import { IBlogRawData } from 'src/types';
+import { CURRENT_DATE_MOCK, DATE_STRING_MOCK } from '__mocks__/date';
+import { BlogModel } from 'model';
+import { IBlogRawData } from 'types';
 
 export const BLOG_ID_MOCK = 'id';
 

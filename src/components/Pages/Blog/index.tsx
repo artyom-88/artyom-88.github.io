@@ -1,14 +1,14 @@
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import React, { FunctionComponent } from 'react';
-import { PageContainer } from 'src/components/Pages';
-import { useBlogItems } from 'src/components/Pages/Blog/hooks';
-import { BLANK, BLOG, REL } from 'src/const';
-import { BlogModel } from 'src/model';
+import { PageContainer } from 'components/Pages';
+import { useBlogItems } from 'components/Pages/Blog/hooks';
+import { BLANK, BLOG, REL } from 'const';
+import { BlogModel } from 'model';
+import React, { FC } from 'react';
 import useStyles from './styles';
 
-const Blog: FunctionComponent = () => {
+const Blog: FC = () => {
   const classes = useStyles();
   const items: BlogModel[] = useBlogItems();
   return (

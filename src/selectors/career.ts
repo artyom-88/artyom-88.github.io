@@ -1,4 +1,4 @@
-import { CareerModel } from 'src/model';
-import { IState } from 'src/types';
+import { CareerModel } from 'model';
+import { IState } from 'types';
 
 export const getCareerListItems = ({ career }: IState): CareerModel[] => career.items;

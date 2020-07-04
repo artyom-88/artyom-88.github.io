@@ -1,5 +1,5 @@
-import { CareerModel } from 'src/model';
-import { ICareerRawData } from 'src/types';
+import { CareerModel } from 'model';
+import { ICareerRawData } from 'types';
 
 export const careerModelAdapter = (data: ICareerRawData): CareerModel => {
   const { _id, title, description, post, site, tools, startDate, endDate } = data;

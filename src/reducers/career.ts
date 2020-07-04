@@ -4,8 +4,8 @@ import {
   CareerActionsType,
   IErrorAction,
   ILoadCareerListSuccessAction,
-} from 'src/actions';
-import { ICareerState } from 'src/types';
+} from 'actions';
+import { ICareerState } from 'types';
 
 export const initialState: ICareerState = {
   detail: {},

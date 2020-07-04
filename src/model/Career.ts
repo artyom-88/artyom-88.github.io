@@ -1,5 +1,5 @@
+import SimpleModel from 'model/SimpleModel';
 import { Moment } from 'moment';
-import SimpleModel from 'src/model/SimpleModel';
 import CareerBuilder from './CareerBuilder';
 
 const DATE_FORMAT = 'MMMM YYYY';

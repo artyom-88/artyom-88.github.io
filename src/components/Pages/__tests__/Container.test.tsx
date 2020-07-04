@@ -1,15 +1,15 @@
 import Typography from '@material-ui/core/Typography';
+import { LoadingIndicator } from 'components/Navigation';
+import { PageContainer } from 'components/Pages';
 import { shallow, ShallowWrapper } from 'enzyme';
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { LoadingIndicator } from 'src/components/Navigation';
-import { PageContainer } from 'src/components/Pages';
 
 jest.mock('react-redux');
 
 describe('PageContainer', () => {
   const titleMock = 'title 1';
-  const Content: FunctionComponent = () => <div>text1</div>;
+  const Content: FC = () => <div>text1</div>;
 
   const render = (loading = false): ShallowWrapper => {
     (useSelector as jest.Mock).mockReturnValue(loading);

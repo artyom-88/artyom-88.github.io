@@ -1,6 +1,6 @@
-import { DATE_STRING_MOCK } from 'src/__mocks__/date';
-import { CareerModel } from 'src/model';
-import { ICareerRawData } from 'src/types';
+import { DATE_STRING_MOCK } from '__mocks__/date';
+import { CareerModel } from 'model';
+import { ICareerRawData } from 'types';
 
 export const CAREER_ID_MOCK = 'id';
 

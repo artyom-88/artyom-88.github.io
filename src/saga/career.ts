@@ -1,9 +1,9 @@
+import { CAREER_LOAD_LIST, careerLoadListError, careerLoadListSuccess } from 'actions';
+import { careerListAdapter } from 'adapter/career';
+import { loadCareerList as loadCareerListApi } from 'api/career';
 import { AxiosResponse } from 'axios';
 import { call, CallEffect, ForkEffect, put, PutEffect, takeEvery } from 'redux-saga/effects';
-import { CAREER_LOAD_LIST, careerLoadListError, careerLoadListSuccess } from 'src/actions';
-import { careerListAdapter } from 'src/adapter/career';
-import { loadCareerList as loadCareerListApi } from 'src/api/career';
-import { ICareerRawData } from 'src/types';
+import { ICareerRawData } from 'types';
 
 export function* loadCareerList(): Generator<PutEffect | CallEffect> {
   try {

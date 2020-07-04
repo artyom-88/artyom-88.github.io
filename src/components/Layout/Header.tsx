@@ -1,11 +1,11 @@
-import React, { FunctionComponent } from 'react';
-import { NavigationMenu } from 'src/components/Navigation';
-import { IClassName } from 'src/components/types';
+import { NavigationMenu } from 'components/Navigation';
+import { IClassName } from 'components/types';
+import React, { FC } from 'react';
 
 /**
  * Header component
  */
-const Header: FunctionComponent<IClassName> = ({ className = '' }: IClassName) => (
+const Header: FC<IClassName> = ({ className = '' }: IClassName) => (
   <header className={className}>
     <NavigationMenu />
   </header>

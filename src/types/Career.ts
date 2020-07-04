@@ -1,5 +1,5 @@
-import { CareerModel } from 'src/model';
-import { IErrorState } from 'src/types';
+import { CareerModel } from 'model';
+import { IErrorState } from 'types';
 
 export interface ICareerRawData {
   _id: string;

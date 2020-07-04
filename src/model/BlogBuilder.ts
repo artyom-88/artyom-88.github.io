@@ -1,5 +1,5 @@
+import { BlogModel } from 'model';
 import moment, { Moment } from 'moment';
-import { BlogModel } from 'src/model';
 import AbstractBuilder from './AbstractBuilder';
 
 class BlogBuilder extends AbstractBuilder<BlogModel> {

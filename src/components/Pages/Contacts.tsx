@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from 'react';
-import { contacts } from 'src/assets';
-import { PageContainer } from 'src/components/Pages';
-import { BLANK, CONTACTS, REL } from 'src/const';
+import { contacts } from 'assets';
+import { PageContainer } from 'components/Pages';
+import { BLANK, CONTACTS, REL } from 'const';
+import React, { FC } from 'react';
 import styles from './Contacts.module.scss';
 
 /**
@@ -33,7 +33,7 @@ const items = contacts.data.map(({ key, link, title }: IContact) => (
 /**
  * Contacts page component
  */
-const Contacts: FunctionComponent = () => (
+const Contacts: FC = () => (
   <PageContainer title={CONTACTS.name} Icon={CONTACTS.Icon}>
     <div className={`flexBox alignItemsBaseline justifyContentBetween ${styles.container}`}>
       <div>{titles}</div>

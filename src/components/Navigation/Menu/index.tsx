@@ -4,9 +4,10 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { PopoverOrigin } from '@material-ui/core/Popover/Popover';
 import AppsTwoToneIcon from '@material-ui/icons/AppsTwoTone';
-import React, { FunctionComponent, MouseEvent, ReactNode, useCallback, useState } from 'react';
-import NavigationMenuItem from 'src/components/Navigation/Menu/Item';
-import { PAGES } from 'src/const';
+import NavigationMenuItem from 'components/Navigation/Menu/Item';
+import { PAGES } from 'const';
+import React, { FC, MouseEvent, ReactNode, useCallback, useState } from 'react';
+import { IPageProps } from '../../Pages';
 import useStyles from './styles';
 
 export const ANCHOR_ORIGIN: PopoverOrigin = {
@@ -24,7 +25,7 @@ export const MENU_TITLE = 'Menu';
 /**
  * Navigation menu component
  */
-const NavigationMenu: FunctionComponent = () => {
+const NavigationMenu: FC = () => {
   const classes = useStyles();
   const [anchor, setAnchor] = useState<null | HTMLElement>(null);
 
@@ -63,7 +64,7 @@ const NavigationMenu: FunctionComponent = () => {
         transformOrigin={TRANSFORM_ORIGIN}
       >
         {PAGES.map(
-          (props): ReactNode => {
+          (props: IPageProps): ReactNode => {
             const { id } = props;
             return (
               <MenuItem disableGutters key={id}>

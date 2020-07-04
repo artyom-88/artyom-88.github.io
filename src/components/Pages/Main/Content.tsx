@@ -2,9 +2,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import React, { FunctionComponent } from 'react';
-import { artyom } from 'src/assets';
-import { BLANK, REL } from 'src/const';
+import { artyom } from 'assets';
+import { BLANK, REL } from 'const';
+import React, { FC } from 'react';
 import useStyles from './styles';
 
 const LINKS = {
@@ -13,7 +13,7 @@ const LINKS = {
   Rybinsk: 'https://en.wikipedia.org/wiki/Rybinsk',
 };
 
-const Content: FunctionComponent = () => {
+const Content: FC = () => {
   const classes = useStyles();
   return (
     <Card className={classes.mainPage} raised>

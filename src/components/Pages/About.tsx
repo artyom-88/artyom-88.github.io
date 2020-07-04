@@ -16,8 +16,8 @@ const About: FC = () => {
   const classes = useStyles();
   return (
     <PageContainer title={ABOUT.name} Icon={ABOUT.Icon}>
-      <Card className={classes.aboutPageCard} raised>
-        <CardContent className={classes.aboutPageContent}>
+      <Card raised>
+        <CardContent>
           <Typography variant='h4' paragraph>
             {TITLE}
           </Typography>

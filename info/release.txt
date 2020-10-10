@@ -1,3 +1,4 @@
+2020-10-10: Update dependencies. Migration to MongoDB Atlas.
 2020-07-04: New design with Material UI.
 2020-05-30: Migrate Front-end project to Yarn, add tests.
 2020-05-17: Add Redux Saga and Enzyme.

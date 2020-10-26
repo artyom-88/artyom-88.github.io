@@ -38,7 +38,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "5.11.4",
     "@testing-library/react": "11.0.4",
-    "@testing-library/user-event": "12.1.7",
+    "@testing-library/user-event": "12.1.10",
     "@types/enzyme": "3.10.7",
     "@types/enzyme-adapter-react-16": "1.0.6",
     "@types/enzyme-to-json": "1.5.4",

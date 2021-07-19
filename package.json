@@ -51,7 +51,7 @@
     "@types/redux-actions": "2.6.1",
     "@types/redux-saga": "0.10.5",
     "@typescript-eslint/parser": "4.4.0",
-    "@typescript-eslint/eslint-plugin": "4.4.0",
+    "@typescript-eslint/eslint-plugin": "4.28.3",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.5",
     "enzyme-to-json": "3.6.1",

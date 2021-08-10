@@ -1,13 +1,14 @@
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import { PageContainer, useBlogItems } from 'components/Pages';
-import useStyles from 'components/Pages/Blog.styles';
+import PageContainer from 'components/Pages/PageContainer';
+import { useBlogItems } from 'components/Pages/Pages.hooks';
 import { BLANK, BLOG, REL } from 'const';
 import { BlogModel } from 'model';
-import React, { FC } from 'react';
+import { ReactElement } from 'react';
+import useStyles from './Blog.styles';
 
-const Blog: FC = () => {
+const Blog = (): ReactElement => {
   const classes = useStyles();
   const items: BlogModel[] = useBlogItems();
   return (

@@ -1,24 +1,19 @@
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { LoadingIndicator } from 'components/Navigation';
-import { IPageContainer } from 'components/Pages';
-import useStyles from 'components/Pages/PageContainer.styles';
+import LoadingIndicator from 'components/Navigation/LoadingIndicator';
+import { IPageContainer } from 'components/Pages/Pages.types';
 import { useIsNarrow } from 'hooks';
-import React, { FC, PropsWithChildren } from 'react';
+import { PropsWithChildren, ReactElement } from 'react';
 import { useSelector } from 'react-redux';
 import { isLoading } from 'selectors';
 import { IState } from 'types';
+import useStyles from './PageContainer.styles';
 
 /**
  * Page container with title
  */
-const PageContainer: FC<IPageContainer> = ({
-  children,
-  centerTitle,
-  Icon,
-  title,
-}: PropsWithChildren<IPageContainer>) => {
+const PageContainer = ({ children, centerTitle, Icon, title }: PropsWithChildren<IPageContainer>): ReactElement => {
   const classes = useStyles();
   const loading = useSelector<IState, boolean>(isLoading);
   const justifyContent = centerTitle ? 'center' : 'flex-start';

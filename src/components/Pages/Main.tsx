@@ -1,12 +1,12 @@
-import { PageContainer } from 'components/Pages';
 import MainPageContent from 'components/Pages/MainPageContent';
+import PageContainer from 'components/Pages/PageContainer';
 import { MAIN } from 'const';
-import React, { FC } from 'react';
+import { ReactElement } from 'react';
 
 /**
  * Main page component
  */
-const Main: FC = () => (
+const Main = (): ReactElement => (
   <PageContainer Icon={MAIN.Icon}>
     <MainPageContent />
   </PageContainer>

@@ -1,15 +1,16 @@
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-import { Footer, Header } from 'components/Layout';
-import { Routes } from 'components/Navigation';
-import React, { FC } from 'react';
+import Footer from 'components/Layout/Footer';
+import Header from 'components/Layout/Header';
+import Routes from 'components/Navigation/Routes';
+import { ReactElement } from 'react';
 import { HashRouter } from 'react-router-dom';
-import useStyles from './styles';
+import useStyles from './App.styles';
 
 /**
  * Main application component
  */
-const App: FC = () => {
+const App = (): ReactElement => {
   const classes = useStyles();
   return (
     <Box className={classes.app} display='flex' flexDirection='column'>

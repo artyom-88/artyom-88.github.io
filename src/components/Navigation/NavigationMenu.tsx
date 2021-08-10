@@ -4,11 +4,11 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { PopoverOrigin } from '@material-ui/core/Popover/Popover';
 import AppsTwoToneIcon from '@material-ui/icons/AppsTwoTone';
-import NavigationMenuItem from 'components/Navigation/Menu/Item';
+import NavigationMenuItem from 'components/Navigation/NavigationMenuItem';
+import { IPageProps } from 'components/Pages/Pages.types';
 import { PAGES } from 'const';
-import React, { FC, MouseEvent, ReactNode, useCallback, useState } from 'react';
-import { IPageProps } from '../../Pages';
-import useStyles from './styles';
+import { MouseEvent, ReactElement, ReactNode, useCallback, useState } from 'react';
+import useStyles from './NavigationMenu.styles';
 
 export const ANCHOR_ORIGIN: PopoverOrigin = {
   vertical: 'bottom',
@@ -25,7 +25,7 @@ export const MENU_TITLE = 'Menu';
 /**
  * Navigation menu component
  */
-const NavigationMenu: FC = () => {
+const NavigationMenu = (): ReactElement => {
   const classes = useStyles();
   const [anchor, setAnchor] = useState<null | HTMLElement>(null);
 
@@ -63,16 +63,14 @@ const NavigationMenu: FC = () => {
         open={Boolean(anchor)}
         transformOrigin={TRANSFORM_ORIGIN}
       >
-        {PAGES.map(
-          (props: IPageProps): ReactNode => {
-            const { id } = props;
-            return (
-              <MenuItem disableGutters key={id}>
-                <NavigationMenuItem {...props} onClick={close} />
-              </MenuItem>
-            );
-          }
-        )}
+        {PAGES.map((props: IPageProps): ReactNode => {
+          const { id } = props;
+          return (
+            <MenuItem disableGutters key={id}>
+              <NavigationMenuItem {...props} onClick={close} />
+            </MenuItem>
+          );
+        })}
       </Menu>
     </Container>
   );

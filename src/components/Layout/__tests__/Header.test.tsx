@@ -1,6 +1,5 @@
-import { NavigationMenu } from 'components/Navigation';
+import NavigationMenu from 'components/Navigation/NavigationMenu';
 import { shallow, ShallowWrapper } from 'enzyme';
-import React from 'react';
 import Header from '../Header';
 
 describe('Header', () => {

@@ -4,10 +4,10 @@ import Typography from '@material-ui/core/Typography';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import { IClassName } from 'components/types';
+import { IClassName } from 'components/Components.types';
 import { BLANK, REL } from 'const';
-import React, { FC } from 'react';
-import useStyles from './styles';
+import { ReactElement } from 'react';
+import useStyles from './Footer.styles';
 
 export const RIGHTS_TEXT = '© 2020 All rights reserved';
 
@@ -18,7 +18,7 @@ const FACEBOOK = 'https://www.facebook.com/artyom.ganev';
 /**
  * Footer component
  */
-const Footer: FC<IClassName> = ({ className }: IClassName) => {
+const Footer = ({ className }: IClassName): ReactElement => {
   const classes = useStyles();
   return (
     <Container className={className} disableGutters fixed component='footer'>

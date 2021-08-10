@@ -1,11 +1,11 @@
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { contacts } from 'assets';
-import { PageContainer } from 'components/Pages';
-import useStyles from 'components/Pages/Contacts.styles';
+import PageContainer from 'components/Pages/PageContainer';
 import { BLANK, CONTACTS, REL } from 'const';
-import React, { FC } from 'react';
-import { useIsNarrow } from '../../hooks';
+import { useIsNarrow } from 'hooks';
+import { ReactElement, ReactNode, useMemo } from 'react';
+import useStyles from './Contacts.styles';
 
 /**
  * Contact options interface
@@ -20,7 +20,7 @@ interface IContact {
 /**
  * Contacts items markup
  */
-const renderItems = (narrow: boolean) => {
+const renderItems = (narrow: boolean): ReactNode[] => {
   const padding = narrow ? 1 : 2;
   const justifyContent = narrow ? 'space-between' : 'center';
   return contacts.data.map(({ key, link, title, value }: IContact) => (
@@ -40,12 +40,14 @@ const renderItems = (narrow: boolean) => {
 /**
  * Contacts page component
  */
-const Contacts: FC = () => {
+const Contacts = (): ReactElement => {
   const classes = useStyles();
   const narrow = useIsNarrow();
+  const items = useMemo(() => renderItems(narrow), [narrow]);
+
   return (
     <PageContainer centerTitle title={CONTACTS.name} Icon={CONTACTS.Icon}>
-      <Box className={classes.contactsContainer}>{renderItems(narrow)}</Box>
+      <Box className={classes.contactsContainer}>{items}</Box>
     </PageContainer>
   );
 };

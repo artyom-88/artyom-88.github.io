@@ -3,7 +3,7 @@ import HelpTwoToneIcon from '@material-ui/icons/HelpTwoTone';
 import HomeTwoTone from '@material-ui/icons/HomeTwoTone';
 import MailTwoToneIcon from '@material-ui/icons/MailTwoTone';
 import MenuBookTwoToneIcon from '@material-ui/icons/MenuBookTwoTone';
-import { IPageProps } from 'components/Pages';
+import { IPageProps } from 'components/Pages/Pages.types';
 
 export const ABOUT: IPageProps = { id: 'about', Icon: HelpTwoToneIcon, name: 'About', url: 'about' };
 export const BLOG: IPageProps = { id: 'blog', Icon: MenuBookTwoToneIcon, name: 'Blog', url: 'blog' };

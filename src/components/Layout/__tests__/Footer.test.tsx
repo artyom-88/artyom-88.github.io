@@ -3,10 +3,8 @@ import Typography from '@material-ui/core/Typography';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import { Footer } from 'components/Layout';
-import { RIGHTS_TEXT } from 'components/Layout/Footer';
+import Footer, { RIGHTS_TEXT } from 'components/Layout/Footer';
 import { shallow, ShallowWrapper } from 'enzyme';
-import React from 'react';
 
 describe('Footer', () => {
   const wrapper: ShallowWrapper = shallow(<Footer />);

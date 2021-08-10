@@ -1,8 +1,7 @@
-import { PageContainer } from 'components/Pages';
 import Main from 'components/Pages/Main';
 import MainPageContent from 'components/Pages/MainPageContent';
+import PageContainer from 'components/Pages/PageContainer';
 import { shallow, ShallowWrapper } from 'enzyme';
-import React from 'react';
 
 describe('Main page', () => {
   const wrapper: ShallowWrapper = shallow(<Main />);

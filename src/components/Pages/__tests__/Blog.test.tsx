@@ -1,10 +1,9 @@
 import Card from '@material-ui/core/Card';
 import { BLOG_ITEMS_MOCK } from '__mocks__';
-import { PageContainer } from 'components/Pages';
 import Blog from 'components/Pages/Blog';
+import PageContainer from 'components/Pages/PageContainer';
 import { useBlogItems } from 'components/Pages/Pages.hooks';
 import { shallow, ShallowWrapper } from 'enzyme';
-import React from 'react';
 
 jest.mock('components/Pages/Pages.hooks');
 

@@ -3,9 +3,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { artyom } from 'assets';
-import useStyles from 'components/Pages/Main.styles';
 import { BLANK, REL } from 'const';
-import React, { FC } from 'react';
+import { ReactElement } from 'react';
+import useStyles from './Main.styles';
 
 const LINKS = {
   Back: 'https://github.com/Artyom-Ganev/artyom-ganev-node',
@@ -15,7 +15,7 @@ const LINKS = {
 
 const TOOLTIP = 'Click to see sources';
 
-const MainPageContent: FC = () => {
+const MainPageContent = (): ReactElement => {
   const classes = useStyles();
   return (
     <Card raised>

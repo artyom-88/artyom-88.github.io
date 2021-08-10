@@ -1,11 +1,12 @@
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import { PageContainer, useCareerItems } from 'components/Pages';
-import useStyles from 'components/Pages/Career.styles';
+import PageContainer from 'components/Pages/PageContainer';
+import { useCareerItems } from 'components/Pages/Pages.hooks';
 import { BLANK, CAREER, REL } from 'const';
 import { CareerModel } from 'model';
-import React, { FC, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
+import useStyles from './Career.styles';
 
 const prepareTitle = (site: string, title: string, className: string): ReactNode => {
   const header = (
@@ -22,7 +23,7 @@ const prepareTitle = (site: string, title: string, className: string): ReactNode
   );
 };
 
-const Career: FC = () => {
+const Career = (): ReactElement => {
   const classes = useStyles();
   const items: CareerModel[] = useCareerItems();
   return (

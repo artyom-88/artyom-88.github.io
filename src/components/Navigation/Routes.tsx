@@ -1,16 +1,16 @@
-import { LoadingIndicator } from 'components/Navigation';
-import { PageContainer } from 'components/Pages';
-import React, { FC, lazy, Suspense } from 'react';
+import LoadingIndicator from 'components/Navigation/LoadingIndicator';
+import PageContainer from 'components/Pages/PageContainer';
+import { lazy, ReactElement, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-const Main = lazy(() => import('components/Pages/Main'));
-const About = lazy(() => import('components/Pages/About'));
-const Blog = lazy(() => import('components/Pages/Blog'));
-const Career = lazy(() => import('components/Pages/Career'));
-const Contacts = lazy(() => import('components/Pages/Contacts'));
-const NotFound = lazy(() => import('components/Pages/NotFound'));
+const Main = lazy(() => import(/* webpackChunkName: "main-page" */ 'components/Pages/Main'));
+const About = lazy(() => import(/* webpackChunkName: "about-page" */ 'components/Pages/About'));
+const Blog = lazy(() => import(/* webpackChunkName: "blog-page" */ 'components/Pages/Blog'));
+const Career = lazy(() => import(/* webpackChunkName: "career-page" */ 'components/Pages/Career'));
+const Contacts = lazy(() => import(/* webpackChunkName: "contacts-page" */ 'components/Pages/Contacts'));
+const NotFound = lazy(() => import(/* webpackChunkName: "not-found-page" */ 'components/Pages/NotFound'));
 
-const Indicator: FC = () => (
+const Indicator = (): ReactElement => (
   <PageContainer>
     <LoadingIndicator />
   </PageContainer>
@@ -19,15 +19,15 @@ const Indicator: FC = () => (
 /**
  * Application routes component
  */
-const Routes: FC = () => (
+const Routes = (): ReactElement => (
   <Suspense fallback={<Indicator />}>
     <Switch>
       <Redirect from='/main' to='/' />
-      <Route exact={true} path='/' component={Main} />
-      <Route exact={true} path='/about' component={About} />
-      <Route exact={true} path='/blog' component={Blog} />
-      <Route exact={true} path='/career' component={Career} />
-      <Route exact={true} path='/contacts' component={Contacts} />
+      <Route exact path='/' component={Main} />
+      <Route exact path='/about' component={About} />
+      <Route exact path='/blog' component={Blog} />
+      <Route exact path='/career' component={Career} />
+      <Route exact path='/contacts' component={Contacts} />
       <Route component={NotFound} />
     </Switch>
   </Suspense>

@@ -1,10 +1,9 @@
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { NavigationMenuItem } from 'components/Navigation';
+import NavigationMenuItem from 'components/Navigation/NavigationMenuItem';
+import { IPageProps } from 'components/Pages/Pages.types';
 import { PAGES } from 'const';
-import { IPageProps } from 'container';
 import { shallow } from 'enzyme';
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 describe('NavigationMenuItem', () => {

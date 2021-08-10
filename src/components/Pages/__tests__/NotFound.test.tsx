@@ -1,8 +1,7 @@
 import Typography from '@material-ui/core/Typography';
-import { PageContainer } from 'components/Pages';
 import NotFound from 'components/Pages/NotFound';
+import PageContainer from 'components/Pages/PageContainer';
 import { shallow, ShallowWrapper } from 'enzyme';
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 describe('NotFound', () => {

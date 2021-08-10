@@ -1,5 +1,5 @@
 docs/**
 public/**
-src/registerServiceWorker.ts
 src/**/__tests__/**
 src/**/styles.ts
+src/**/*.styles.ts

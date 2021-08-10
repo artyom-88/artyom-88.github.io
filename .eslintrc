@@ -8,10 +8,10 @@
   "parser": "@typescript-eslint/parser",
   "extends": [
     "plugin:react/recommended",
-    "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "prettier"
   ],
   "root": true,
   "parserOptions": {
@@ -24,10 +24,10 @@
   "plugins": [
     "react",
     "@typescript-eslint",
-    "prettier",
     "react-hooks",
     "jest",
-    "import"
+    "import",
+    "prettier"
   ],
   "settings": {
     "import/extensions": [
@@ -85,6 +85,8 @@
           "caseInsensitive": true
         }
       }
-    ]
+    ],
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off"
   }
 }

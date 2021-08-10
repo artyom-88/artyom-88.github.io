@@ -2,10 +2,10 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { NavigationMenu, NavigationMenuItem } from 'components/Navigation';
+import NavigationMenu from 'components/Navigation/NavigationMenu';
+import NavigationMenuItem from 'components/Navigation/NavigationMenuItem';
 import { PAGES } from 'const';
 import { shallow } from 'enzyme';
-import React from 'react';
 
 describe('NavigationMenu', () => {
   const wrapper = shallow(<NavigationMenu />);

@@ -1,4 +1,4 @@
-import LoadingIndicator from 'components/Navigation/LoadingIndicator/LoadingIndicator';
+import LoadingIndicator from 'components/Navigation/LoadingIndicator';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 

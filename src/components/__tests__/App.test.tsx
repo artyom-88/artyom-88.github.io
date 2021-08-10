@@ -3,18 +3,15 @@ import Footer from 'components/Layout/Footer';
 import Header from 'components/Layout/Header';
 import Routes from 'components/Navigation/Routes';
 import { mount } from 'enzyme';
-import { Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 import store from 'store';
 
 describe('App', () => {
   const component = mount(
-    <Suspense fallback={null}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </Suspense>
+    <Provider store={store}>
+      <App />
+    </Provider>
   );
 
   it('Should render HashRouter', () => {

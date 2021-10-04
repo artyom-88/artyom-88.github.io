@@ -7,11 +7,8 @@
   },
   "parser": "@typescript-eslint/parser",
   "extends": [
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:import/typescript",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "root": true,
   "parserOptions": {
@@ -23,7 +20,6 @@
   },
   "plugins": [
     "react",
-    "@typescript-eslint",
     "react-hooks",
     "jest",
     "import",

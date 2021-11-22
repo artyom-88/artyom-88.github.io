@@ -44,7 +44,7 @@
     "@types/enzyme": "^3.10.9",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/enzyme-to-json": "^1.5.4",
-    "@types/jest": "^26.0.24",
+    "@types/jest": "^27.0.3",
     "@types/node": "^16.4.13",
     "@types/react": "^17.0.16",
     "@types/react-dom": "^17.0.9",

@@ -2,6 +2,7 @@
 **Preparation:**
 1. Clone project with *git clone* command.
 2. Install all dependencies with *yarn install*.
+3. Configure environment variables (add `.env.local` using `.env.example`).
 - - - -
 **Commands:**
 * *yarn start* - run local development server at http://localhost:8081/

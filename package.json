@@ -14,7 +14,7 @@
   },
   "scripts": {
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
-    "audit": "yarn-audit-ci --high",
+    "audit": "yarn-audit-ci",
     "build": "react-scripts build",
     "deploy": "gh-pages -o production -d build -t",
     "lint": "eslint --fix \"src/**/*.ts?\"",

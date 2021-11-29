@@ -67,7 +67,7 @@
     "gh-pages": "3.2.3",
     "husky": "7.0.4",
     "lint-staged": "12.1.2",
-    "prettier": "2.4.1",
+    "prettier": "2.5.0",
     "react-scripts": "4.0.3",
     "redux-saga-test-plan": "4.0.4",
     "source-map-explorer": "2.5.2",

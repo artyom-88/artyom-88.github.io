@@ -44,7 +44,7 @@
   "devDependencies": {
     "@redux-saga/is": "1.1.2",
     "@redux-saga/symbols": "1.1.2",
-    "@testing-library/jest-dom": "5.15.0",
+    "@testing-library/jest-dom": "5.16.1",
     "@types/enzyme": "3.10.10",
     "@types/enzyme-to-json": "1.5.4",
     "@types/jest": "26.0.14",

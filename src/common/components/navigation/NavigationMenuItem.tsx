@@ -9,9 +9,9 @@ const NavigationMenuItem = ({ Icon, name, onClick, url }: INavigationMenuItem): 
   const classes = useStyles();
   return (
     <NavLink
-      exact={!url}
+      // exact={!url}
       className={classes.navigationMenuLink}
-      activeClassName='active'
+      // activeClassName='active'
       to={`/${url}`}
       onClick={onClick}
     >

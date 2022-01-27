@@ -17,7 +17,7 @@ export const BLOG_RAW_ITEM_MOCK: BlogDTO = {
   title: BLOG_TITLE_MOCK,
 };
 
-export const BLOG_RAW_ITEMS_MOCK: readonly BlogDTO[] = [BLOG_RAW_ITEM_MOCK] as const;
+export const BLOG_RAW_ITEMS_MOCK: BlogDTO[] = [BLOG_RAW_ITEM_MOCK];
 
 export const BLOG_LIST_RESPONSE_MOCK = {
   data: BLOG_RAW_ITEMS_MOCK,
@@ -35,4 +35,4 @@ export const BLOG_ITEM_MOCK: BlogModel = {
   linkCaption: BLOG_LINK_CAPTION_MOCK,
 };
 
-export const BLOG_ITEMS_MOCK: readonly BlogModel[] = [BLOG_ITEM_MOCK] as const;
+export const BLOG_ITEMS_MOCK: BlogModel[] = [BLOG_ITEM_MOCK];

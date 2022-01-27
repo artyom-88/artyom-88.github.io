@@ -1,5 +1,6 @@
+import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 import { BaseModel } from 'common/types/common.types';
-import { BaseState } from 'common/types/store.types';
+import { BaseState, ListReducer } from 'common/types/store.types';
 import { Moment } from 'moment';
 
 export interface BlogBase extends BaseModel {
@@ -20,3 +21,7 @@ export interface BlogData {
 }
 
 export type BlogState = BaseState<BlogData>;
+
+export interface BlogReducers extends ListReducer<BlogState, BlogModel> {
+  // empty
+}

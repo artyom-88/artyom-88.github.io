@@ -1,17 +1,26 @@
 import { RootState } from 'common/types/store.types';
 import { useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { selectCareerList } from './career.selector';
-import { careerLoadList } from './career.slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { isListLoading, selectList } from './career.selector';
+import { actions } from './career.slice';
 import { CareerModel } from './career.types';
 
-export const useCareerItems = (): CareerModel[] => {
-  const items = useSelector<RootState, CareerModel[]>(selectCareerList, shallowEqual);
+interface UseCareerItems {
+  items: CareerModel[];
+  isLoading: boolean;
+}
+
+export const useCareerItems = (): UseCareerItems => {
   const dispatch = useDispatch();
+  const items = useSelector<RootState, CareerModel[]>(selectList);
+  const isLoading = useSelector<RootState, boolean>(isListLoading);
 
   useEffect(() => {
-    dispatch(careerLoadList(undefined));
+    dispatch(actions.loadList());
+    return () => {
+      dispatch(actions.clearList());
+    };
   }, [dispatch]);
 
-  return items;
+  return { isLoading, items };
 };

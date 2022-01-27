@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { initialState } from './career.constants';
-import { CareerReducer, CareerState } from './career.types';
+import { initialState } from './contact.constants';
+import { ContactReducers, ContactState } from './contact.types';
 
-const careerSlice = createSlice<CareerState, CareerReducer>({
-  name: 'career',
+const slice = createSlice<ContactState, ContactReducers>({
+  name: 'contact',
   initialState,
   reducers: {
-    loadList(state: CareerState) {
+    loadList(state: ContactState) {
       state.meta.loading = true;
     },
     loadListSuccess(state, { payload }) {
@@ -23,6 +23,6 @@ const careerSlice = createSlice<CareerState, CareerReducer>({
   },
 });
 
-export const { actions } = careerSlice;
+export const { actions } = slice;
 
-export default careerSlice.reducer;
+export default slice.reducer;

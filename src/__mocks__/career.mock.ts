@@ -25,7 +25,7 @@ export const CAREER_RAW_ITEM_MOCK: CareerDTO = {
   tools: CAREER_TOOLS_MOCK,
 };
 
-export const CAREER_RAW_ITEMS_MOCK: readonly CareerDTO[] = [CAREER_RAW_ITEM_MOCK] as const;
+export const CAREER_RAW_ITEMS_MOCK: CareerDTO[] = [CAREER_RAW_ITEM_MOCK];
 
 export const CAREER_LIST_RESPONSE_MOCK = {
   data: CAREER_RAW_ITEMS_MOCK,
@@ -46,4 +46,4 @@ export const CAREER_ITEM_MOCK: CareerModel = {
   tools: CAREER_TOOLS_MOCK,
 };
 
-export const CAREER_ITEMS_MOCK: readonly CareerModel[] = [CAREER_ITEM_MOCK] as const;
+export const CAREER_ITEMS_MOCK: CareerModel[] = [CAREER_ITEM_MOCK];

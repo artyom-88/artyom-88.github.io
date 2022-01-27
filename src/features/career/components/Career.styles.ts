@@ -1,12 +1,16 @@
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const color = '#70719b';
 
-export default makeStyles(() =>
+export default makeStyles((theme: Theme) =>
   createStyles({
     careerItem: {
-      lineHeight: '24px',
+      marginBottom: theme.spacing(2),
+    },
+    careerItemContent: {
       letterSpacing: '1px',
+      lineHeight: '24px',
+      padding: theme.spacing(2),
       wordSpacing: '1px',
     },
     careerDetail: {

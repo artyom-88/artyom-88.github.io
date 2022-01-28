@@ -1,5 +1,5 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { rybinsk } from '../../assets';
+import { rybinsk } from 'assets';
 
 const APP_HEADER_HEIGHT = 42;
 

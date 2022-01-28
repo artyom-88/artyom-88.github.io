@@ -1,14 +1,14 @@
 import Card from '@material-ui/core/Card';
 import { BLOG_ITEMS_MOCK } from '__mocks__/blog.mock';
 import PageContainer from 'common/components/pages/PageContainer';
+import useListItems from 'common/hooks/useListItems';
 import { shallow, ShallowWrapper } from 'enzyme';
-import { useBlogItems } from 'features/blog/blog.hooks';
 import Blog from 'features/blog/components/Blog';
 
-jest.mock('features/blog/blog.hooks');
+jest.mock('common/hooks/useListItems');
 
 describe('Blog page', () => {
-  (useBlogItems as jest.Mock).mockReturnValue(BLOG_ITEMS_MOCK);
+  (useListItems as jest.Mock).mockReturnValue({ isLoading: false, items: BLOG_ITEMS_MOCK });
 
   const wrapper: ShallowWrapper = shallow(<Blog />);
 

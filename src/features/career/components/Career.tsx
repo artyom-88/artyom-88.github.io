@@ -1,11 +1,12 @@
-import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import PageContainer from 'common/components/pages/PageContainer';
 import { BLANK, REL } from 'common/const/html.const';
 import { CAREER } from 'common/const/pages.const';
-import { useCareerItems } from 'features/career/career.hooks';
-import { CareerModel } from 'features/career/career.types';
+import useListItems from 'common/hooks/useListItems';
+import selectors from 'features/career/career.selector';
+import { actions } from 'features/career/career.slice';
+import { CareerModel, CareerState } from 'features/career/career.types';
 import { formatDates } from 'features/career/career.utils';
 import { ReactElement, ReactNode } from 'react';
 import useStyles from './Career.styles';
@@ -27,15 +28,15 @@ const prepareTitle = (site: string, title: string, className: string): ReactNode
 
 const Career = (): ReactElement => {
   const classes = useStyles();
-  const items: CareerModel[] = useCareerItems();
+  const { isLoading, items } = useListItems<CareerState, CareerModel>(actions, selectors);
   return (
-    <PageContainer title={CAREER.name} Icon={CAREER.Icon}>
-      {items.map((item: CareerModel) => {
+    <PageContainer isLoading={isLoading} title={CAREER.name} Icon={CAREER.Icon}>
+      {items.map((item) => {
         const { _id, site, title, post, description, tools } = item;
         return (
-          <Box key={_id} mb={2}>
+          <div key={_id} className={classes.careerItem}>
             <Card raised>
-              <Box className={classes.careerItem} p={2}>
+              <div className={classes.careerItemContent}>
                 {prepareTitle(site, title, classes.careerTitle)}
                 <Typography variant='h6' paragraph className={classes.careerDates}>
                   {formatDates(item)}
@@ -44,14 +45,14 @@ const Career = (): ReactElement => {
                 <Typography variant='h6' paragraph>
                   {description}
                 </Typography>
-                <Box display='flex' flexDirection='column'>
+                <div className='ag-flexbox ag-flexColumn'>
                   <Typography variant='h6' paragraph>
                     Tools:&nbsp;{tools}
                   </Typography>
-                </Box>
-              </Box>
+                </div>
+              </div>
             </Card>
-          </Box>
+          </div>
         );
       })}
     </PageContainer>

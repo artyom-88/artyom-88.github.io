@@ -1,34 +1,28 @@
-import { createSlice, PayloadAction, SliceCaseReducers } from '@reduxjs/toolkit';
-import { BlogModel, BlogState } from './blog.types';
+import { createSlice } from '@reduxjs/toolkit';
+import { initialState } from './blog.constants';
+import { BlogReducers, BlogState } from './blog.types';
 
-export const initialState: BlogState = {
-  data: {
-    list: [],
-  },
-  meta: {
-    error: '',
-    loading: false,
-  },
-};
-
-const { actions, reducer } = createSlice<BlogState, SliceCaseReducers<BlogState>>({
+const blogSlice = createSlice<BlogState, BlogReducers>({
   name: 'blog',
   initialState,
   reducers: {
-    blogLoadList(state: BlogState) {
+    loadList(state: BlogState) {
       state.meta.loading = true;
     },
-    blogLoadListSuccess(state, { payload }: PayloadAction<BlogModel[]>) {
+    loadListSuccess(state, { payload }) {
       state.data.list = payload;
       state.meta.loading = false;
     },
-    blogLoadListError(state, { payload }: PayloadAction<string>) {
+    loadListError(state, { payload }) {
       state.meta.error = payload;
       state.meta.loading = false;
+    },
+    clearList(state) {
+      state.data.list = [];
     },
   },
 });
 
-export const { blogLoadList, blogLoadListSuccess, blogLoadListError } = actions;
+export const { actions } = blogSlice;
 
-export default reducer;
+export default blogSlice.reducer;

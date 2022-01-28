@@ -1,5 +1,6 @@
 import store from 'app/store';
 import App from 'common/components/App';
+import ErrorBoundary from 'common/components/ErrorBoundary';
 import Footer from 'common/components/layout/Footer';
 import Header from 'common/components/layout/Header';
 import Routes from 'common/components/Routes';
@@ -20,6 +21,10 @@ describe('App', () => {
 
   it('Should render Header', () => {
     expect(component.find(Header)).toHaveLength(1);
+  });
+
+  it('Should render ErrorBoundary', () => {
+    expect(component.find(ErrorBoundary)).toHaveLength(1);
   });
 
   it('Should render Routes', () => {

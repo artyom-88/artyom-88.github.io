@@ -8,13 +8,7 @@ import { INavigationMenuItem } from './NavigationMenu.types';
 const NavigationMenuItem = ({ Icon, name, onClick, url }: INavigationMenuItem): ReactElement => {
   const classes = useStyles();
   return (
-    <NavLink
-      exact={!url}
-      className={classes.navigationMenuLink}
-      activeClassName='active'
-      to={`/${url}`}
-      onClick={onClick}
-    >
+    <NavLink className={classes.navigationMenuLink} to={`/${url}`} onClick={onClick}>
       {Icon && (
         <ListItemIcon>
           <Icon fontSize='small' />

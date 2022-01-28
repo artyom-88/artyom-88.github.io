@@ -1,4 +1,3 @@
-import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -22,7 +21,7 @@ const Footer = ({ className }: ComponentWithClassName): ReactElement => {
   const classes = useStyles();
   return (
     <Container className={className} disableGutters fixed component='footer'>
-      <Box display='flex' alignItems='center'>
+      <div className='ag-flexbox ag-alignItems_center'>
         <Typography color='textSecondary' className={classes.footerText}>
           {RIGHTS_TEXT}
         </Typography>
@@ -35,7 +34,7 @@ const Footer = ({ className }: ComponentWithClassName): ReactElement => {
         <a href={FACEBOOK} target={BLANK} rel={REL}>
           <FacebookIcon color='action' className={classes.footerIcon} />
         </a>
-      </Box>
+      </div>
     </Container>
   );
 };

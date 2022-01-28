@@ -4,12 +4,19 @@ import Typography from '@material-ui/core/Typography';
 import { IPageContainer } from 'common/components/pages/Pages.types';
 import useIsNarrow from 'common/hooks/useIsNarrow';
 import { PropsWithChildren, ReactElement } from 'react';
+import LoadingIndicator from '../layout/LoadingIndicator';
 import useStyles from './PageContainer.styles';
 
 /**
  * Page container with title
  */
-const PageContainer = ({ children, centerTitle, Icon, title }: PropsWithChildren<IPageContainer>): ReactElement => {
+const PageContainer = ({
+  Icon,
+  centerTitle,
+  children,
+  isLoading = false,
+  title,
+}: PropsWithChildren<IPageContainer>): ReactElement => {
   const classes = useStyles();
   const justifyContent = centerTitle ? 'center' : 'flex-start';
   const narrow = useIsNarrow();
@@ -24,7 +31,7 @@ const PageContainer = ({ children, centerTitle, Icon, title }: PropsWithChildren
             </Typography>
           )}
         </Box>
-        {children}
+        {isLoading ? <LoadingIndicator /> : children}
       </Box>
     </Paper>
   );

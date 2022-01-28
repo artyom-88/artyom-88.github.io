@@ -7,6 +7,8 @@ const INDICATOR_SIZE = '120px';
 export default makeStyles(() =>
   createStyles({
     loadingIndicatorContainer: {
+      flexBasis: '100%',
+      flexGrow: 1,
       height: '100%',
     },
     loadingIndicator: {

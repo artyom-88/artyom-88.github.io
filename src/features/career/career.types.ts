@@ -1,5 +1,5 @@
 import { BaseModel } from 'common/types/common.types';
-import { BaseState } from 'common/types/store.types';
+import { BaseState, ListReducer } from 'common/types/store.types';
 import { Moment } from 'moment';
 
 export interface CareerBase extends BaseModel {
@@ -24,3 +24,7 @@ export interface CareerData {
 }
 
 export type CareerState = BaseState<CareerData>;
+
+export interface CareerReducer extends ListReducer<CareerState, CareerModel> {
+  // empty
+}

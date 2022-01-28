@@ -1,4 +1,3 @@
-import Box from '@material-ui/core/Box';
 import { ReactElement } from 'react';
 import useStyles from './LoadingIndicator.styles';
 
@@ -7,17 +6,11 @@ import useStyles from './LoadingIndicator.styles';
  */
 const LoadingIndicator = (): ReactElement => {
   const classes = useStyles();
+  const className = `${classes.loadingIndicatorContainer} ag-flexbox ag-justifyContent_center ag-alignItems_center`;
   return (
-    <Box
-      alignItems='center'
-      className={classes.loadingIndicatorContainer}
-      display='flex'
-      flexBasis='100%'
-      flexGrow={1}
-      justifyContent='center'
-    >
+    <div className={className}>
       <div className={classes.loadingIndicator} />
-    </Box>
+    </div>
   );
 };
 

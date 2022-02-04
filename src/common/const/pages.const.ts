@@ -24,3 +24,6 @@ export const MAIN_PAGE_META: PageProps = { id: 'main', Icon: HomeTwoTone, name: 
  * PagesConst settings
  */
 export const PAGES_LIST_META: PageProps[] = [MAIN_PAGE_META, ABOUT_PAGE_META, BLOG, CAREER, CONTACTS_PAGE_META];
+
+export const DEFAULT_DESCRIPTION =
+  'Senior Software Developer. TypeScript, React, Redux, CI/CD, unit testing, code review, Java, Node JS, Linux';

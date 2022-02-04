@@ -12,20 +12,18 @@ const App = (): ReactElement => {
   const classes = useStyles();
   const className = `${classes.app} ag-flexbox ag-flexColumn`;
   return (
-    <>
+    <ErrorBoundary>
       <CssBaseline />
       <div className={className}>
         <HashRouter>
           <Container className={classes.appContent} disableGutters fixed>
             <Header className={classes.appHeader} />
-            <ErrorBoundary>
-              <Routes />
-            </ErrorBoundary>
-            <Footer className={classes.appFooter} />
+            <Routes />
           </Container>
+          <Footer className={classes.appFooter} />
         </HashRouter>
       </div>
-    </>
+    </ErrorBoundary>
   );
 };
 

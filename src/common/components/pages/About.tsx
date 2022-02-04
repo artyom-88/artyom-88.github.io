@@ -11,9 +11,6 @@ import useStyles from './About.styles';
 
 export const TITLE = 'Hi! My name is Artyom.';
 
-/**
- * About page component
- */
 const About = (): ReactElement => {
   const classes = useStyles();
   return (

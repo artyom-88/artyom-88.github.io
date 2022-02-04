@@ -14,9 +14,6 @@ const GITHUB = 'https://github.com/Artyom-Ganev';
 const LINKEDIN = 'https://www.linkedin.com/in/artem-ganev-185b38192';
 const FACEBOOK = 'https://www.facebook.com/artyom.ganev';
 
-/**
- * Footer component
- */
 const Footer = ({ className }: ComponentWithClassName): ReactElement => {
   const classes = useStyles();
   return (

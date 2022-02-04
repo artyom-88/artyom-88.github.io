@@ -8,9 +8,6 @@ import { HashRouter } from 'react-router-dom';
 import useStyles from './App.styles';
 import ErrorBoundary from './ErrorBoundary';
 
-/**
- * Main application component
- */
 const App = (): ReactElement => {
   const classes = useStyles();
   const className = `${classes.app} ag-flexbox ag-flexColumn`;

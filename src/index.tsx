@@ -8,9 +8,6 @@ import 'assets/styles.css';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-/**
- * Site root component
- */
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>

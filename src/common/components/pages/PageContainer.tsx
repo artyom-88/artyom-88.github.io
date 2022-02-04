@@ -9,9 +9,6 @@ import { PropsWithChildren, ReactElement } from 'react';
 import { Helmet } from 'react-helmet';
 import useStyles from './PageContainer.styles';
 
-/**
- * Page container with title
- */
 const PageContainer = ({
   Icon,
   centerTitle,

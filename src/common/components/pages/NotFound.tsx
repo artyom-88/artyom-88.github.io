@@ -5,9 +5,6 @@ import { Link } from 'react-router-dom';
 
 const TITLE = 'Page Not Found';
 
-/**
- * 404 page not component
- */
 const NotFound = (): ReactElement => (
   <PageContainer title={TITLE}>
     <Typography paragraph variant='h4'>

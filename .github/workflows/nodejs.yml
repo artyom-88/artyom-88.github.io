@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Run audit
-        run: yarn run audit
+        run: yarn run audit --high
       - name: Run tests
         run: yarn testCI
       - name: Build app

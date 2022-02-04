@@ -1,4 +1,3 @@
-import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -22,12 +21,9 @@ const About = (): ReactElement => {
             {TITLE}
           </Typography>
           {bio.data.map((value: string, key: number) => (
-            <div className='ag-flexbox' key={key}>
-              <RadioButtonUncheckedOutlinedIcon />
-              <Typography className={classes.aboutPageBlock} paragraph variant='h6'>
-                {value}
-              </Typography>
-            </div>
+            <Typography key={key} className={classes.aboutPageBlock} paragraph variant='h6'>
+              {value}
+            </Typography>
           ))}
         </CardContent>
       </Card>

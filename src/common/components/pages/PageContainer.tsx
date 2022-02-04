@@ -28,12 +28,12 @@ const PageContainer = ({
       </Helmet>
       <Paper className={classes.pageContainer} square>
         <Box px={narrow ? 2 : 4}>
-          <Box display='flex' alignItems='center' justifyContent={justifyContent} pb={1}>
+          <Box display='flex' alignItems='center' justifyContent={justifyContent} mb={1}>
             {Icon && <Icon fontSize='large' />}
             {title && (
-              <Typography variant='h5' className={classes.pageContainerTitle}>
-                {title}
-              </Typography>
+              <div className={classes.pageContainerTitle}>
+                <Typography variant='h5'>{title}</Typography>
+              </div>
             )}
           </Box>
           {isLoading ? <LoadingIndicator /> : children}

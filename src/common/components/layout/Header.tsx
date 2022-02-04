@@ -19,7 +19,11 @@ const Header = ({ className }: ComponentWithClassName): ReactElement => {
             ({ id, name, url }: PageProps): ReactNode => (
               <ListItem key={id} color={theme.palette.common.white}>
                 <NavLink className='ag-flexbox ag-justifyContent_center ag-alignItems_center' to={`/${url}`}>
-                  <ListItemText primary={name} color='inherit' primaryTypographyProps={{ fontSize: 24 }} />
+                  <ListItemText
+                    color='inherit'
+                    primary={name}
+                    primaryTypographyProps={{ fontSize: theme.spacing(3) }}
+                  />
                 </NavLink>
               </ListItem>
             )

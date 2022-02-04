@@ -21,7 +21,7 @@ export interface BaseModel {
 }
 
 export interface ComponentWithClassName {
-  className?: string;
+  className: string;
 }
 
 export type Object<TValue = unknown> = Record<string, TValue>;

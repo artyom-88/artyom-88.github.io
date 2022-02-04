@@ -16,13 +16,13 @@ const App = (): ReactElement => {
       <CssBaseline />
       <div className={className}>
         <HashRouter>
-          <Header className={classes.appHeader} />
-          <Container className={classes.appContainer} disableGutters fixed>
+          <Container className={classes.appContent} disableGutters fixed>
+            <Header className={classes.appHeader} />
             <ErrorBoundary>
               <Routes />
             </ErrorBoundary>
+            <Footer className={classes.appFooter} />
           </Container>
-          <Footer className={classes.appFooter} />
         </HashRouter>
       </div>
     </>

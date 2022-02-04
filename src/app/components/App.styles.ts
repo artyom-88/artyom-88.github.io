@@ -1,11 +1,11 @@
 import { Theme } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import { rybinsk } from 'assets';
-
-const APP_HEADER_HEIGHT = 42;
+import { FOOTER_HEIGHT_RATE, HEADER_HEIGHT_RATE } from 'common/const/layout.const';
 
 export default makeStyles((theme: Theme) => {
-  const footerHeight = theme.spacing(5);
+  const footerHeight = theme.spacing(FOOTER_HEIGHT_RATE);
+  const headerHeight = theme.spacing(HEADER_HEIGHT_RATE);
   return {
     app: {
       backgroundImage: `url('${rybinsk}')`,
@@ -16,25 +16,17 @@ export default makeStyles((theme: Theme) => {
       right: 0,
       top: 0,
     },
-    appContainer: {
-      height: `calc(100% - ${footerHeight}px)`,
-      paddingTop: `${APP_HEADER_HEIGHT}px`,
+    appHeader: {
+      height: `${headerHeight}`,
+    },
+    appContent: {
+      height: `calc(100% - ${footerHeight})`,
       marginBottom: `${footerHeight}px`,
+      paddingTop: `${headerHeight}px`,
     },
     appFooter: {
-      alignItems: 'center',
-      backgroundColor: theme.palette.primary.main,
       bottom: 0,
-      color: theme.palette.common.white,
-      display: 'flex',
       height: `${footerHeight}px`,
-      justifyContent: 'center',
-      left: 0,
-      position: 'fixed',
-      right: 0,
-    },
-    appHeader: {
-      height: `${APP_HEADER_HEIGHT}px`,
       left: 0,
       position: 'fixed',
       right: 0,

@@ -11,6 +11,14 @@ a:visited {
   color: #70719b;
 }
 
+nav a {
+  color: #fff;
+}
+
+nav a:visited {
+  color: #fff;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -36,6 +44,10 @@ h3 {
 
 .ag-alignItems_center {
   align-items: center;
+}
+
+.ag-alignItems_end {
+  align-items: flex-end;
 }
 
 .ag-justifyContent_center {

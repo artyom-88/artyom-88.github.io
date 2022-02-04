@@ -24,7 +24,7 @@ const Routes = (): ReactElement => (
       <Route path='/' element={<About />} />
       <Route path='/blog' element={<Blog />} />
       <Route path='/career' element={<Career />} />
-      <Route element={<NotFound />} />
+      <Route path='*' element={<NotFound />} />
     </ReactRoutes>
   </Suspense>
 );

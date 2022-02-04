@@ -1,11 +1,12 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { rybinsk } from 'assets';
 
 const APP_HEADER_HEIGHT = 42;
 
 export default makeStyles((theme: Theme) => {
   const footerHeight = theme.spacing(5);
-  return createStyles({
+  return {
     app: {
       backgroundImage: `url('${rybinsk}')`,
       backgroundSize: 'cover',
@@ -38,5 +39,5 @@ export default makeStyles((theme: Theme) => {
       position: 'fixed',
       right: 0,
     },
-  });
+  };
 });

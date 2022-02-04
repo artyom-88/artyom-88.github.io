@@ -1,5 +1,5 @@
-import { OverridableComponent } from '@material-ui/core/OverridableComponent';
-import { SvgIconTypeMap } from '@material-ui/core/SvgIcon/SvgIcon';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
+import { SvgIconTypeMap } from '@mui/material/SvgIcon/SvgIcon';
 
 export interface ComponentWithIcon {
   Icon?: OverridableComponent<SvgIconTypeMap>;

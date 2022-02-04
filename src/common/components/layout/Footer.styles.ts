@@ -1,15 +1,14 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
-export default makeStyles((theme: Theme) =>
-  createStyles({
-    footerText: {
-      fontWeight: 'bold',
+export default makeStyles((theme: Theme) => ({
+  footerText: {
+    fontWeight: 'bold',
+  },
+  footerIcon: {
+    marginLeft: theme.spacing(1),
+    '&:hover': {
+      color: theme.palette.common.white,
     },
-    footerIcon: {
-      marginLeft: theme.spacing(1),
-      '&:hover': {
-        color: theme.palette.common.white,
-      },
-    },
-  })
-);
+  },
+}));

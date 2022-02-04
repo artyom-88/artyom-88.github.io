@@ -1,4 +1,4 @@
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import NotFound from 'common/components/pages/NotFound';
 import PageContainer from 'common/components/pages/PageContainer';
 import { shallow, ShallowWrapper } from 'enzyme';

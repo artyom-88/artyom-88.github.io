@@ -1,8 +1,8 @@
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import Footer, { RIGHTS_TEXT } from 'common/components/layout/Footer';
 import { shallow, ShallowWrapper } from 'enzyme';
 

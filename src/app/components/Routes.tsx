@@ -3,7 +3,6 @@ import PageContainer from 'common/components/pages/PageContainer';
 import { lazy, ReactElement, Suspense } from 'react';
 import { Navigate, Route, Routes as ReactRoutes } from 'react-router-dom';
 
-const Main = lazy(() => import(/* webpackChunkName: "main-page" */ 'common/components/pages/Main'));
 const About = lazy(() => import(/* webpackChunkName: "about-page" */ 'common/components/pages/About'));
 const Blog = lazy(() => import(/* webpackChunkName: "blog-page" */ 'features/blog/components/Blog'));
 const Career = lazy(() => import(/* webpackChunkName: "career-page" */ 'features/career/components/Career'));
@@ -22,9 +21,8 @@ const Indicator = (): ReactElement => (
 const Routes = (): ReactElement => (
   <Suspense fallback={<Indicator />}>
     <ReactRoutes>
-      <Route path='/main' element={<Navigate to='/' />} />
-      <Route path='/' element={<Main />} />
-      <Route path='/about' element={<About />} />
+      <Route path='/about' element={<Navigate to='/' />} />
+      <Route path='/' element={<About />} />
       <Route path='/blog' element={<Blog />} />
       <Route path='/career' element={<Career />} />
       <Route path='/contacts' element={<Contacts />} />

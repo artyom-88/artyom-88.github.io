@@ -1,7 +1,7 @@
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import NavigationMenu from 'common/components/navigation/NavigationMenu';
 import NavigationMenuItem from 'common/components/navigation/NavigationMenuItem';
 import { PAGES_LIST_META } from 'common/const/pages.const';

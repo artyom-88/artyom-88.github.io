@@ -1,33 +1,28 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 const textDecoration = 'underline';
 
-export default makeStyles((theme: Theme) =>
-  createStyles({
-    navigationMenu: {
-      backgroundColor: theme.palette.primary.main,
-    },
-    navigationMenuButton: {
-      minWidth: '152px',
-    },
-    navigationMenuLink: {
-      '&.active': {
-        textDecoration,
-        '&:hover': {
-          textDecoration,
-        },
-      },
+export default makeStyles((theme: Theme) => ({
+  navigationMenu: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  navigationMenuLink: {
+    '&.active': {
+      textDecoration,
       '&:hover': {
-        textDecoration: 'none',
+        textDecoration,
       },
-      alignItems: 'center',
-      color: '#343648',
-      display: 'flex',
-      flexGrow: 1,
-      paddingBottom: theme.spacing(1),
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-      paddingTop: theme.spacing(1),
     },
-  })
-);
+    '&:hover': {
+      textDecoration: 'none',
+    },
+    alignItems: 'center',
+    color: '#343648',
+    display: 'flex',
+    paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingTop: theme.spacing(1),
+  },
+}));

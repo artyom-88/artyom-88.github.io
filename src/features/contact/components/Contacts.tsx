@@ -1,5 +1,5 @@
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import PageContainer from 'common/components/pages/PageContainer';
 import { BLANK, REL } from 'common/const/html.const';
 import { CONTACTS_PAGE_META } from 'common/const/pages.const';

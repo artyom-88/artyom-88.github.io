@@ -1,9 +1,9 @@
+import App from 'app/components/App';
+import ErrorBoundary from 'app/components/ErrorBoundary';
+import Routes from 'app/components/Routes';
 import store from 'app/store';
-import App from 'common/components/App';
-import ErrorBoundary from 'common/components/ErrorBoundary';
 import Footer from 'common/components/layout/Footer';
 import Header from 'common/components/layout/Header';
-import Routes from 'common/components/Routes';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';

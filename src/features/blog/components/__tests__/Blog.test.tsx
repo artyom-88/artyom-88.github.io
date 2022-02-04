@@ -1,4 +1,4 @@
-import Card from '@material-ui/core/Card';
+import Card from '@mui/material/Card';
 import { BLOG_ITEMS_MOCK } from '__mocks__/blog.mock';
 import PageContainer from 'common/components/pages/PageContainer';
 import useListItems from 'common/hooks/useListItems';

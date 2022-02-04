@@ -22,7 +22,7 @@
     "predeploy": "yarn build",
     "prepare": "husky install",
     "prettier": "prettier -c --write \"src/**/*.ts?\"",
-    "serve": "yarn build && node server.js",
+    "serve": "node server.js",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "testCI": "CI=true react-scripts test",

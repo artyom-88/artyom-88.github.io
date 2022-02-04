@@ -1,5 +1,5 @@
-import { Theme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Theme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const QUERY = '@media (min-width:960px)';
 

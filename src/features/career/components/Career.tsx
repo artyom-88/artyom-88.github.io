@@ -1,8 +1,8 @@
-import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
 import PageContainer from 'common/components/pages/PageContainer';
 import { BLANK, REL } from 'common/const/html.const';
-import { CAREER } from 'common/const/pages.const';
+import { CAREER_PAGE_META } from 'common/const/pages.const';
 import useListItems from 'common/hooks/useListItems';
 import selectors from 'features/career/career.selector';
 import { actions } from 'features/career/career.slice';
@@ -30,7 +30,7 @@ const Career = (): ReactElement => {
   const classes = useStyles();
   const { isLoading, items } = useListItems<CareerState, CareerModel>(actions, selectors);
   return (
-    <PageContainer isLoading={isLoading} title={CAREER.name} Icon={CAREER.Icon}>
+    <PageContainer isLoading={isLoading} title={CAREER_PAGE_META.name} Icon={CAREER_PAGE_META.Icon}>
       {items.map((item) => {
         const { _id, site, title, post, description, tools } = item;
         return (

@@ -1,8 +1,8 @@
-import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
 import PageContainer from 'common/components/pages/PageContainer';
 import { BLANK, REL } from 'common/const/html.const';
-import { BLOG } from 'common/const/pages.const';
+import { BLOG_PAGE_META } from 'common/const/pages.const';
 import useListItems from 'common/hooks/useListItems';
 import { BLOG_DATE_FORMAT } from 'features/blog/blog.constants';
 import selectors from 'features/blog/blog.selector';
@@ -15,7 +15,7 @@ const Blog = (): ReactElement => {
   const classes = useStyles();
   const { isLoading, items } = useListItems<BlogState, BlogModel>(actions, selectors);
   return (
-    <PageContainer isLoading={isLoading} title={BLOG.name} Icon={BLOG.Icon}>
+    <PageContainer isLoading={isLoading} title={BLOG_PAGE_META.name} Icon={BLOG_PAGE_META.Icon}>
       <div className='ag-flexbox ag-flexColumn'>
         {items.map((item) => {
           const { _id, title, link, linkCaption } = item;

@@ -1,15 +1,13 @@
-import Typography from '@material-ui/core/Typography';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import Typography from '@mui/material/Typography';
 import PageContainer from 'common/components/pages/PageContainer';
 import { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 
 const TITLE = 'Page Not Found';
 
-/**
- * 404 page not component
- */
 const NotFound = (): ReactElement => (
-  <PageContainer title={TITLE}>
+  <PageContainer title={TITLE} Icon={ErrorOutlineIcon}>
     <Typography paragraph variant='h4'>
       <Link to='/'>Go to main page</Link>
     </Typography>

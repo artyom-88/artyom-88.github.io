@@ -1,4 +1,4 @@
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import PageContainer from 'common/components/pages/PageContainer';
 import { Object } from 'common/types/common.types';
 import { Component, ErrorInfo, PropsWithChildren } from 'react';

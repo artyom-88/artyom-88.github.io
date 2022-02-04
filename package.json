@@ -15,7 +15,7 @@
   "scripts": {
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
     "audit": "yarn-audit-ci",
-    "build": "react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "deploy": "gh-pages -o production -d build -t",
     "lint": "eslint --fix \"src/**/*.ts?\"",
     "pre-commit": "lint-staged",
@@ -28,9 +28,11 @@
     "testCoverage": "react-scripts test --coverage"
   },
   "dependencies": {
-    "@material-ui/core": "4.12.3",
-    "@material-ui/icons": "4.11.2",
-    "@material-ui/styles": "4.11.4",
+    "@emotion/react": "11.7.1",
+    "@emotion/styled": "11.6.0",
+    "@mui/icons-material": "5.3.1",
+    "@mui/material": "5.4.0",
+    "@mui/styles": "5.3.0",
     "@reduxjs/toolkit": "1.7.1",
     "axios": "0.25.0",
     "moment": "2.29.1",

@@ -1,5 +1,5 @@
 import makeStyles from '@mui/styles/makeStyles';
-import { loadingIndicator } from 'assets';
+import loadingIndicator from 'assets/images/loading-indicator.svg';
 
 const INDICATOR_SIZE = '120px';
 

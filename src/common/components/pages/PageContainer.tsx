@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import LoadingIndicator from 'common/components/layout/LoadingIndicator';
 import { IPageContainer } from 'common/components/pages/Pages.types';
-import { DEFAULT_DESCRIPTION } from 'common/const/pages.const';
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from 'common/const/pages.const';
 import useIsNarrow from 'common/hooks/useIsNarrow';
 import { PropsWithChildren, ReactElement } from 'react';
 import { Helmet } from 'react-helmet';
@@ -23,7 +23,7 @@ const PageContainer = ({
   return (
     <>
       <Helmet>
-        {title && <title>{title}</title>}
+        <title>{title || DEFAULT_TITLE}</title>
         <meta name='description' content={description} />
       </Helmet>
       <Paper className={classes.pageContainer} square>

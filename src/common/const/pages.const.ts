@@ -26,5 +26,7 @@ export const CAREER_PAGE_META: PageProps = {
 
 export const PAGES_LIST_META: PageProps[] = [ABOUT_PAGE_META, BLOG_PAGE_META, CAREER_PAGE_META];
 
+export const DEFAULT_TITLE = "Artyom Ganev's site";
+
 export const DEFAULT_DESCRIPTION =
   'Senior Software Developer. TypeScript, React, Redux, CI/CD, unit testing, code review, Java, Node JS, Linux';

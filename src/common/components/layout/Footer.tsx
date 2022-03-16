@@ -1,6 +1,7 @@
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { ComponentWithClassName } from 'common/types/common.types';
@@ -20,7 +21,15 @@ const Footer = ({ className }: ComponentWithClassName): ReactElement => {
       <Paper square>
         <BottomNavigation onChange={onLinkClick}>
           {Object.entries(FOOTER_LINKS).map(([k, { Icon }]) => (
-            <BottomNavigationAction key={k} value={k} icon={<Icon />} />
+            <BottomNavigationAction
+              key={k}
+              value={k}
+              icon={
+                <IconButton>
+                  <Icon />
+                </IconButton>
+              }
+            />
           ))}
         </BottomNavigation>
         <div className='ag-flexbox ag-justifyContent_center ag-alignItems_center'>

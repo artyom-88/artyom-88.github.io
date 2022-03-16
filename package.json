@@ -45,7 +45,7 @@
     "redux-saga": "1.1.3"
   },
   "devDependencies": {
-    "@babel/core": "7.17.5",
+    "@babel/core": "7.17.7",
     "@babel/plugin-syntax-flow": "7.16.7",
     "@babel/plugin-transform-react-jsx": "7.17.3",
     "@redux-saga/is": "1.1.2",

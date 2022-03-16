@@ -1,13 +1,14 @@
-import { SvgIconComponent } from '@mui/icons-material';
+import { FC } from 'react';
 
 export enum FooterLinks {
+  FACEBOOK = 'FACEBOOK',
   GITHUB = 'GITHUB',
   LINKEDIN = 'LINKEDIN',
-  FACEBOOK = 'FACEBOOK',
+  STACKOVERFLOW = 'STACKOVERFLOW',
 }
 
 export interface BottomNavigationLink {
-  Icon: SvgIconComponent;
+  Icon: FC;
   url: string;
 }
 

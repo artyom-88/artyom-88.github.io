@@ -35,7 +35,7 @@
     "@mui/styles": "5.5.1",
     "@reduxjs/toolkit": "1.8.0",
     "@stackoverflow/stacks-icons": "^2.27.0",
-    "axios": "0.26.0",
+    "axios": "0.26.1",
     "moment": "2.29.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",

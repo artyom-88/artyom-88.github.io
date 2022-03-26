@@ -92,6 +92,7 @@
     "glob-parent": ">=5.1.2",
     "immer": ">=9.0.6",
     "lodash": ">=4.17.21",
+    "minimist": ">=1.2.6",
     "nth-check": ">=2.0.1",
     "path-parse": ">=1.0.7",
     "postcss": " >=8.2.13",

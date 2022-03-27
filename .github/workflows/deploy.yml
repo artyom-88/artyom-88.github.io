@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - master
+env:
+  GITHUB_SHA: ${{ secrets.GITHUB_SHA }}
 jobs:
   deployment:
     runs-on: ubuntu-latest
@@ -24,12 +26,13 @@ jobs:
       - name: Build
         run: |
           yarn build
+          echo $GITHUB_SHA > ./build/version
         env:
           REACT_APP_API_PATH: ${{ secrets.REACT_APP_API_PATH }}
       - name: Deploy app
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/artyom-88/artyom-88.github.io.git
-          yarn gh-pages -d build -u "Artem Ganev <a.a.ganev@gmail.com>" -m "${GITHUB_SHA} deploy"
+          yarn gh-pages -d build -u "Artem Ganev <a.a.ganev@gmail.com>" -m ${GITHUB_SHA}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_SHA: ${{ secrets.GITHUB_SHA }}

@@ -2,7 +2,6 @@ name: Deploy
 on:
   push:
     branches:
-      - master
       - add_deploy
 jobs:
   deployment:
@@ -27,6 +26,6 @@ jobs:
       - name: Deploy app
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/artyom-88/artem-ganev-site.git
-          gh-pages -d build -t -u "github-actions-bot <support+actions@github.com>"
+          yarn gh-pages -d build -t -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,22 +1,18 @@
 {
-  "name": "artyom-ganev-site",
+  "name": "artem-ganev-site",
   "version": "1.1.0",
-  "private": true,
-  "author": "Artyom Ganev",
+  "private": false,
+  "author": "Artem Ganev",
   "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/Artyom-Ganev/artyom-ganev-site/issues"
-  },
-  "homepage": "http://artyom-ganev.github.io",
+  "homepage": "https://www.artemganev.site",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Artyom-Ganev/artyom-ganev-site.git"
+    "url": "https://github.com/artyom-88/artyom-88.github.io"
   },
   "scripts": {
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
     "audit": "yarn-audit-ci",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
-    "deploy": "gh-pages -o production -d build -t",
     "lint": "eslint --fix \"src/**/*.ts?\"",
     "pre-commit": "lint-staged",
     "predeploy": "yarn build",
@@ -111,6 +107,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
+      "src/app/**/*.{ts,tsx}",
       "src/common/**/*.{ts,tsx}",
       "src/features/**/*.{ts,tsx}"
     ]

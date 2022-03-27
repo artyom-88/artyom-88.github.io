@@ -1,4 +1,4 @@
-import InfoIcon from '@mui/icons-material/Info';
+import GitHub from '@mui/icons-material/GitHub';
 import AppBar from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
@@ -6,13 +6,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import useTheme from '@mui/material/styles/useTheme';
 import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
 import { PAGES_LIST_META } from 'common/const/pages.const';
 import { ComponentWithClassName, PageProps } from 'common/types/common.types';
+import { openWindow } from 'common/utils/navigate.utils';
 import { ReactElement, ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 
-const version = process.env.REACT_APP_VERSION;
+const onLinkClick = () => {
+  openWindow('https://github.com/artyom-88');
+};
 
 const Header = ({ className }: ComponentWithClassName): ReactElement => {
   const theme = useTheme();
@@ -34,13 +36,9 @@ const Header = ({ className }: ComponentWithClassName): ReactElement => {
             )
           )}
         </List>
-        {version && (
-          <Tooltip title={`v.${version}`}>
-            <IconButton>
-              <InfoIcon />
-            </IconButton>
-          </Tooltip>
-        )}
+        <IconButton onClick={onLinkClick}>
+          <GitHub />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

@@ -7,7 +7,7 @@
   "homepage": "https://www.artemganev.site",
   "repository": {
     "type": "git",
-    "url": "https://github.com/artyom-88/artem-ganev-site"
+    "url": "https://github.com/artyom-88/artyom-88.github.io"
   },
   "scripts": {
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
@@ -107,6 +107,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
+      "src/app/**/*.{ts,tsx}",
       "src/common/**/*.{ts,tsx}",
       "src/features/**/*.{ts,tsx}"
     ]

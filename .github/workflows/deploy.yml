@@ -29,6 +29,7 @@ jobs:
       - name: Deploy app
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/artyom-88/artyom-88.github.git
-          yarn gh-pages -d build -u "Artem Ganev <a.a.ganev@gmail.com>"
+          yarn gh-pages -d build -u "Artem Ganev <a.a.ganev@gmail.com>" -m ${GITHUB_SHA} deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_SHA: ${{ secrets.GITHUB_SHA }}

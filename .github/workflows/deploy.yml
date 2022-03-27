@@ -28,7 +28,7 @@ jobs:
           REACT_APP_API_PATH: ${{ secrets.REACT_APP_API_PATH }}
       - name: Deploy app
         run: |
-          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/artyom-88/artyom-88.github.git
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/artyom-88/artyom-88.github.io.git
           yarn gh-pages -d build -u "Artem Ganev <a.a.ganev@gmail.com>" -m ${GITHUB_SHA} deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

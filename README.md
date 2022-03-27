@@ -1,4 +1,4 @@
- This project contains Front-end sources of https://artyom-ganev.github.io/ site.  
+ This project contains FE app used for [artemganev.site](https://artemganev.site)  
 **Preparation:**
 1. Clone project with *git clone* command.
 2. Install all dependencies with *yarn install*.
@@ -12,18 +12,21 @@
 Backend sources of https://artyom-ganev.github.io/ site are here https://github.com/Artyom-Ganev/artyom-ganev-node
 - - - -
 **Made with:**
-* [ESLint](https://eslint.org/)
-* [Jest](https://jestjs.io/)
-* [Material UI](https://material-ui.com/)
-* [Moment.js](https://momentjs.com/)
-* [Prettier](https://prettier.io/)
-* [React](https://reactjs.org/)
-* [Redux-Saga](https://redux-saga.js.org/)
-* [Redux](https://redux.js.org/)
-* [Sass](https://sass-lang.com/)
-* [TypeScript](https://www.typescriptlang.org)
-* [Yarn](https://yarnpkg.com/)
-* [axios](https://github.com/axios/axios/)
+* [ESLint](https://eslint.org)
+* [GitHub Actions](https://docs.github.com/en/actions)
+* [GitHub Pages](https://pages.github.com)
+* [Heroku](https://www.heroku.com)
+* [Jest](https://jestjs.io)
+* [Material UI](https://material-ui.com)
+* [Moment.js](https://momentjs.com)
+* [Prettier](https://prettier.io)
+* [React](https://reactjs.org)
+* [Redux](https://redux.js.org)
+* [Type Script](https://www.typescriptlang.org)
+* [axios](https://github.com/axios/axios)
+* [create-react-app](https://create-react-app.dev)
+* [gh-pages](https://github.com/tschaub/gh-pages)
 * [husky](https://github.com/typicode/husky)
 * [lint-staged](https://github.com/okonet/lint-staged)
-* [react-scripts](https://www.npmjs.com/package/react-scripts)
+* [redux-saga](https://redux-saga.js.org)
+* [yarn](https://yarnpkg.com)

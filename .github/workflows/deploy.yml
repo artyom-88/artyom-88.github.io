@@ -22,10 +22,18 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Build
-        run: yarn build
+        run: |
+          echo $REACT_APP_API_PATH
+          echo $REACT_APP_VERSION
+          echo $REACT_APP_NAME
+          yarn build
+        env:
+          REACT_APP_API_PATH: ${{ secrets.REACT_APP_API_PATH }}
+          REACT_APP_VERSION: ${{ secrets.REACT_APP_VERSION }}
+          REACT_APP_NAME: ${{ secrets.REACT_APP_NAME }}
       - name: Deploy app
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/artyom-88/artem-ganev-site.git
-          yarn gh-pages -d build -t -u "github-actions-bot <support+actions@github.com>"
+          yarn gh-pages -d build -u "Artem Ganev <a.a.ganev@gmail.com>"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

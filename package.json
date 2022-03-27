@@ -9,6 +9,10 @@
     "type": "git",
     "url": "https://github.com/artyom-88/artyom-88.github.io"
   },
+  "engines": {
+    "node": "14.x",
+    "yarn": "1.22.x"
+  },
   "scripts": {
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
     "audit": "yarn-audit-ci",

@@ -2,7 +2,7 @@ name: Deploy
 on:
   push:
     branches:
-      - fix_readme
+      - master
 jobs:
   deployment:
     runs-on: ubuntu-latest

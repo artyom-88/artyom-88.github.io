@@ -31,7 +31,7 @@
     "@emotion/react": "11.8.2",
     "@emotion/styled": "11.8.1",
     "@mui/icons-material": "5.5.1",
-    "@mui/material": "5.5.1",
+    "@mui/material": "5.5.2",
     "@mui/styles": "5.5.1",
     "@reduxjs/toolkit": "1.8.0",
     "@stackoverflow/stacks-icons": "^2.27.0",

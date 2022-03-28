@@ -1,3 +1,5 @@
+[![codebeat badge](https://codebeat.co/badges/dd98a6ea-1863-4ddc-ac08-53922563ca20)](https://codebeat.co/projects/github-com-artyom-88-artyom-88-github-io-develop)
+ 
  This project contains FE app used for [artemganev.site](https://artemganev.site)  
 **Preparation:**
 1. Clone project with *git clone* command.

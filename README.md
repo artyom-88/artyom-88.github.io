@@ -9,9 +9,7 @@
 **Commands:**
 * *yarn start* - run local development server at http://localhost:8081/
 * *yarn build* - create an optimized production build before deploy to the site
-* *yarn test* - run tests  
-- - - -
-Backend sources of https://artyom-ganev.github.io/ site are here https://github.com/Artyom-Ganev/artyom-ganev-node
+* *yarn test* - run tests 
 - - - -
 **Made with:**
 * [ESLint](https://eslint.org)
@@ -32,3 +30,5 @@ Backend sources of https://artyom-ganev.github.io/ site are here https://github.
 * [lint-staged](https://github.com/okonet/lint-staged)
 * [redux-saga](https://redux-saga.js.org)
 * [yarn](https://yarnpkg.com)
+- - - -
+BE App sources fot the site are in the [artemganev-be](https://github.com/artyom-88/artemganev-be) repo.

@@ -3,7 +3,7 @@ import { BaseState, ListReducer } from 'common/types/store.types';
 import { Moment } from 'moment';
 
 export interface CareerBase extends BaseModel {
-  description: string;
+  description: string | null;
   post: string;
   site: string;
   tools: string;

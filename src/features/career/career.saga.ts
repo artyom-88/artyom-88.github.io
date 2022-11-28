@@ -1,3 +1,4 @@
+import careerMock from 'assets/data/career.json';
 import { AxiosResponse } from 'axios';
 import { call, CallEffect, ForkEffect, put, PutEffect, takeEvery } from 'redux-saga/effects';
 import { careerListAdapter } from './career.adapter';
@@ -14,7 +15,11 @@ export function* loadCareerListSaga(): Generator<PutEffect | CallEffect> {
   } catch (e) {
     const { message } = e as Error;
     console.log(`careerLoadListError: ${message}`);
-    yield put(actions.loadListError(message));
+    // TODO: temporary solution because of Heroku free plan cancel
+    //  https://devcenter.heroku.com/articles/usage-and-billing
+    // yield put(actions.loadListError(message));
+    const items = yield call(careerListAdapter, careerMock as CareerDTO[]);
+    yield put(actions.loadListSuccess(items as CareerModel[]));
   }
 }
 

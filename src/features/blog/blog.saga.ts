@@ -1,3 +1,4 @@
+import blogMock from 'assets/data/blog.json';
 import { AxiosResponse } from 'axios';
 import blogApi from 'features/blog/blog.api';
 import { call, CallEffect, ForkEffect, put, PutEffect, takeEvery } from 'redux-saga/effects';
@@ -14,7 +15,11 @@ export function* loadBlogList(): Generator<PutEffect | CallEffect> {
   } catch (e) {
     const { message } = e as Error;
     console.log(`blogLoadListError: ${message}`);
-    yield put(actions.loadListError(message));
+    // TODO: temporary solution because of Heroku free plan cancel
+    //  https://devcenter.heroku.com/articles/usage-and-billing
+    // yield put(actions.loadListError(message));
+    const items = yield call(blogListAdapter, blogMock as BlogDTO[]);
+    yield put(actions.loadListSuccess(items as BlogModel[]));
   }
 }
 

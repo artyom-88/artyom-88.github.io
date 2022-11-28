@@ -35,7 +35,7 @@
     "@mui/styles": "5.5.3",
     "@reduxjs/toolkit": "1.8.1",
     "@stackoverflow/stacks-icons": "^2.27.0",
-    "axios": "0.26.1",
+    "axios": "1.1.3",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -74,18 +74,19 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "^7.31.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "gh-pages": "3.2.3",
-    "husky": "7.0.4",
-    "lint-staged": "12.3.7",
+    "gh-pages": "4.0.0",
+    "husky": "8.0.1",
+    "lint-staged": "13.0.3",
     "postcss": "8.4.12",
     "prettier": "2.6.2",
-    "react-scripts": "5.0.0",
+    "react-scripts": "5.0.1",
     "redux-saga-test-plan": "4.0.4",
     "source-map-explorer": "2.5.2",
     "typescript": "4.6.3",
     "yarn-audit-ci": "1.2.0"
   },
   "resolutions": {
+    "minimatch": ">=3.0.5",
     "nth-check": ">=2.0.1"
   },
   "lint-staged": {

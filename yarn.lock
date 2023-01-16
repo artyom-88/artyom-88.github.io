@@ -1951,10 +1951,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@stackoverflow/stacks-icons@^2.27.0":
-  version "2.27.0"
-  resolved "https://registry.yarnpkg.com/@stackoverflow/stacks-icons/-/stacks-icons-2.27.0.tgz#dd6af7ad67da491a68df84badfc70bdb613a69fe"
-  integrity sha512-2URJtpO8th6vSaYMdPYVNNUqx58vUL6cs4Y42grEBjbcakIRUL2uyDpes+610E/NcCP0cREJhXVx2x4BHXV/EQ==
+"@stackoverflow/stacks-icons@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@stackoverflow/stacks-icons/-/stacks-icons-5.1.0.tgz#b890b3ab6f6648c6815e11eb4f335d7980ec9c41"
+  integrity sha512-oGwqQcv+6k2YBHtut890UTPHoyQupZO/Ljw+vt1dqhWvivcxp/4H2lQsxlLNeXcTki0f13R/S/95gNJ4FOevqA==
 
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"

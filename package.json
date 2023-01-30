@@ -54,7 +54,7 @@
     "@testing-library/jest-dom": "5.16.4",
     "@types/enzyme": "3.10.11",
     "@types/enzyme-to-json": "1.5.4",
-    "@types/express": "4.17.13",
+    "@types/express": "4.17.16",
     "@types/jest": "27.4.1",
     "@types/node": "17.0.23",
     "@types/react": "^18.0.17",

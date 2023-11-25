@@ -1,10 +1,11 @@
-import Icon from '@mui/material/Icon';
-import logoGlyph from '@stackoverflow/stacks-icons/src/Icon/LogoGlyphSm.svg';
 import { FC, ReactElement } from 'react';
 
+import Icon from '@ant-design/icons';
+
+// TODO: @stackoverflow/stacks-icons
 const StackOverflowIcon: FC = (): ReactElement => (
   <Icon>
-    <img src={logoGlyph} alt='Stackoverflow' />
+    <img src='' alt='Stackoverflow' />
   </Icon>
 );
 

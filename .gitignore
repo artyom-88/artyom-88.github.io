@@ -2,6 +2,7 @@
 
 # idea project
 .idea
+.vscode
 
 # converted sources
 *.map
@@ -11,7 +12,7 @@ src/**/*.js
 /coverage
 
 # production
-build
+dist
 
 # misc
 .DS_Store

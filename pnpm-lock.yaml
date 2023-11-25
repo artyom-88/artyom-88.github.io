@@ -47,8 +47,8 @@ dependencies:
 
 devDependencies:
   '@tanstack/eslint-plugin-query':
-    specifier: 5.0.5
-    version: 5.0.5(eslint@8.52.0)(typescript@5.2.2)
+    specifier: 5.8.4
+    version: 5.8.4(eslint@8.52.0)(typescript@5.2.2)
   '@testing-library/jest-dom':
     specifier: 6.1.4
     version: 6.1.4(vitest@0.34.6)
@@ -889,8 +889,8 @@ packages:
     resolution: {integrity: sha512-y/WRgMgE/I262A7vZdNgWWEMYMzECrJrzLObR4WKodFerQ577htm2XLQvgCKMhq6rhNhOFEi7VZOZVsd9IiCZA==}
     dev: false
 
-  /@tanstack/eslint-plugin-query@5.0.5(eslint@8.52.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-kYbh5Cboz1BzN6LeUWnI1B0BCikXMYQjxaEO7cV+0rycllU0qZqSEkd2LdgWIZhuLTc4WBt0li1s+O6RhM5Cog==}
+  /@tanstack/eslint-plugin-query@5.8.4(eslint@8.52.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-KVgcMc+Bn1qbwkxYVWQoiVSNEIN4IAiLj3cUH/SAHT8m8E59Y97o8ON1syp0Rcw094ItG8pEVZFyQuOaH6PDgQ==}
     peerDependencies:
       eslint: ^8.0.0
     dependencies:

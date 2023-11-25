@@ -46,18 +46,11 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            axios: ['axios'],
-            vendors: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query', 'formik', 'ky', 'yup', 'zustand'],
+            vendors: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query', 'ky', 'zustand'],
           },
         },
       },
       sourcemap: isDevelopment,
-      target: 'es2015',
-    },
-    optimizeDeps: {
-      esbuildOptions: {
-        target: 'es2015',
-      },
     },
     test: {
       environment: 'jsdom',

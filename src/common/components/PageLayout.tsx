@@ -10,11 +10,9 @@ import StackOverflowIcon from 'common/components/icons/StackOverflowIcon';
 import { PAGES_LIST_META } from 'common/constants/pages-constants';
 import { openWindow } from 'common/utils/navigate-utils';
 
-import styles from './PageLayout.module.scss';
-
 const layoutClassName = 'flex flex-column align-center full-width full-height';
 
-const contentClassName = `${layoutClassName} ${styles.content}`;
+const contentClassName = `${layoutClassName}`;
 
 const currentYear = dayjs.utc().year();
 

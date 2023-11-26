@@ -79,7 +79,7 @@
     "lint-staged": "15.0.2",
     "postcss": "8.4.31",
     "rollup-plugin-visualizer": "5.9.3",
-    "prettier": "3.0.3",
+    "prettier": "3.1.0",
     "sass": "1.69.5",
     "typescript": "5.2.2",
     "vite": "4.5.0",

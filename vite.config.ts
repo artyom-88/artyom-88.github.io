@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv, PluginOption } from 'vite';
+import svg from 'vite-plugin-svgo';
 
 const DEFAULT_DOMAIN = 'artyom-88.github.io';
 const DEFAULT_PORT = 8000;
@@ -11,13 +12,14 @@ const DEV = 'development';
 
 const getIsDevelopment = (mode: string): boolean => mode !== PROD;
 
+const defaultPlugins = [react(), svg()];
+
 const getPlugins = (mode: string): PluginOption[] => {
-  const defaultPlugins = [react()];
   return mode === 'analyze'
     ? [...defaultPlugins, visualizer({ filename: './dist/report.html', gzipSize: true, open: true })]
     : getIsDevelopment(mode)
-    ? [...defaultPlugins, basicSsl()]
-    : defaultPlugins;
+      ? [...defaultPlugins, basicSsl()]
+      : defaultPlugins;
 };
 
 export default defineConfig(({ mode }) => {

@@ -14,7 +14,7 @@ const PageContainer = ({
   description = DEFAULT_DESCRIPTION,
   title = DEFAULT_TITLE,
 }: PropsWithChildren<PageContainerProps>): ReactElement => (
-  <Space direction='vertical'>
+  <Space className='flex flex-col h-full w-full' direction='vertical'>
     <Helmet>
       <title>{title}</title>
       <meta name='description' content={description} />

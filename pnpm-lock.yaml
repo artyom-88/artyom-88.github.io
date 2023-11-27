@@ -9,8 +9,8 @@ dependencies:
     specifier: 5.2.6
     version: 5.2.6(react-dom@18.2.0)(react@18.2.0)
   '@stackoverflow/stacks-icons':
-    specifier: 2.27.0
-    version: 2.27.0
+    specifier: 6.0.0
+    version: 6.0.0
   '@tanstack/react-query':
     specifier: 5.8.7
     version: 5.8.7(react-dom@18.2.0)(react@18.2.0)
@@ -888,9 +888,8 @@ packages:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
 
-  /@stackoverflow/stacks-icons@2.27.0:
-    resolution: {integrity: sha512-2URJtpO8th6vSaYMdPYVNNUqx58vUL6cs4Y42grEBjbcakIRUL2uyDpes+610E/NcCP0cREJhXVx2x4BHXV/EQ==}
-    deprecated: This package was deprecated effective 2023-01-05.  All items that include language, including, but not limited to, Stack Overflow, Stack Exchange and Exchange, and the accompanying graphics including the Stack Exchange bubble icon, are the property of Stack Exchange, Inc. and may not be used without express written permission.
+  /@stackoverflow/stacks-icons@6.0.0:
+    resolution: {integrity: sha512-y/WRgMgE/I262A7vZdNgWWEMYMzECrJrzLObR4WKodFerQ577htm2XLQvgCKMhq6rhNhOFEi7VZOZVsd9IiCZA==}
     dev: false
 
   /@tanstack/eslint-plugin-query@5.8.4(eslint@8.54.0)(typescript@5.2.2):

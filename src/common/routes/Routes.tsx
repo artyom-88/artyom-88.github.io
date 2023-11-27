@@ -33,7 +33,7 @@ const routesConfig: RouteObject[] = [
       },
       {
         element: <Career />,
-        path: routesConstants.BLOG_URL,
+        path: routesConstants.CAREER_URL,
       },
       {
         element: <NotFound />,

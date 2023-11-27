@@ -4,7 +4,7 @@ import { Card, Typography } from 'antd';
 
 import PageContainer from 'common/components/PageContainer';
 import { BLANK, REL } from 'common/constants/html-constants';
-import { CAREER_PAGE_META } from 'common/constants/pages-constants';
+import { CAREER_PAGE_PROPS } from 'common/constants/pages-constants';
 
 const prepareTitle = (site: string, title: string, className: string): ReactNode => {
   const header = <Typography.Title className={className}>{title}</Typography.Title>;
@@ -22,7 +22,7 @@ const itemsMock = { isLoading: false, items: [] };
 const Career = (): ReactElement => {
   const { isLoading, items } = itemsMock;
   return (
-    <PageContainer isLoading={isLoading} title={CAREER_PAGE_META.name} Icon={CAREER_PAGE_META.Icon}>
+    <PageContainer isLoading={isLoading} title={CAREER_PAGE_PROPS.id} Icon={CAREER_PAGE_PROPS.Icon}>
       {items.map((item) => {
         const { _id: id, site, title, post, description, tools } = item;
         return (

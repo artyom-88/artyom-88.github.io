@@ -4,5 +4,5 @@ export interface PageContainerProps extends WithIcon {
   centerTitle?: boolean;
   description?: string;
   isLoading?: boolean;
-  title?: string;
+  title: string;
 }

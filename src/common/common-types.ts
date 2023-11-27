@@ -6,12 +6,7 @@ export interface WithIcon {
 
 export interface PageProps extends WithIcon {
   id: string;
-  name: string;
   url: string;
-}
-
-export interface Clickable {
-  onClick: () => void;
 }
 
 export interface BaseModel {

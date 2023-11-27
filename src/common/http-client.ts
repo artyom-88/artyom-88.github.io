@@ -5,6 +5,6 @@ export const httpClient: KyInstance = ky.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  prefixUrl: process.env.VITE_API_URL,
+  prefixUrl: import.meta.env.VITE_API_URL,
   retry: 0,
 });

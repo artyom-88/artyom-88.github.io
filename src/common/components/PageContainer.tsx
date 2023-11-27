@@ -14,6 +14,7 @@ const PageContainer = ({
   title,
 }: PropsWithChildren<PageContainerProps>): JSX.Element => (
   <Card
+    className='flex flex-col grow w-full'
     title={
       <Space size='large'>
         <Icon />
@@ -26,7 +27,9 @@ const PageContainer = ({
       <title>{title}</title>
       <meta name='description' content={description} />
     </Helmet>
-    {children}
+    <Space className='flex flex-col grow' direction='vertical' size='large'>
+      {children}
+    </Space>
   </Card>
 );
 

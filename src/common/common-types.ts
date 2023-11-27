@@ -1,17 +1,12 @@
 import { FC } from 'react';
 
 export interface WithIcon {
-  Icon?: FC;
+  icon?: FC;
 }
 
 export interface PageProps extends WithIcon {
   id: string;
-  name: string;
   url: string;
-}
-
-export interface Clickable {
-  onClick: () => void;
 }
 
 export interface BaseModel {
@@ -20,7 +15,7 @@ export interface BaseModel {
 }
 
 export interface WithClassName {
-  className: string;
+  className?: string;
 }
 
 export type Object<TValue = unknown> = Record<string, TValue>;

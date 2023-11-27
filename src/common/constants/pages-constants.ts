@@ -1,31 +1,27 @@
 import { HomeOutlined, MenuOutlined, SettingOutlined } from '@ant-design/icons';
 
 import { PageProps } from 'common/common-types';
+import * as routesConstants from 'common/routes/routes-constants';
 
-export const ABOUT_PAGE_META: PageProps = {
-  Icon: HomeOutlined,
-  id: 'about',
-  name: 'About',
-  url: '',
+export const ABOUT_PAGE_PROPS: PageProps = {
+  icon: HomeOutlined,
+  id: routesConstants.ABOUT_PAGE_ID,
+  url: routesConstants.ROOT_URL,
 };
 
-export const BLOG_PAGE_META: PageProps = {
-  Icon: MenuOutlined,
-  id: 'blog',
-  name: 'Blog',
-  url: 'blog',
+export const BLOG_PAGE_PROPS: PageProps = {
+  icon: MenuOutlined,
+  id: routesConstants.BLOG_PAGE_ID,
+  url: routesConstants.BLOG_URL,
 };
 
-export const CAREER_PAGE_META: PageProps = {
-  Icon: SettingOutlined,
-  id: 'career',
-  name: 'Career',
-  url: 'career',
+export const CAREER_PAGE_PROPS: PageProps = {
+  icon: SettingOutlined,
+  id: routesConstants.CAREER_PAGE_ID,
+  url: routesConstants.CAREER_URL,
 };
 
-export const PAGES_LIST_META: PageProps[] = [ABOUT_PAGE_META, BLOG_PAGE_META, CAREER_PAGE_META];
-
-export const DEFAULT_TITLE = "Artyom Ganev's site";
+export const PAGES_PROPS_LIST: PageProps[] = [ABOUT_PAGE_PROPS, BLOG_PAGE_PROPS, CAREER_PAGE_PROPS];
 
 export const DEFAULT_DESCRIPTION =
-  'Senior Software Developer. TypeScript, React, Redux, CI/CD, unit testing, code review, Java, Node JS, Linux';
+  'Lead Software Developer. TypeScript, React, Node JS, CI/CD, Unit testing, Code review, AWS, Java, Linux';

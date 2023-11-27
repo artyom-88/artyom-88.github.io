@@ -1,27 +1,22 @@
 import { ReactElement } from 'react';
 
-import { Card } from 'antd';
+import { Space } from 'antd';
 import bio from 'assets/data/bio.json';
 
 import PageContainer from 'common/components/PageContainer';
-import { ABOUT_PAGE_META } from 'common/constants/pages-constants';
-
-const TITLE = 'Hi! My name is Artyom.';
+import { ABOUT_PAGE_PROPS } from 'common/constants/pages-constants';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const IMAGE = 'https://res.cloudinary.com/hia8f154d/image/upload/v1643992397/artyom.jpg';
 
-const About = (): ReactElement => {
-  return (
-    <PageContainer Icon={ABOUT_PAGE_META.Icon}>
-      <Card>
-        {TITLE}
-        {bio.data.map((value: string, key: number) => (
-          <span key={key}>value</span>
-        ))}
-      </Card>
-    </PageContainer>
-  );
-};
+const About = (): ReactElement => (
+  <PageContainer icon={ABOUT_PAGE_PROPS.icon} title='Hi! My name is Artёm.'>
+    <Space direction='vertical'>
+      {bio.data.map((value: string, key: number) => (
+        <span key={key}>{value}</span>
+      ))}
+    </Space>
+  </PageContainer>
+);
 
 export default About;

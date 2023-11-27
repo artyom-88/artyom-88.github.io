@@ -1,40 +1,36 @@
 import { ReactElement } from 'react';
 
-import { Card } from 'antd';
+import { Col, Row, Tooltip } from 'antd';
 
 import PageContainer from 'common/components/PageContainer';
 import { BLANK, REL } from 'common/constants/html-constants';
-import { BLOG_PAGE_META } from 'common/constants/pages-constants';
+import { BLOG_PAGE_PROPS } from 'common/constants/pages-constants';
+import { useBlogListQuery } from 'features/blog/hooks/use-blog-list-query';
 
-const itemsMock = { isLoading: false, items: [] };
+const gutter = 16;
 
 const Blog = (): ReactElement => {
-  const { isLoading, items } = itemsMock;
+  const { data: list = [], isLoading } = useBlogListQuery();
   return (
-    <PageContainer isLoading={isLoading} title={BLOG_PAGE_META.name} Icon={BLOG_PAGE_META.Icon}>
-      <div className='ag-flexbox ag-flexColumn'>
-        {items.map((item) => {
-          const { _id: id, title, link, linkCaption } = item;
-          // TODO: move to separate component
-          return (
-            <div key={id} className=''>
-              <Card>
-                <div className=''>
-                  <span>{item.date?.format('')}</span>
-                  <span>{title}</span>
-                  {link && (
-                    <div className='ag-flexbox'>
-                      <a href={link} target={BLANK} rel={REL} title='Click for details'>
-                        <span>{linkCaption}</span>
-                      </a>
-                    </div>
-                  )}
-                </div>
-              </Card>
-            </div>
-          );
-        })}
-      </div>
+    <PageContainer isLoading={isLoading} title={BLOG_PAGE_PROPS.id} icon={BLOG_PAGE_PROPS.icon}>
+      {list.map((item) => {
+        const { _id: id, title, link, linkCaption } = item;
+        return (
+          <Row key={id} gutter={gutter} wrap={false}>
+            <Col span={4}>{item.date.format('MMMM Do, YYYY')}</Col>
+            <Col span={12}>{title}</Col>
+            <Col flex='auto'>
+              {link && (
+                <Tooltip title='Click for details'>
+                  <a href={link} target={BLANK} rel={REL}>
+                    <span>{linkCaption}</span>
+                  </a>
+                </Tooltip>
+              )}
+            </Col>
+          </Row>
+        );
+      })}
     </PageContainer>
   );
 };

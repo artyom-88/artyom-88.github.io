@@ -10,7 +10,7 @@ import { ABOUT_PAGE_PROPS } from 'common/constants/pages-constants';
 const IMAGE = 'https://res.cloudinary.com/hia8f154d/image/upload/v1643992397/artyom.jpg';
 
 const About = (): ReactElement => (
-  <PageContainer Icon={ABOUT_PAGE_PROPS.Icon} title='Hi! My name is Artёm.'>
+  <PageContainer icon={ABOUT_PAGE_PROPS.icon} title='Hi! My name is Artёm.'>
     <Space direction='vertical'>
       {bio.data.map((value: string, key: number) => (
         <span key={key}>{value}</span>

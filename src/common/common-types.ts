@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 export interface WithIcon {
-  Icon?: FC;
+  icon?: FC;
 }
 
 export interface PageProps extends WithIcon {

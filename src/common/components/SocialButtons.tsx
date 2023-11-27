@@ -4,19 +4,16 @@ import { GithubOutlined, LinkedinOutlined } from '@ant-design/icons';
 import logoGlyph from '@stackoverflow/stacks-icons/src/Icon/LogoGlyphSm.svg';
 import { Button, Tooltip } from 'antd';
 
-import { WithClassName } from 'common/common-types';
+import { SocialButtonProps } from 'common/components/common-components-types';
 import { openWindow } from 'common/utils/navigate-utils';
 
 const openLinkedin = () => openWindow('https://www.linkedin.com/in/artem-g-185b38192/');
-const openGithub = () => openWindow('https://github.com/artyom-88');
-const openStackOverflow = () => openWindow('https://stackoverflow.com/users/6880595/artyom-ganev');
-const stackOverflowIcon = { __html: logoGlyph as TrustedHTML };
 
-interface SocialButtonProps extends WithClassName {
-  icon: JSX.Element;
-  name: string;
-  onClick: () => void;
-}
+const openGithub = () => openWindow('https://github.com/artyom-88');
+
+const openStackOverflow = () => openWindow('https://stackoverflow.com/users/6880595/artyom-ganev');
+
+const stackOverflowIcon = { __html: logoGlyph as TrustedHTML };
 
 const SocialButton = ({ className = '', icon, onClick, name }: SocialButtonProps): JSX.Element => (
   <div className={`p-1 ${className}`}>

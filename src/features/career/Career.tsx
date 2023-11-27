@@ -22,7 +22,7 @@ const itemsMock = { isLoading: false, items: [] };
 const Career = (): ReactElement => {
   const { isLoading, items } = itemsMock;
   return (
-    <PageContainer isLoading={isLoading} title={CAREER_PAGE_PROPS.id} Icon={CAREER_PAGE_PROPS.Icon}>
+    <PageContainer isLoading={isLoading} title={CAREER_PAGE_PROPS.id} icon={CAREER_PAGE_PROPS.icon}>
       {items.map((item) => {
         const { _id: id, site, title, post, description, tools } = item;
         return (

@@ -15,8 +15,8 @@ dependencies:
     specifier: 5.8.7
     version: 5.8.7(react-dom@18.2.0)(react@18.2.0)
   antd:
-    specifier: 5.11.4
-    version: 5.11.4(react-dom@18.2.0)(react@18.2.0)
+    specifier: 5.11.5
+    version: 5.11.5(react-dom@18.2.0)(react@18.2.0)
   dayjs:
     specifier: 1.11.10
     version: 1.11.10
@@ -1444,8 +1444,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /antd@5.11.4(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-FuaV/viyZiMlCL1JzdQpSlzPcWcBlGYDAbtj3FM4BgwAso+ge3d4tXkZZG4yZkktUoLvWrcaJObs3Nk32Oiwuw==}
+  /antd@5.11.5(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-qB1YmvO4Zm4r48M0Ptxn7orpaXeMPSeTrrw6dAgtTYN+ysnWD/D/zlxFc5g73GywIzZ10XGqvNC+74A+HD0yeQ==}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'

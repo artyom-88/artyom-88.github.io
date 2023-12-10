@@ -19,3 +19,7 @@ export interface CareerModel extends CareerBase {
   startDate: Dayjs;
   tools: string[];
 }
+
+export interface CareerItemProps {
+  item: CareerModel;
+}

@@ -14,3 +14,7 @@ export interface BlogDTO extends BlogBase {
 export interface BlogModel extends BlogBase {
   date: Dayjs;
 }
+
+export interface BlogItemProps {
+  item: BlogModel;
+}

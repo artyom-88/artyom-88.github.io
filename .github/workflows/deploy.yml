@@ -10,29 +10,42 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 14.x ]
+        node-version: [ 18.x ]
     environment: production
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        name: Install NodeJS
         with:
-          persist-credentials: false
-      - uses: actions/setup-node@v2
-        name: Install node
+          node-version: '18'
+      - uses: pnpm/action-setup@v2
+        name: Install PNPM
         with:
-          node-version: '14'
+          version: 8
+          run_install: false
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Build
         run: |
-          yarn build
+          pnpm run build
           echo $GITHUB_SHA > ./build/version
         env:
-          REACT_APP_API_PATH: ${{ secrets.REACT_APP_API_PATH }}
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
       - name: Deploy app
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/artyom-88/artyom-88.github.io.git
-          yarn gh-pages -d build -u "Artem Ganev <a.a.ganev@gmail.com>" -m ${GITHUB_SHA}
+          pnpm gh-pages -d dist -u "Artem Ganev <a.a.ganev@gmail.com>" -m ${GITHUB_SHA}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_SHA: ${{ secrets.GITHUB_SHA }}

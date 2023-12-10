@@ -1,38 +1,53 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
-    "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
+    "allowJs": false,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "baseUrl": ".",
+    "esModuleInterop": false,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "noFallthroughCasesInSwitch": true,
     "jsx": "react-jsx",
-    "sourceMap": true,
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext",
+      "WebWorker"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "noEmit": true,
+    "pretty": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "app/*": [
+        "./src/app/*"
+      ],
+      "assets/*": [
+        "./src/assets/*"
+      ],
+      "common/*": [
+        "./src/common/*"
+      ],
+      "features/*": [
+        "./src/features/*"
+      ],
+      "test/*": [
+        "src/test/*"
+      ]
+    },
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "types": [
+      "./node_modules/vitest/globals.d.ts",
+      "vite/client"
+    ],
+    "useDefineForClassFields": true
   },
   "exclude": [
-    "node_modules",
-    "build",
-    "info",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "src/setupTests.ts"
+    "node_modules"
   ],
   "include": [
-    "src"
+    "./src",
+    "vite.config.mts"
   ]
 }

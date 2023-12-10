@@ -16,7 +16,7 @@
   "scripts": {
     "analyze": "pnpm run build --mode analyze",
     "build": "vite build",
-    "build:ci": "tsc && pnpm run build",
+    "build:ci": "tsc && pnpm build",
     "build:debug": "vite build --debug",
     "build:dev": "vite build --mode development",
     "depcheck": "pnpm dlx depcheck",

@@ -1,6 +1,6 @@
 [![codebeat badge](https://codebeat.co/badges/dd98a6ea-1863-4ddc-ac08-53922563ca20)](https://codebeat.co/projects/github-com-artyom-88-artyom-88-github-io-develop)
  
- This project contains FE app used for [artemganev.site](https://artemganev.site)  
+ This project contains FE app used for [artyom-88.github.io](https://artyom-88.github.io/)  
 **Preparation:**
 1. Clone project with *git clone* command.
 2. Install all dependencies with *pnpm install*.
@@ -18,6 +18,7 @@
 * [GitHub Pages](https://pages.github.com)
 * [Heroku](https://www.heroku.com)
 * [Prettier](https://prettier.io)
+* [React Query](https://tanstack.com/query/v3/)
 * [React](https://reactjs.org)
 * [Type Script](https://www.typescriptlang.org)
 * [gh-pages](https://github.com/tschaub/gh-pages)

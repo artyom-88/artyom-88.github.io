@@ -38,8 +38,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build
         run: |
-          pnpm run build
-          echo $GITHUB_SHA > ./build/version
+          pnpm build
+          echo $GITHUB_SHA > ./dist/version
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
       - name: Deploy app

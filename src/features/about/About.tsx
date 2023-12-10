@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { Space } from 'antd';
+import Space from 'antd/es/space';
 
 import PageContainer from 'common/components/PageContainer';
 import { ABOUT_PAGE_PROPS } from 'common/constants/pages-constants';

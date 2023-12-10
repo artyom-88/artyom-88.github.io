@@ -1,7 +1,9 @@
 import type { JSX } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
-import { Layout, Space, Typography } from 'antd';
+import Layout from 'antd/es/layout';
+import Space from 'antd/es/space';
+import Typography from 'antd/es/typography';
 
 import { dayjs } from 'common/common-date';
 import { PageProps } from 'common/common-types';

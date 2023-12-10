@@ -1,7 +1,8 @@
 import { JSX, PropsWithChildren } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { Card, Space } from 'antd';
+import Card from 'antd/es/card';
+import Space from 'antd/es/space';
 
 import { PageContainerProps, PageTitleProps } from 'common/components/common-components-types';
 import LoadingPage from 'common/components/LoadingPage';

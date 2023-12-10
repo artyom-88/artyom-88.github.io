@@ -1,6 +1,8 @@
 import { ReactElement } from 'react';
 
-import { Col, Row, Typography } from 'antd';
+import Col from 'antd/es/col';
+import Row from 'antd/es/row';
+import Typography from 'antd/es/typography';
 
 import PageContainer from 'common/components/PageContainer';
 import { CAREER_PAGE_PROPS } from 'common/constants/pages-constants';

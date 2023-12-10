@@ -1,4 +1,5 @@
-import { dayjs } from 'common/common-date';
+import { Dayjs } from 'dayjs';
+
 import { BaseModel } from 'common/common-types';
 
 export interface BlogBase extends BaseModel {
@@ -11,5 +12,9 @@ export interface BlogDTO extends BlogBase {
 }
 
 export interface BlogModel extends BlogBase {
-  date: dayjs.Dayjs;
+  date: Dayjs;
+}
+
+export interface BlogItemProps {
+  item: BlogModel;
 }

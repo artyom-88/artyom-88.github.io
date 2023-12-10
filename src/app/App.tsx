@@ -15,7 +15,8 @@ const queryClient = new QueryClient({
     mutations: { retry: 0 },
     queries: {
       refetchOnWindowFocus: false,
-      retry: 0,
+      retry: 5,
+      staleTime: 1000 * 60 * 5,
     },
   },
 });

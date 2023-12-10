@@ -1,22 +1,22 @@
 import { ReactElement } from 'react';
 
 import { Space } from 'antd';
-import bio from 'assets/data/bio.json';
 
 import PageContainer from 'common/components/PageContainer';
 import { ABOUT_PAGE_PROPS } from 'common/constants/pages-constants';
+import { useAboutQuery } from 'features/about/hooks/use-about-query';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const IMAGE = 'https://res.cloudinary.com/hia8f154d/image/upload/v1643992397/artyom.jpg';
-
-const About = (): ReactElement => (
-  <PageContainer icon={ABOUT_PAGE_PROPS.icon} title='Hi! My name is Artёm.'>
-    <Space direction='vertical'>
-      {bio.data.map((value: string, key: number) => (
-        <span key={key}>{value}</span>
-      ))}
-    </Space>
-  </PageContainer>
-);
+const About = (): ReactElement => {
+  const { data = [], isLoading } = useAboutQuery();
+  return (
+    <PageContainer isLoading={isLoading} icon={ABOUT_PAGE_PROPS.icon} title='Hi! My name is Artёm.'>
+      <Space direction='vertical' size='middle'>
+        {data.map((value: string, key: number) => (
+          <span key={key}>{value}</span>
+        ))}
+      </Space>
+    </PageContainer>
+  );
+};
 
 export default About;

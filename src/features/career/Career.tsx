@@ -1,46 +1,32 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement } from 'react';
 
-import { Card, Typography } from 'antd';
+import { Col, Row, Typography } from 'antd';
 
 import PageContainer from 'common/components/PageContainer';
-import { BLANK, REL } from 'common/constants/html-constants';
 import { CAREER_PAGE_PROPS } from 'common/constants/pages-constants';
-
-const prepareTitle = (site: string, title: string, className: string): ReactNode => {
-  const header = <Typography.Title className={className}>{title}</Typography.Title>;
-  return site ? (
-    <a href={site} target={BLANK} rel={REL} title='Click for details'>
-      {header}
-    </a>
-  ) : (
-    header
-  );
-};
-
-const itemsMock = { isLoading: false, items: [] };
+import { CAREER_ROW_GUTTER } from 'features/career/career-constants';
+import CareerItem from 'features/career/CareerItem';
+import { useCareerListQuery } from 'features/career/hooks/use-career-list-query';
 
 const Career = (): ReactElement => {
-  const { isLoading, items } = itemsMock;
+  const { data: list = [], isLoading } = useCareerListQuery();
   return (
     <PageContainer isLoading={isLoading} title={CAREER_PAGE_PROPS.id} icon={CAREER_PAGE_PROPS.icon}>
-      {items.map((item) => {
-        const { _id: id, site, title, post, description, tools } = item;
-        return (
-          <div key={id} className=''>
-            <Card>
-              <div className=''>
-                {prepareTitle(site, title, '')}
-                <Typography.Title className=''>{title}</Typography.Title>
-                <Typography.Title>Post:&nbsp;{post}</Typography.Title>
-                <Typography.Title>{description}</Typography.Title>
-                <div className='ag-flexbox ag-flexColumn'>
-                  <Typography.Title>Tools:&nbsp;{tools}</Typography.Title>
-                </div>
-              </div>
-            </Card>
-          </div>
-        );
-      })}
+      <Row gutter={CAREER_ROW_GUTTER} wrap={false}>
+        <Col span={10}>
+          <Typography.Title className='mt-0' level={5}>
+            Description
+          </Typography.Title>
+        </Col>
+        <Col flex='auto'>
+          <Typography.Title className='mt-0' level={5}>
+            Technologies and tools
+          </Typography.Title>
+        </Col>
+      </Row>
+      {list.map((item) => (
+        <CareerItem item={item} key={item._id} />
+      ))}
     </PageContainer>
   );
 };

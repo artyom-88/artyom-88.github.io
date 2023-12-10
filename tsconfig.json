@@ -48,6 +48,6 @@
   ],
   "include": [
     "./src",
-    "vite.config.ts"
+    "vite.config.mts"
   ]
 }

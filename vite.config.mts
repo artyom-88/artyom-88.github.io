@@ -2,7 +2,7 @@ import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
-import { defineConfig, loadEnv, PluginOption } from 'vite';
+import { defineConfig, loadEnv, PluginOption, UserConfig } from 'vite';
 import svg from 'vite-plugin-svgo';
 
 const DEFAULT_DOMAIN = 'artyom-88.github.io';
@@ -22,7 +22,7 @@ const getPlugins = (mode: string): PluginOption[] => {
       : defaultPlugins;
 };
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode }): UserConfig => {
   const env = loadEnv(mode, process.cwd());
   const isDevelopment = getIsDevelopment(mode);
   const host = `${env.VITE_DOMAIN || DEFAULT_DOMAIN}`;
@@ -41,7 +41,6 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: host,
-      https: true,
       port: port,
     },
     build: {

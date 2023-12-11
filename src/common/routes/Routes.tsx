@@ -5,7 +5,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 
 import LoadingPage from 'common/components/LoadingPage';
 import NotFound from 'common/components/NotFound';
-import PageLayout from 'common/components/PageLayout';
+import PageContent from 'common/components/PageContent';
 import * as routesConstants from 'common/routes/routes-constants';
 
 const About = lazy(() => import('features/about/About'));
@@ -16,7 +16,7 @@ const loadingPage = <LoadingPage />;
 
 const routesConfig: RouteObject[] = [
   {
-    element: <PageLayout />,
+    element: <PageContent />,
     path: routesConstants.ROOT_URL,
     children: [
       {

@@ -20,6 +20,7 @@
     "build:debug": "vite build --debug",
     "build:dev": "vite build --mode development",
     "depcheck": "pnpm dlx depcheck",
+    "deploy:local": "pnpm build:ci && echo $(git rev-parse HEAD)  > ./dist/version && pnpm gh-pages -d dist -u \"Artem Ganev <a.a.ganev@gmail.com>\" -m \"Manual deploy\"",
     "lint": "eslint 'src/**/*.{tsx,ts}' --quiet --max-warnings 1",
     "lint:fix": "eslint 'src/**/*.{tsx,ts}' --fix ",
     "lint:warn": "eslint 'src/**/*.{tsx,ts}'",

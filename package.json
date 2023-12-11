@@ -16,10 +16,11 @@
   "scripts": {
     "analyze": "pnpm run build --mode analyze",
     "build": "vite build",
-    "build:ci": "tsc && pnpm run build",
+    "build:ci": "tsc && pnpm build",
     "build:debug": "vite build --debug",
     "build:dev": "vite build --mode development",
     "depcheck": "pnpm dlx depcheck",
+    "deploy:local": "pnpm build:ci && echo $(git rev-parse HEAD)  > ./dist/version && pnpm gh-pages -d dist -u \"Artem Ganev <a.a.ganev@gmail.com>\" -m \"Manual deploy\"",
     "lint": "eslint 'src/**/*.{tsx,ts}' --quiet --max-warnings 1",
     "lint:fix": "eslint 'src/**/*.{tsx,ts}' --fix ",
     "lint:warn": "eslint 'src/**/*.{tsx,ts}'",
@@ -47,8 +48,7 @@
     "react-helmet-async": "2.0.1",
     "react-redux": "8.1.3",
     "react-router-dom": "6.20.0",
-    "tailwindcss": "3.3.5",
-    "zustand": "4.4.6"
+    "tailwindcss": "3.3.5"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "5.8.4",

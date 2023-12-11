@@ -1,6 +1,10 @@
 import { JSX } from 'react';
 
-import { Col, Row, Space, Tooltip, Typography } from 'antd';
+import Col from 'antd/es/col';
+import Row from 'antd/es/row';
+import Space from 'antd/es/space';
+import Tooltip from 'antd/es/tooltip';
+import Typography from 'antd/es/typography';
 
 import { BLANK, REL } from 'common/constants/html-constants';
 import { BlogItemProps } from 'features/blog/blog-types';

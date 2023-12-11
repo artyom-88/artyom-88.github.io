@@ -1,6 +1,10 @@
-import { JSX } from 'react';
+import type { JSX } from 'react';
 
-import { Col, Row, Space, Tag, Typography } from 'antd';
+import Col from 'antd/es/col';
+import Row from 'antd/es/row';
+import Space from 'antd/es/space';
+import Tag from 'antd/es/tag';
+import Typography from 'antd/es/typography';
 
 import { BLANK, REL } from 'common/constants/html-constants';
 import { CAREER_ROW_GUTTER } from 'features/career/career-constants';

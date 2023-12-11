@@ -1,8 +1,10 @@
 import { JSX } from 'react';
 
-import { GithubOutlined, LinkedinOutlined } from '@ant-design/icons';
+import GithubOutlined from '@ant-design/icons/GithubOutlined';
+import LinkedinOutlined from '@ant-design/icons/LinkedinOutlined';
 import logoGlyph from '@stackoverflow/stacks-icons/src/Icon/LogoGlyphSm.svg';
-import { Button, Tooltip } from 'antd';
+import Button from 'antd/es/button';
+import Tooltip from 'antd/es/tooltip';
 
 import { SocialButtonProps } from 'common/components/common-components-types';
 import { openWindow } from 'common/utils/navigate-utils';

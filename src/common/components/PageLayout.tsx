@@ -6,7 +6,6 @@ import Button from 'antd/es/button';
 import Layout from 'antd/es/layout';
 import Popover from 'antd/es/popover';
 import Space from 'antd/es/space';
-import Tooltip from 'antd/es/tooltip';
 import Typography from 'antd/es/typography';
 
 import { dayjs } from 'common/common-date';
@@ -41,9 +40,7 @@ const PageLayout = ({ children }: PropsWithChildren): JSX.Element => {
           trigger='click'
         >
           <div className='p-1'>
-            <Tooltip title='Click to navigate'>
-              <Button icon={<MenuOutlined />} />
-            </Tooltip>
+            <Button icon={<MenuOutlined />} />
           </div>
         </Popover>
         <SocialButtons />

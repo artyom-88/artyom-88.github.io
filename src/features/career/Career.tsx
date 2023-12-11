@@ -15,12 +15,12 @@ const Career = (): ReactElement => {
   return (
     <PageContainer isLoading={isLoading} title={CAREER_PAGE_PROPS.id} icon={CAREER_PAGE_PROPS.icon}>
       <Row gutter={CAREER_ROW_GUTTER} wrap={false}>
-        <Col span={10}>
+        <Col span={10} xs={0} sm={0} md={0} lg={14} xl={11} xxl={10}>
           <Typography.Title className='mt-0' level={5}>
             Description
           </Typography.Title>
         </Col>
-        <Col flex='auto'>
+        <Col span={14} xs={0} sm={0} md={0} lg={10} xl={13} xxl={14}>
           <Typography.Title className='mt-0' level={5}>
             Technologies and tools
           </Typography.Title>

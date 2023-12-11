@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://artyom-ganev.github.io/sitemap.xml
+Sitemap: https://artyom-88.github.io/sitemap.xml

@@ -45,10 +45,6 @@ export default defineConfig(({ mode }): UserConfig => {
     },
     build: {
       rollupOptions: {
-        external: [
-          // https://ant.design/docs/blog/tree-shaking
-          'rc-field-form'
-        ],
         output: {
           manualChunks: {
             vendors: ['dayjs', 'react', 'react-dom', 'react-router-dom', '@tanstack/react-query', 'ky'],

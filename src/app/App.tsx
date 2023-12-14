@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { HashRouter } from 'react-router-dom';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import AntdApp from 'antd/es/app';
 
 import ErrorBoundary from 'common/components/ErrorBoundary';
 import PageLayout from 'common/components/PageLayout';
@@ -26,9 +27,11 @@ const App = (): JSX.Element => (
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
           <HashRouter>
-            <PageLayout>
-              <Routes />
-            </PageLayout>
+            <AntdApp>
+              <PageLayout>
+                <Routes />
+              </PageLayout>
+            </AntdApp>
           </HashRouter>
         </QueryClientProvider>
       </HelmetProvider>

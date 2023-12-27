@@ -7,3 +7,7 @@ updates:
     schedule:
       interval: "weekly"
     versioning-strategy: "increase-if-necessary"
+  - directory: "/"
+    package-ecosystem: "github-actions"
+    schedule:
+      interval: "weekly"

@@ -9,7 +9,7 @@ import Tooltip from 'antd/es/tooltip';
 import { SocialButtonProps } from 'common/components/common-components-types';
 import { openWindow } from 'common/utils/navigate-utils';
 
-const openLinkedin = () => openWindow('https://www.linkedin.com/in/artem-g-185b38192/');
+const openLinkedin = () => openWindow('https://linkedin.com/in/artem-ganev/');
 
 const openGithub = () => openWindow('https://github.com/artyom-88');
 

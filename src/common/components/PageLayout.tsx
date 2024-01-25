@@ -27,7 +27,7 @@ const PageLayout = ({ children }: PropsWithChildren): JSX.Element => {
           onOpenChange={toggleOpen}
           open={open}
           content={
-            <Space direction='vertical'>
+            <Space direction='vertical' data-testid='nav-menu-content'>
               {PAGES_PROPS_LIST.map(({ id, url }: PageProps) => (
                 <Typography.Text key={id} strong>
                   <NavLink className='capitalize' to={url} onClick={toggleOpen}>
@@ -40,7 +40,7 @@ const PageLayout = ({ children }: PropsWithChildren): JSX.Element => {
           trigger='click'
         >
           <div className='p-1'>
-            <Button icon={<MenuOutlined />} />
+            <Button icon={<MenuOutlined />} data-testid='nav-menu' />
           </div>
         </Popover>
         <SocialButtons />

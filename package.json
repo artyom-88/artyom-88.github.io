@@ -76,7 +76,7 @@
     "eslint-plugin-vitest": "0.3.20",
     "gh-pages": "6.1.1",
     "husky": "8.0.3",
-    "jsdom": "23.2.0",
+    "jsdom": "24.0.0",
     "lint-staged": "15.2.0",
     "postcss": "8.4.33",
     "prettier": "3.2.4",

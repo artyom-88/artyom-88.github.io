@@ -43,6 +43,11 @@ export default defineConfig(({ mode }): UserConfig => {
       host: host,
       port: port,
     },
+    preview: {
+      host: host,
+      port: port,
+      strictPort: true,
+    },
     build: {
       rollupOptions: {
         output: {

@@ -6,7 +6,7 @@ import { defineConfig, loadEnv, PluginOption, UserConfig } from 'vite';
 import svg from 'vite-plugin-svgo';
 
 const DEFAULT_DOMAIN = 'artyom-88.github.io';
-const DEFAULT_PORT = 8080;
+const DEFAULT_PORT = +(process.env.PORT ?? 8080);
 const PROD = 'production';
 const DEV = 'development';
 

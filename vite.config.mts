@@ -6,7 +6,7 @@ import { defineConfig, loadEnv, PluginOption, UserConfig } from 'vite';
 import svg from 'vite-plugin-svgo';
 
 const DEFAULT_DOMAIN = 'artyom-88.github.io';
-const DEFAULT_PORT = 8000;
+const DEFAULT_PORT = 8080;
 const PROD = 'production';
 const DEV = 'development';
 
@@ -26,7 +26,7 @@ export default defineConfig(({ mode }): UserConfig => {
   const env = loadEnv(mode, process.cwd());
   const isDevelopment = getIsDevelopment(mode);
   const host = `${env.VITE_DOMAIN || DEFAULT_DOMAIN}`;
-  const port = +env.VITE_PORT || DEFAULT_PORT;
+  const port = +(env.VITE_PORT || DEFAULT_PORT);
   return {
     mode: isDevelopment ? DEV : PROD,
     plugins: getPlugins(mode),

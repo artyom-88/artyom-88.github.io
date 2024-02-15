@@ -26,7 +26,7 @@ export default defineConfig(({ mode }): UserConfig => {
   const env = loadEnv(mode, process.cwd());
   const isDevelopment = getIsDevelopment(mode);
   const host = `${env.VITE_DOMAIN || DEFAULT_DOMAIN}`;
-  const port = +env.VITE_PORT || DEFAULT_PORT;
+  const port = +(env.VITE_PORT || DEFAULT_PORT);
   return {
     mode: isDevelopment ? DEV : PROD,
     plugins: getPlugins(mode),

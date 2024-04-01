@@ -39,7 +39,7 @@
     "update": "pnpm dlx npm-check -u -E -s"
   },
   "dependencies": {
-    "@ant-design/icons": "5.3.5",
+    "@ant-design/icons": "5.3.6",
     "@stackoverflow/stacks-icons": "2.27.0",
     "@tanstack/react-query": "5.25.0",
     "antd": "5.15.3",

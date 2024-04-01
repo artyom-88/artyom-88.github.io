@@ -45,7 +45,7 @@ jobs:
       - name: Deploy app
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/artyom-88/artyom-88.github.io.git
-          pnpm gh-pages -d dist -u "Artem Ganev <a.a.ganev@gmail.com>" -m ${GITHUB_SHA}
+          pnpm gh-pages -d dist -u "Artёm <artem_ganev@epam.com>" -m ${GITHUB_SHA}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_SHA: ${{ secrets.GITHUB_SHA }}

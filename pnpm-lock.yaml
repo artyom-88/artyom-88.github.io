@@ -44,8 +44,8 @@ devDependencies:
     specifier: ^1.41.2
     version: 1.42.1
   '@tanstack/eslint-plugin-query':
-    specifier: 5.20.1
-    version: 5.20.1(eslint@8.57.0)(typescript@5.4.3)
+    specifier: 5.28.11
+    version: 5.28.11(eslint@8.57.0)(typescript@5.4.3)
   '@testing-library/jest-dom':
     specifier: 6.4.2
     version: 6.4.2(vitest@1.2.2)
@@ -1022,8 +1022,8 @@ packages:
     deprecated: This package was deprecated effective 2023-01-05.  All items that include language, including, but not limited to, Stack Overflow, Stack Exchange and Exchange, and the accompanying graphics including the Stack Exchange bubble icon, are the property of Stack Exchange, Inc. and may not be used without express written permission.
     dev: false
 
-  /@tanstack/eslint-plugin-query@5.20.1(eslint@8.57.0)(typescript@5.4.3):
-    resolution: {integrity: sha512-oIp7Wh90KHOm1FKCvcv87fiD2H96xo/crFrlhbvqBzR2f0tMEGOK/ANKMGNFQprd6BT6lyZhQPlOEkFdezsjIg==}
+  /@tanstack/eslint-plugin-query@5.28.11(eslint@8.57.0)(typescript@5.4.3):
+    resolution: {integrity: sha512-bODGLeG4WCGmHVKCh3bH1KLfq7xdi1jsRjTESV6ifCw1mZ0m2fBMxAjK42KjbhJwcvNdTlYHI+YY/aZWBk4Niw==}
     peerDependencies:
       eslint: ^8.0.0
     dependencies:

@@ -30,7 +30,7 @@ jobs:
         with:
           path: |
             ${{ env.STORE_PATH }}
-            /node_modules
+            ./node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: ${{ runner.os }}-
       - name: Install dependencies

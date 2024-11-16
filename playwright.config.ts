@@ -16,7 +16,7 @@ export default defineConfig({
   use: {
     baseURL: baseUrl,
     ignoreHTTPSErrors: true,
-    trace: 'on-first-retry',
+    trace: 'on',
   },
   webServer: {
     command: 'pnpm start',

@@ -8,16 +8,14 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.48.1-noble
     env:
       VITE_API_URL: ${{ secrets.VITE_API_URL }}
     steps:
     - uses: actions/checkout@v4
     - name: Ping API
       run: curl "${{ env.VITE_API_URL }}/api/health"
-    - uses: actions/setup-node@v4
-      name: Install NodeJS
-      with:
-        node-version: '22'
     - uses: pnpm/action-setup@v4
       name: Install PNPM
       with:

@@ -96,11 +96,6 @@
       "micromatch": ">=4.0.8"
     }
   },
-  "pnpm": {
-    "overrides": {
-      "micromatch": ">=4.0.8"
-    }
-  },
   "lint-staged": {
     "src/**/*.scss": [
       "prettier --write --max-warnings 1"

@@ -5,6 +5,7 @@ import { BlogDTO } from 'features/blog/blog-types';
 test.describe('blog page', () => {
   test('has default content', async ({ page }) => {
     await page.goto('/#/blog');
+    console.log(page.url());
     await expect(page).toHaveTitle('blog');
     await expect(page.getByTestId('nav-menu')).toBeVisible();
     await expect(page.getByText('blog')).toBeVisible();

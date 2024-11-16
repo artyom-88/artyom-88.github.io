@@ -68,8 +68,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     timeout-minutes: 5
-    container:
-      image: mcr.microsoft.com/playwright:v1.48.2
     env:
       HOME: /root
       VITE_API_URL: ${{ secrets.VITE_API_URL }}
@@ -95,6 +93,8 @@ jobs:
           restore-keys: ${{ runner.os }}-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
       - name: Run Playwright tests
         run: pnpm exec playwright test
       - uses: actions/upload-artifact@v4

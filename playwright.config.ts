@@ -10,8 +10,8 @@ export default defineConfig({
   testDir: '././src/test/e2e',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  retries: process.env.CI ? 1 : 0,
+  workers: process.env.CI ? 2 : undefined,
   reporter: 'html',
   use: {
     baseURL: baseUrl,
@@ -23,9 +23,6 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
     reuseExistingServer: !process.env.CI,
     url: baseUrl,
-  },
-  expect: {
-    timeout: 6 * 1000,
   },
   projects: [
     {
@@ -47,14 +44,6 @@ export default defineConfig({
     {
       name: 'Mobile Safari',
       use: { ...devices['iPhone 12'] },
-    },
-    {
-      name: 'Microsoft Edge',
-      use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    },
-    {
-      name: 'Google Chrome',
-      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     },
   ],
 });

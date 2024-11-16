@@ -27,7 +27,7 @@ const PageContainer = ({
   useEffect(() => {
     if (isLoading) {
       const timeout = setTimeout(() => {
-        void notification.warning({
+        notification.warning({
           message: 'Sorry, I use Eco dynos in my Heroku account.',
           description: (
             <Typography.Text>
@@ -41,7 +41,10 @@ const PageContainer = ({
           duration: WARNING_DURATION_SEC,
         });
       }, SHOW_WARNING_TIMEOUT_MS);
-      return () => clearTimeout(timeout);
+      return () => {
+        clearTimeout(timeout);
+        notification.destroy();
+      };
     }
   }, [isLoading, notification]);
 

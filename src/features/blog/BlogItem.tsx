@@ -23,7 +23,7 @@ const BlogItem = ({ item }: BlogItemProps): JSX.Element => {
     </Tooltip>
   ) : null;
   return (
-    <Row key={id} gutter={gutter} wrap={false}>
+    <Row key={id} data-testid={`blog-item-${id}`} gutter={gutter} wrap={false}>
       <Col span={6} xs={0} sm={8} md={7} lg={4}>
         {dateRender}
       </Col>

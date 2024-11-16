@@ -10,9 +10,10 @@
     "url": "https://github.com/artyom-88/artyom-88.github.io"
   },
   "engines": {
-    "node": "20.x",
-    "pnpm": "8.x"
+    "node": ">=22",
+    "pnpm": ">=9"
   },
+  "packageManager": "pnpm@9.13.2",
   "scripts": {
     "analyze": "pnpm run build --mode analyze",
     "build": "vite build",
@@ -20,7 +21,7 @@
     "build:debug": "vite build --debug",
     "build:dev": "vite build --mode development",
     "depcheck": "pnpm dlx depcheck",
-    "deploy:local": "pnpm build:ci && echo $(git rev-parse HEAD)  > ./dist/version && pnpm gh-pages -d dist -u \"Artem Ganev <a.a.ganev@gmail.com>\" -m \"Manual deploy\"",
+    "deploy:local": "pnpm build:ci && echo $(git rev-parse HEAD)  > ./dist/version && pnpm gh-pages -d dist -u \"Artёm <artem_ganev@epam.com>\" -m \"Manual deploy\"",
     "lint": "eslint 'src/**/*.{tsx,ts}' --quiet --max-warnings 1",
     "lint:fix": "eslint 'src/**/*.{tsx,ts}' --fix ",
     "lint:warn": "eslint 'src/**/*.{tsx,ts}'",
@@ -41,31 +42,32 @@
   "dependencies": {
     "@ant-design/icons": "5.3.6",
     "@stackoverflow/stacks-icons": "2.27.0",
-    "@tanstack/react-query": "5.25.0",
-    "antd": "5.15.3",
+    "@tanstack/react-query": "5.51.21",
+    "antd": "5.22.1",
     "dayjs": "1.11.10",
-    "ky": "1.2.3",
+    "ky": "1.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-helmet-async": "2.0.4",
-    "react-router-dom": "6.22.2",
-    "tailwindcss": "3.4.1"
+    "react-router-dom": "6.23.0",
+    "tailwindcss": "3.4.15"
   },
   "devDependencies": {
-    "@playwright/test": "^1.41.2",
-    "@tanstack/eslint-plugin-query": "5.20.1",
-    "@testing-library/jest-dom": "6.4.2",
-    "@testing-library/react": "14.2.2",
+    "@playwright/test": "1.48.2",
+    "@tanstack/eslint-plugin-query": "5.28.11",
+    "@testing-library/jest-dom": "6.6.3",
+    "@testing-library/react": "15.0.4",
     "@testing-library/user-event": "14.5.2",
-    "@types/node": "20.11.30",
-    "@types/react": "18.2.73",
-    "@types/react-dom": "18.2.19",
+    "@types/node": "22.1.0",
+    "@types/react": "18.2.79",
+    "@types/react-dom": "18.2.25",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",
     "@vitejs/plugin-basic-ssl": "1.1.0",
-    "@vitejs/plugin-react": "4.2.1",
-    "@vitest/ui": "1.2.2",
-    "autoprefixer": "10.4.18",
+    "@vitejs/plugin-react": "4.3.3",
+    "@vitest/ui": "2.1.5",
+    "@vitest/coverage-v8": "2.1.5",
+    "autoprefixer": "10.4.19",
     "dotenv": "16.4.5",
     "eslint": "8.57.0",
     "eslint-config-airbnb-typescript": "17.1.0",
@@ -83,11 +85,16 @@
     "postcss": "8.4.38",
     "prettier": "3.2.5",
     "rollup-plugin-visualizer": "5.12.0",
-    "sass": "1.71.1",
-    "typescript": "5.4.3",
-    "vite": "5.1.6",
+    "sass": "1.75.0",
+    "typescript": "5.6.3",
+    "vite": "5.4.11",
     "vite-plugin-svgo": "1.4.0",
-    "vitest": "1.2.2"
+    "vitest": "2.1.5"
+  },
+  "pnpm": {
+    "overrides": {
+      "micromatch": ">=4.0.8"
+    }
   },
   "lint-staged": {
     "src/**/*.scss": [

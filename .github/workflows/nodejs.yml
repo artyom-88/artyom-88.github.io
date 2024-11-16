@@ -92,14 +92,6 @@ jobs:
           restore-keys: ${{ runner.os }}-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: APT Cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            /var/cache/apt/archives/
-          key: ${{ runner.os }}-apt-${{ hashFiles('/var/cache/apt/archives/apt-dependencies-list.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-apt-
       - name: Get Playwright Version
         run: |
           VERSION_OUTPUT=$(pnpm exec playwright --version)

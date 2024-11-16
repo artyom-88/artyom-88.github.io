@@ -8,10 +8,12 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      VITE_API_URL: ${{ secrets.VITE_API_URL }}
     steps:
     - uses: actions/checkout@v4
     - name: Ping API
-      run: curl https://artemganev-be-dev-02da3abc0800.herokuapp.com/api/health
+      run: curl "${{ env.VITE_API_URL }}/api/health"
     - uses: actions/setup-node@v4
       name: Install NodeJS
       with:
@@ -40,8 +42,6 @@ jobs:
         pnpm exec playwright install msedge
     - name: Run Playwright tests
       run: pnpm exec playwright test
-      env:
-        VITE_API_URL: ${{ secrets.VITE_API_URL }}
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:

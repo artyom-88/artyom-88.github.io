@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test.describe.skip('main page', () => {
+test.describe('main page', () => {
   test('has title', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle('Hi! My name is Artёm.');

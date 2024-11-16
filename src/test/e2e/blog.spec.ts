@@ -12,7 +12,7 @@ test.describe('blog page', () => {
 
   test('has blog item list', async ({ page }) => {
     const [response] = await Promise.all([
-      page.waitForResponse((res) => res.url().includes('/api/blog') && res.status() === 200, { timeout: 5000 }),
+      page.waitForResponse((res) => res.url().includes('/api/blog') && res.status() === 200),
       page.goto('/#/blog'),
     ]);
     const blogItems: BlogDTO[] = await response.json();

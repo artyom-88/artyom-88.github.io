@@ -7,12 +7,12 @@ test.describe('career page', () => {
     await page.goto('/#/career');
     await expect(page).toHaveTitle('career');
     await expect(page.getByTestId('nav-menu')).toBeVisible();
-    await expect(page.getByText('career')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'career' })).toBeVisible();
   });
 
   test('has career item list', async ({ page }) => {
     const [response] = await Promise.all([
-      page.waitForResponse((res) => res.url().includes('/api/career') && res.status() === 200, { timeout: 30000 }),
+      page.waitForResponse((res) => res.url().includes('/api/career') && res.status() === 200),
       page.goto('/#/career'),
     ]);
     const careerItems: CareerDTO[] = await response.json();

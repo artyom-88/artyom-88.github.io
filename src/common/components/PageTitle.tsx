@@ -7,7 +7,9 @@ import { PageTitleProps } from 'common/components/common-components-types';
 const PageTitle = ({ icon: Icon, title }: PageTitleProps): JSX.Element => (
   <Space size='large'>
     <Icon />
-    <span className='capitalize'>{title}</span>
+    <span className='capitalize' role='heading'>
+      {title}
+    </span>
   </Space>
 );
 

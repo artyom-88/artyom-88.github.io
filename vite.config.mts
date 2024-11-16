@@ -57,6 +57,20 @@ export default defineConfig(({ mode }): UserConfig => {
       environment: 'jsdom',
       globals: true,
       setupFiles: './src/test/test-setup.ts',
+      include: ['src/test/**/**test.{ts,tsx}'],
+      coverage: {
+        include: ['src'],
+        exclude: ['src/test'],
+        reporter: ['text', 'text-summary', 'html'],
+        thresholds: {
+          perFile: false,
+          statements: 1,
+          branches: 1,
+          functions: 1,
+          lines: 1,
+        },
+        provider: 'v8',
+      },
     },
   };
 });

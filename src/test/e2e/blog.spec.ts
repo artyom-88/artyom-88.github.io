@@ -7,12 +7,12 @@ test.describe('blog page', () => {
     await page.goto('/#/blog');
     await expect(page).toHaveTitle('blog');
     await expect(page.getByTestId('nav-menu')).toBeVisible();
-    await expect(page.getByText('blog')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'blog' })).toBeVisible();
   });
 
   test('has blog item list', async ({ page }) => {
     const [response] = await Promise.all([
-      page.waitForResponse((res) => res.url().includes('/api/blog') && res.status() === 200, { timeout: 30000 }),
+      page.waitForResponse((res) => res.url().includes('/api/blog') && res.status() === 200),
       page.goto('/#/blog'),
     ]);
     const blogItems: BlogDTO[] = await response.json();

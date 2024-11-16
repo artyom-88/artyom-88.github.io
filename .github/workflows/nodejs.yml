@@ -7,12 +7,9 @@ on:
 jobs:
   install:
     runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.48.1-noble
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        name: Install NodeJS
-        with:
-          node-version: '22'
       - uses: pnpm/action-setup@v4
         name: Install PNPM
         with:
@@ -33,13 +30,10 @@ jobs:
         run: pnpm install --frozen-lockfile
   build:
     runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.48.1-noble
     needs: install
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        name: Install NodeJS
-        with:
-          node-version: '22'
       - uses: pnpm/action-setup@v4
         name: Install PNPM
         with:
@@ -66,10 +60,9 @@ jobs:
         run: pnpm build:ci
   e2e:
     runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.48.1-noble
     needs: install
     timeout-minutes: 5
-    container:
-      image: mcr.microsoft.com/playwright:v1.48.1-noble
     env:
       HOME: /root
       VITE_API_URL: ${{ secrets.VITE_API_URL }}

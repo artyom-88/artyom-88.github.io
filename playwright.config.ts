@@ -10,7 +10,7 @@ export default defineConfig({
   testDir: '././src/test/e2e',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 0 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
@@ -24,7 +24,7 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     url: baseUrl,
   },
-  timeout: 60 * 1000,
+  timeout: 10 * 1000,
   projects: [
     {
       name: 'chromium',

@@ -24,9 +24,7 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     url: baseUrl,
   },
-  expect: {
-    timeout: 6 * 1000,
-  },
+  timeout: 60 * 1000,
   projects: [
     {
       name: 'chromium',

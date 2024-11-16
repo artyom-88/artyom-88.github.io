@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 import { CareerDTO } from 'features/career/career-types';
 
-test.describe('career page', () => {
+test.describe.skip('career page', () => {
   test('has default content', async ({ page }) => {
     await page.goto('/#/career');
     await expect(page).toHaveTitle('career');

@@ -46,8 +46,8 @@ importers:
         version: 3.4.15
     devDependencies:
       '@playwright/test':
-        specifier: ^1.43.1
-        version: 1.43.1
+        specifier: 1.48.2
+        version: 1.48.2
       '@tanstack/eslint-plugin-query':
         specifier: 5.28.11
         version: 5.28.11(eslint@8.57.0)(typescript@5.6.3)
@@ -129,9 +129,6 @@ importers:
       lint-staged:
         specifier: 15.2.2
         version: 15.2.2
-      playwright:
-        specifier: ^1.48.2
-        version: 1.48.2
       postcss:
         specifier: 8.4.38
         version: 8.4.38
@@ -585,9 +582,9 @@ packages:
     resolution: {integrity: sha512-Zwq5OCzuwJC2jwqmpEQt7Ds1DTi6BWSwoGkbb1n9pO3hzb35BoJELx7c0T23iDkBGkh2e7tvOtjF3tr3OaQHDQ==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@playwright/test@1.43.1':
-    resolution: {integrity: sha512-HgtQzFgNEEo4TE22K/X7sYTYNqEMMTZmFS8kTq6m8hXj+m1D8TgwgIbumHddJa9h4yl4GkKb8/bgAl2+g7eDgA==}
-    engines: {node: '>=16'}
+  '@playwright/test@1.48.2':
+    resolution: {integrity: sha512-54w1xCWfXuax7dz4W2M9uw0gDyh+ti/0K/MxcCUxChFh37kkdxPdfZDw5QBbuPUJHr1CiHJ1hXgSs+GgeQc5Zw==}
+    engines: {node: '>=18'}
     hasBin: true
 
   '@polka/url@1.0.0-next.24':
@@ -2443,19 +2440,9 @@ packages:
   pkg-types@1.0.3:
     resolution: {integrity: sha512-nN7pYi0AQqJnoLPC9eHFQ8AcyaixBUOwvqc5TDnIKCMEE6I0y8P7OKA7fPexsXGCGxQDl/cmrLAp26LhcwxZ4A==}
 
-  playwright-core@1.43.1:
-    resolution: {integrity: sha512-EI36Mto2Vrx6VF7rm708qSnesVQKbxEWvPrfA1IPY6HgczBplDx7ENtx+K2n4kJ41sLLkuGfmb0ZLSSXlDhqPg==}
-    engines: {node: '>=16'}
-    hasBin: true
-
   playwright-core@1.48.2:
     resolution: {integrity: sha512-sjjw+qrLFlriJo64du+EK0kJgZzoQPsabGF4lBvsid+3CNIZIYLgnMj9V6JY5VhM2Peh20DJWIVpVljLLnlawA==}
     engines: {node: '>=18'}
-    hasBin: true
-
-  playwright@1.43.1:
-    resolution: {integrity: sha512-V7SoH0ai2kNt1Md9E3Gwas5B9m8KR2GVvwZnAI6Pg0m3sh7UvgiYhRrhsziCmqMJNouPckiOhk8T+9bSAK0VIA==}
-    engines: {node: '>=16'}
     hasBin: true
 
   playwright@1.48.2:
@@ -3889,9 +3876,9 @@ snapshots:
 
   '@pkgr/core@0.1.0': {}
 
-  '@playwright/test@1.43.1':
+  '@playwright/test@1.48.2':
     dependencies:
-      playwright: 1.43.1
+      playwright: 1.48.2
 
   '@polka/url@1.0.0-next.24': {}
 
@@ -6011,15 +5998,7 @@ snapshots:
       mlly: 1.4.2
       pathe: 1.1.1
 
-  playwright-core@1.43.1: {}
-
   playwright-core@1.48.2: {}
-
-  playwright@1.43.1:
-    dependencies:
-      playwright-core: 1.43.1
-    optionalDependencies:
-      fsevents: 2.3.2
 
   playwright@1.48.2:
     dependencies:

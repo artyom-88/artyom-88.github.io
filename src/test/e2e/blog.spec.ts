@@ -7,7 +7,7 @@ test.describe('blog page', () => {
     await page.goto('/#/blog');
     await expect(page).toHaveTitle('blog');
     await expect(page.getByTestId('nav-menu')).toBeVisible();
-    await expect(page.getByText('blog')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'blog' })).toBeVisible();
   });
 
   test('has blog item list', async ({ page }) => {

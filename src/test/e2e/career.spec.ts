@@ -7,7 +7,7 @@ test.describe('career page', () => {
     await page.goto('/#/career');
     await expect(page).toHaveTitle('career');
     await expect(page.getByTestId('nav-menu')).toBeVisible();
-    await expect(page.getByText('career')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'career' })).toBeVisible();
   });
 
   test('has career item list', async ({ page }) => {

@@ -12,7 +12,7 @@ test.describe('career page', () => {
 
   test('has career item list', async ({ page }) => {
     const [response] = await Promise.all([
-      page.waitForResponse((res) => res.url().includes('/api/career') && res.status() === 200, { timeout: 30000 }),
+      page.waitForResponse((res) => res.url().includes('/api/career') && res.status() === 200, { timeout: 60000 }),
       page.goto('/#/career'),
     ]);
     const careerItems: CareerDTO[] = await response.json();

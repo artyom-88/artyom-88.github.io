@@ -129,6 +129,9 @@ importers:
       lint-staged:
         specifier: 15.2.2
         version: 15.2.2
+      playwright:
+        specifier: ^1.48.2
+        version: 1.48.2
       postcss:
         specifier: 8.4.38
         version: 8.4.38
@@ -2445,9 +2448,19 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
+  playwright-core@1.48.2:
+    resolution: {integrity: sha512-sjjw+qrLFlriJo64du+EK0kJgZzoQPsabGF4lBvsid+3CNIZIYLgnMj9V6JY5VhM2Peh20DJWIVpVljLLnlawA==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   playwright@1.43.1:
     resolution: {integrity: sha512-V7SoH0ai2kNt1Md9E3Gwas5B9m8KR2GVvwZnAI6Pg0m3sh7UvgiYhRrhsziCmqMJNouPckiOhk8T+9bSAK0VIA==}
     engines: {node: '>=16'}
+    hasBin: true
+
+  playwright@1.48.2:
+    resolution: {integrity: sha512-NjYvYgp4BPmiwfe31j4gHLa3J7bD2WiBz8Lk2RoSsmX38SVIARZ18VYjxLjAcDsAhA+F4iSEXTSGgjua0rrlgQ==}
+    engines: {node: '>=18'}
     hasBin: true
 
   pluralize@8.0.0:
@@ -6000,9 +6013,17 @@ snapshots:
 
   playwright-core@1.43.1: {}
 
+  playwright-core@1.48.2: {}
+
   playwright@1.43.1:
     dependencies:
       playwright-core: 1.43.1
+    optionalDependencies:
+      fsevents: 2.3.2
+
+  playwright@1.48.2:
+    dependencies:
+      playwright-core: 1.48.2
     optionalDependencies:
       fsevents: 2.3.2
 

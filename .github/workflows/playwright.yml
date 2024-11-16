@@ -1,9 +1,9 @@
 name: Playwright Tests
 on:
-  push:
-    branches: [ develop ]
   pull_request:
-    branches: [ master ]
+    branches:
+      - develop
+      - master
 jobs:
   test:
     timeout-minutes: 60
@@ -11,10 +11,27 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
+      name: Install NodeJS
       with:
-        node-version: 22
+        node-version: '22'
+    - uses: pnpm/action-setup@v4
+      name: Install PNPM
+      with:
+        run_install: false
+    - name: Get pnpm store directory
+      shell: bash
+      run: |
+        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+    - uses: actions/cache@v4
+      name: Setup cache
+      with:
+        path: |
+          ${{ env.STORE_PATH }}
+          ./node_modules
+        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: ${{ runner.os }}-
     - name: Install dependencies
-      run: npm install -g pnpm && pnpm install
+      run: pnpm install --frozen-lockfile
     - name: Install Playwright Browsers
       run: |
         pnpm exec playwright install --with-deps

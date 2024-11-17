@@ -1,3 +1,10 @@
 ignores: [
-  "autoprefixer"
+  "@vitest/coverage-v8",
+  "app",
+  "assets",
+  "autoprefixer",
+  "common",
+  "features",
+  "postcss",
+  "tailwindcss"
 ]

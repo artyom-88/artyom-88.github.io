@@ -47,7 +47,7 @@ export default defineConfig(({ mode }): UserConfig => {
       rollupOptions: {
         output: {
           manualChunks: {
-            vendors: ['dayjs', 'react', 'react-dom', 'react-router-dom', '@tanstack/react-query', 'ky'],
+            vendors: ['@ant-design/icons', 'dayjs', 'react', 'react-dom', 'react-router-dom', '@tanstack/react-query', 'ky'],
           },
         },
       },

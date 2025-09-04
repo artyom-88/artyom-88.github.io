@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { expect, vi } from 'vitest';
-
 import PageTitle from 'common/components/PageTitle';
+import { expect, vi } from 'vitest';
 
 describe('PageTitle', () => {
   const title = 'test title';

@@ -1,12 +1,10 @@
-import { ReactElement, useMemo } from 'react';
-
-import Timeline, { TimelineItemProps } from 'antd/es/timeline';
-
+import Timeline, { type TimelineItemProps } from 'antd/es/timeline';
 import PageContainer from 'common/components/PageContainer';
 import { CAREER_PAGE_PROPS } from 'common/constants/pages-constants';
 import CareerItem from 'features/career/CareerItem';
 import CareerItemTitle from 'features/career/CareerItemTitle';
 import { useCareerListQuery } from 'features/career/hooks/use-career-list-query';
+import { type ReactElement, useMemo } from 'react';
 
 const Career = (): ReactElement => {
   const { data: list = [], isLoading } = useCareerListQuery();

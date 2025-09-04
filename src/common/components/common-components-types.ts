@@ -1,6 +1,5 @@
+import type { WithClassName, WithIcon } from 'common/common-types';
 import type { JSX } from 'react';
-
-import { WithClassName, WithIcon } from 'common/common-types';
 
 export interface PageTitleProps extends WithIcon {
   title: string;

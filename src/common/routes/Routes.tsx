@@ -1,12 +1,11 @@
-import type { JSX } from 'react';
-import { lazy, Suspense } from 'react';
-import type { RouteObject } from 'react-router-dom';
-import { Navigate, useRoutes } from 'react-router-dom';
-
 import LoadingPage from 'common/components/LoadingPage';
 import NotFound from 'common/components/NotFound';
 import PageContent from 'common/components/PageContent';
 import * as routesConstants from 'common/routes/routes-constants';
+import type { JSX } from 'react';
+import { lazy, Suspense } from 'react';
+import type { RouteObject } from 'react-router-dom';
+import { Navigate, useRoutes } from 'react-router-dom';
 
 const About = lazy(() => import('features/about/About'));
 const Blog = lazy(() => import('features/blog/Blog'));

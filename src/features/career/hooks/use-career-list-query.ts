@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { dayjs } from 'common/common-date';
 import { httpClient } from 'common/http-client';
-import { CareerDTO, CareerModel } from 'features/career/career-types';
+import type { CareerDTO, CareerModel } from 'features/career/career-types';
 
 export const useCareerListQuery = (): UseQueryResult<CareerModel[]> =>
   useQuery<CareerModel[]>({

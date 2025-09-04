@@ -1,13 +1,11 @@
-import type { JSX } from 'react';
-import { StrictMode } from 'react';
-import { HashRouter } from 'react-router-dom';
-
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AntdApp from 'antd/es/app';
-
 import ErrorBoundary from 'common/components/ErrorBoundary';
 import PageLayout from 'common/components/PageLayout';
 import Routes from 'common/routes/Routes';
+import type { JSX } from 'react';
+import { StrictMode } from 'react';
+import { HashRouter } from 'react-router-dom';
 
 const queryClient = new QueryClient({
   defaultOptions: {

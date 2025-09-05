@@ -1,13 +1,11 @@
-import { JSX } from 'react';
-
 import Col from 'antd/es/col';
 import Row from 'antd/es/row';
 import Space from 'antd/es/space';
 import Tooltip from 'antd/es/tooltip';
 import Typography from 'antd/es/typography';
-
 import { BLANK, REL } from 'common/constants/html-constants';
-import { BlogItemProps } from 'features/blog/blog-types';
+import type { BlogItemProps } from 'features/blog/blog-types';
+import type { JSX } from 'react';
 
 const gutter = 16;
 

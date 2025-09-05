@@ -1,10 +1,8 @@
-import type { JSX } from 'react';
-
 import Space from 'antd/es/space';
 import Tag from 'antd/es/tag';
 import Typography from 'antd/es/typography';
-
-import { CareerItemProps } from 'features/career/career-types';
+import type { CareerItemProps } from 'features/career/career-types';
+import type { JSX } from 'react';
 
 const CareerItem = ({ item }: CareerItemProps): JSX.Element => {
   const { _id: id, post, description, tools } = item;

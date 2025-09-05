@@ -1,9 +1,0 @@
-build
-config
-coverage
-dist
-info
-node_modules
-postcss.config.js
-public
-tailwind.config.js

@@ -1,13 +1,11 @@
-import { JSX } from 'react';
-
 import GithubOutlined from '@ant-design/icons/GithubOutlined';
 import LinkedinOutlined from '@ant-design/icons/LinkedinOutlined';
-import logoGlyph from '@stackoverflow/stacks-icons/src/Icon/LogoGlyphSm.svg';
+import stackOverflowIcon from '@stackoverflow/stacks-icons/src/Icon/LogoGlyphSm.svg';
 import Button from 'antd/es/button';
 import Tooltip from 'antd/es/tooltip';
-
-import { SocialButtonProps } from 'common/components/common-components-types';
+import type { SocialButtonProps } from 'common/components/common-components-types';
 import { openWindow } from 'common/utils/navigate-utils';
+import type { JSX } from 'react';
 
 const openLinkedin = () => openWindow('https://linkedin.com/in/artem-ganev/');
 
@@ -15,7 +13,7 @@ const openGithub = () => openWindow('https://github.com/artyom-88');
 
 const openStackOverflow = () => openWindow('https://stackoverflow.com/users/6880595/artyom-ganev');
 
-const stackOverflowIcon = { __html: logoGlyph as TrustedHTML };
+const stackOverflowIconSrc = `data:image/svg+xml;utf8,${encodeURIComponent(stackOverflowIcon)}`;
 
 const SocialButton = ({ className = '', icon, onClick, name }: SocialButtonProps): JSX.Element => (
   <div className={`p-1 ${className}`}>
@@ -32,7 +30,7 @@ const SocialButtons = (): JSX.Element => (
     <SocialButton
       className='self-center'
       onClick={openStackOverflow}
-      icon={<span dangerouslySetInnerHTML={stackOverflowIcon} role='img' aria-label='stack-overflow' className='anticon' />}
+      icon={<img src={stackOverflowIconSrc} alt='Stack Overflow' className='anticon' />}
       name='Stackoverflow'
     />
   </div>

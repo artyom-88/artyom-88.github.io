@@ -1,8 +1,8 @@
+import { resolve } from 'node:path';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
-import { defineConfig, loadEnv, PluginOption, UserConfig } from 'vite';
+import { defineConfig, loadEnv, type PluginOption, type UserConfig } from 'vite';
 import svg from 'vite-plugin-svgo';
 
 const DEFAULT_DOMAIN = 'artyom-88.github.io';

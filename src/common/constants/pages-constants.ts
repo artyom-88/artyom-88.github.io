@@ -1,6 +1,6 @@
 import { HomeOutlined, MenuOutlined, SettingOutlined } from '@ant-design/icons';
 
-import { PageProps } from 'common/common-types';
+import type { PageProps } from 'common/common-types';
 import * as routesConstants from 'common/routes/routes-constants';
 
 export const ABOUT_PAGE_PROPS: PageProps = {

@@ -13,7 +13,7 @@
 - - - -
 **Made with:**
 * [Day.js](https://day.js.org)
-* [ESLint](https://eslint.org)
+* [Biome](https://biomejs.dev)
 * [GitHub Actions](https://docs.github.com/en/actions)
 * [GitHub Pages](https://pages.github.com)
 * [Heroku](https://www.heroku.com)

@@ -1,5 +1,4 @@
 import { JSX, PropsWithChildren, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 
 import App from 'antd/es/app';
 import Card from 'antd/es/card';
@@ -50,10 +49,8 @@ const PageContainer = ({
 
   return (
     <Card className='flex flex-col grow w-full' title={<PageTitle icon={icon} title={title} />}>
-      <Helmet>
-        <title>{title}</title>
-        <meta name='description' content={description} />
-      </Helmet>
+      <title>{title}</title>
+      <meta name='description' content={description} />
       {isLoading ? (
         <LoadingPage />
       ) : (

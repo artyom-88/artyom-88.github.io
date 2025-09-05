@@ -28,9 +28,15 @@ const PageLayout = ({ children }: PropsWithChildren): JSX.Element => {
           open={open}
           content={
             <Space direction='vertical' data-testid='nav-menu-content'>
-              {PAGES_PROPS_LIST.map(({ id, url }: PageProps) => (
+              {PAGES_PROPS_LIST.map(({ id, url, handlePreload }: PageProps) => (
                 <Typography.Text key={id} strong>
-                  <NavLink className='capitalize' to={url} onClick={toggleOpen}>
+                  <NavLink
+                    className='capitalize'
+                    to={url}
+                    onClick={toggleOpen}
+                    onMouseEnter={handlePreload}
+                    onFocus={handlePreload}
+                  >
                     {id}
                   </NavLink>
                 </Typography.Text>

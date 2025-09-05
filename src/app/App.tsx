@@ -1,6 +1,5 @@
 import type { JSX } from 'react';
 import { StrictMode } from 'react';
-import { HelmetProvider } from 'react-helmet-async';
 import { HashRouter } from 'react-router-dom';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -24,17 +23,15 @@ const queryClient = new QueryClient({
 const App = (): JSX.Element => (
   <StrictMode>
     <ErrorBoundary>
-      <HelmetProvider>
-        <QueryClientProvider client={queryClient}>
-          <HashRouter>
-            <AntdApp>
-              <PageLayout>
-                <Routes />
-              </PageLayout>
-            </AntdApp>
-          </HashRouter>
-        </QueryClientProvider>
-      </HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <HashRouter>
+          <AntdApp>
+            <PageLayout>
+              <Routes />
+            </PageLayout>
+          </AntdApp>
+        </HashRouter>
+      </QueryClientProvider>
     </ErrorBoundary>
   </StrictMode>
 );

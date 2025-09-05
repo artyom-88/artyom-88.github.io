@@ -7,6 +7,7 @@ export interface WithIcon {
 export interface PageProps extends WithIcon {
   id: string;
   url: string;
+  handlePreload: () => void;
 }
 
 export interface BaseModel {

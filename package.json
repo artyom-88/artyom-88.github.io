@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@playwright/test": "1.48.2",
+    "@tailwindcss/postcss": "4.1.13",
     "@testing-library/jest-dom": "6.8.0",
     "@testing-library/react": "16.3.0",
     "@testing-library/user-event": "14.6.1",
@@ -62,16 +63,16 @@
     "@vitest/coverage-v8": "3.2.4",
     "@vitest/ui": "3.2.4",
     "@biomejs/biome": "2.2.2",
-    "autoprefixer": "10.4.20",
+    "autoprefixer": "10.4.21",
     "dotenv": "16.4.5",
     "gh-pages": "6.2.0",
     "husky": "9.1.7",
     "jsdom": "26.1.0",
     "lint-staged": "16.1.6",
-    "postcss": "8.4.49",
+    "postcss": "8.5.6",
     "rollup-plugin-visualizer": "5.12.0",
     "sass": "1.81.0",
-    "tailwindcss": "3.4.15",
+    "tailwindcss": "4.1.13",
     "typescript": "5.9.2",
     "vite": "7.1.4",
     "vite-plugin-svgo": "2.0.0",
@@ -79,7 +80,7 @@
   },
   "pnpm": {
     "overrides": {
-      "micromatch": ">=4.0.8",
+      "@babel/runtime": ">=7.26.10",
       "react": "$react",
       "react-dom": "$react-dom",
       "vite": "$vite"

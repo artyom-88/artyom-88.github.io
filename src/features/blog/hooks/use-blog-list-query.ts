@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { dayjs } from 'common/common-date';
 import { httpClient } from 'common/http-client';
-import { BlogDTO, BlogModel } from 'features/blog/blog-types';
+import type { BlogDTO, BlogModel } from 'features/blog/blog-types';
 
 export const useBlogListQuery = (): UseQueryResult<BlogModel[]> =>
   useQuery<BlogModel[]>({

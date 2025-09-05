@@ -1,10 +1,8 @@
-import type { JSX } from 'react';
-
 import Space from 'antd/es/space';
 import Typography from 'antd/es/typography';
-
 import { BLANK, REL } from 'common/constants/html-constants';
-import { CareerItemProps } from 'features/career/career-types';
+import type { CareerItemProps } from 'features/career/career-types';
+import type { JSX } from 'react';
 
 const CareerItemTitle = ({ item }: CareerItemProps): JSX.Element => {
   const { endDate, site, startDate, title } = item;

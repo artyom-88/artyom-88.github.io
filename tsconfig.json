@@ -7,48 +7,24 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext",
-      "WebWorker"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "WebWorker"],
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "noEmit": true,
     "pretty": true,
     "resolveJsonModule": true,
     "paths": {
-      "app/*": [
-        "./src/app/*"
-      ],
-      "assets/*": [
-        "./src/assets/*"
-      ],
-      "common/*": [
-        "./src/common/*"
-      ],
-      "features/*": [
-        "./src/features/*"
-      ],
-      "test/*": [
-        "src/test/*"
-      ]
+      "app/*": ["./src/app/*"],
+      "assets/*": ["./src/assets/*"],
+      "common/*": ["./src/common/*"],
+      "features/*": ["./src/features/*"],
+      "test/*": ["src/test/*"]
     },
     "skipLibCheck": true,
     "target": "ESNext",
-    "types": [
-      "./node_modules/vitest/globals.d.ts",
-      "vite/client"
-    ],
+    "types": ["./node_modules/vitest/globals.d.ts", "vite/client"],
     "useDefineForClassFields": true
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "./src",
-    "vite.config.mts",
-    "playwright.config.ts",
-  ]
+  "exclude": ["node_modules"],
+  "include": ["./src", "vite.config.mts", "playwright.config.ts"]
 }

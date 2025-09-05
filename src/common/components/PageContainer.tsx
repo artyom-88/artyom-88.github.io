@@ -1,16 +1,13 @@
-import { JSX, PropsWithChildren, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
-
 import App from 'antd/es/app';
 import Card from 'antd/es/card';
 import Space from 'antd/es/space';
 import Typography from 'antd/es/typography';
-
-import { PageContainerProps } from 'common/components/common-components-types';
+import type { PageContainerProps } from 'common/components/common-components-types';
 import LoadingPage from 'common/components/LoadingPage';
 import PageTitle from 'common/components/PageTitle';
 import { BLANK, REL } from 'common/constants/html-constants';
 import { DEFAULT_DESCRIPTION } from 'common/constants/pages-constants';
+import { type JSX, type PropsWithChildren, useEffect } from 'react';
 
 const SHOW_WARNING_TIMEOUT_MS = 1000;
 const WARNING_DURATION_SEC = 20;
@@ -50,10 +47,8 @@ const PageContainer = ({
 
   return (
     <Card className='flex flex-col grow w-full' title={<PageTitle icon={icon} title={title} />}>
-      <Helmet>
-        <title>{title}</title>
-        <meta name='description' content={description} />
-      </Helmet>
+      <title>{title}</title>
+      <meta name='description' content={description} />
       {isLoading ? (
         <LoadingPage />
       ) : (

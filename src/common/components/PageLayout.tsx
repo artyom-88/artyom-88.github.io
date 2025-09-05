@@ -1,18 +1,16 @@
-import type { JSX, PropsWithChildren } from 'react';
-import { NavLink } from 'react-router-dom';
-
 import MenuOutlined from '@ant-design/icons/MenuOutlined';
 import Button from 'antd/es/button';
 import Layout from 'antd/es/layout';
 import Popover from 'antd/es/popover';
 import Space from 'antd/es/space';
 import Typography from 'antd/es/typography';
-
 import { dayjs } from 'common/common-date';
-import { PageProps } from 'common/common-types';
+import type { PageProps } from 'common/common-types';
 import SocialButtons from 'common/components/SocialButtons';
 import { PAGES_PROPS_LIST } from 'common/constants/pages-constants';
 import useToggleValue from 'common/hooks/use-toggle-value';
+import type { JSX, PropsWithChildren } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import styles from './PageLayout.module.scss';
 
@@ -28,9 +26,15 @@ const PageLayout = ({ children }: PropsWithChildren): JSX.Element => {
           open={open}
           content={
             <Space direction='vertical' data-testid='nav-menu-content'>
-              {PAGES_PROPS_LIST.map(({ id, url }: PageProps) => (
+              {PAGES_PROPS_LIST.map(({ id, url, handlePreload }: PageProps) => (
                 <Typography.Text key={id} strong>
-                  <NavLink className='capitalize' to={url} onClick={toggleOpen}>
+                  <NavLink
+                    className='capitalize'
+                    to={url}
+                    onClick={toggleOpen}
+                    onMouseEnter={handlePreload}
+                    onFocus={handlePreload}
+                  >
                     {id}
                   </NavLink>
                 </Typography.Text>

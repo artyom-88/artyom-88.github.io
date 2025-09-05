@@ -72,8 +72,6 @@ jobs:
       VITE_API_URL: ${{ secrets.VITE_API_URL }}
     steps:
       - uses: actions/checkout@v4
-      - name: Ping API
-        run: curl "${{ env.VITE_API_URL }}/api/health"
       - uses: pnpm/action-setup@v4
         name: Install PNPM
         with:

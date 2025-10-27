@@ -62,7 +62,7 @@
     "@vitejs/plugin-react": "5.0.2",
     "@vitest/coverage-v8": "3.2.4",
     "@vitest/ui": "3.2.4",
-    "@biomejs/biome": "2.2.2",
+    "@biomejs/biome": "2.3.1",
     "autoprefixer": "10.4.21",
     "dotenv": "16.4.5",
     "gh-pages": "6.2.0",

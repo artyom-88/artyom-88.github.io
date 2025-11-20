@@ -5,9 +5,9 @@
  * Shared functionality for checking and updating compromised packages
  */
 
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+const fs = require('node:fs');
+const path = require('node:path');
+const { execSync } = require('node:child_process');
 
 const ROOT_DIR = path.join(__dirname, '..');
 
@@ -198,7 +198,7 @@ function isPackageDuplicate(pkg1, pkg2) {
  * @param {string[]} packages - Array of package strings to write
  */
 function writePackagesToFile(filePath, packages) {
-  const content = packages.join('\n') + '\n';
+  const content = `${packages.join('\n')}\n`;
   fs.writeFileSync(filePath, content, 'utf8');
 }
 

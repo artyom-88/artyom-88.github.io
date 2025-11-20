@@ -19,7 +19,7 @@
  *   node scripts/check-compromised.js /absolute/path/to/compromised.txt
  */
 
-const path = require('path');
+const path = require('node:path');
 const { getCompromisedFilePath, parseCompromisedPackages, getInstalledPackages, isCompromised } = require('./compromised-utils');
 
 /**

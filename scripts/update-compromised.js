@@ -29,15 +29,9 @@
  *   node scripts/update-compromised.js --no-fetch compromised.txt package@1.0.0
  */
 
-const fs = require('fs');
-const path = require('path');
-const {
-  ROOT_DIR,
-  parsePackageNameVersion,
-  parseExistingPackages,
-  isPackageDuplicate,
-  writePackagesToFile,
-} = require('./compromised-utils');
+const fs = require('node:fs');
+const path = require('node:path');
+const { ROOT_DIR, parseExistingPackages, isPackageDuplicate, writePackagesToFile } = require('./compromised-utils');
 
 /**
  * Parse command line arguments

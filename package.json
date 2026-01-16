@@ -47,7 +47,7 @@
     "ky": "1.7.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "react-router-dom": "6.28.0"
+    "react-router-dom": "6.30.3"
   },
   "devDependencies": {
     "@playwright/test": "1.48.2",

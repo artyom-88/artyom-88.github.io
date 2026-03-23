@@ -21,8 +21,8 @@ importers:
         specifier: 2.27.0
         version: 2.27.0
       '@tanstack/react-query':
-        specifier: 5.95.1
-        version: 5.95.1(react@19.2.4)
+        specifier: 5.95.2
+        version: 5.95.2(react@19.2.4)
       antd:
         specifier: 5.22.1
         version: 5.22.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -115,14 +115,14 @@ importers:
         specifier: 4.2.2
         version: 4.2.2
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 6.0.2
+        version: 6.0.2
       vite:
         specifier: 8.0.2
         version: 8.0.2(@types/node@22.17.2)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3)
       vite-plugin-svgo:
         specifier: 2.0.0
-        version: 2.0.0(typescript@5.9.3)(vite@8.0.2(@types/node@22.17.2)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3))
+        version: 2.0.0(typescript@6.0.2)(vite@8.0.2(@types/node@22.17.2)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3))
       vitest:
         specifier: 4.1.1
         version: 4.1.1(@types/node@22.17.2)(@vitest/ui@4.1.1)(jsdom@29.0.1)(vite@8.0.2(@types/node@22.17.2)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3))
@@ -1105,11 +1105,11 @@ packages:
   '@tailwindcss/postcss@4.2.2':
     resolution: {integrity: sha512-n4goKQbW8RVXIbNKRB/45LzyUqN451deQK0nzIeauVEqjlI49slUlgKYJM2QyUzap/PcpnS7kzSUmPb1sCRvYQ==}
 
-  '@tanstack/query-core@5.95.1':
-    resolution: {integrity: sha512-RTa+CECs9hNMDR2qH4x6bZEjXXDqnjolwecCgwk7ItW1K9WDjUrnyTrtGv4o6aZc1/6uUMkF6DWlYt78uJpgxw==}
+  '@tanstack/query-core@5.95.2':
+    resolution: {integrity: sha512-o4T8vZHZET4Bib3jZ/tCW9/7080urD4c+0/AUaYVpIqOsr7y0reBc1oX3ttNaSW5mYyvZHctiQ/UOP2PfdmFEQ==}
 
-  '@tanstack/react-query@5.95.1':
-    resolution: {integrity: sha512-lqWkRuVtcz9p68/LxxKlWS+M4ACuizJUkVPZryKj0RKE8Se6TD8HU7FNy1c1Mv9C1CPBfzj/p/xiXWK9VCsKJQ==}
+  '@tanstack/react-query@5.95.2':
+    resolution: {integrity: sha512-/wGkvLj/st5Ud1Q76KF1uFxScV7WeqN1slQx5280ycwAyYkIPGaRZAEgHxe3bjirSd5Zpwkj6zNcR4cqYni/ZA==}
     peerDependencies:
       react: 19.2.4
 
@@ -3318,8 +3318,8 @@ packages:
   typedarray-to-buffer@3.1.5:
     resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}
 
-  typescript@5.9.3:
-    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+  typescript@6.0.2:
+    resolution: {integrity: sha512-bGdAIrZ0wiGDo5l8c++HWtbaNCWTS4UTv7RaTH/ThVIgjkveJt83m74bBHMJkuCbslY8ixgLBVZJIOiQlQTjfQ==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -4274,11 +4274,11 @@ snapshots:
       postcss: 8.5.8
       tailwindcss: 4.2.2
 
-  '@tanstack/query-core@5.95.1': {}
+  '@tanstack/query-core@5.95.2': {}
 
-  '@tanstack/react-query@5.95.1(react@19.2.4)':
+  '@tanstack/react-query@5.95.2(react@19.2.4)':
     dependencies:
-      '@tanstack/query-core': 5.95.1
+      '@tanstack/query-core': 5.95.2
       react: 19.2.4
 
   '@testing-library/dom@10.4.0':
@@ -6686,7 +6686,7 @@ snapshots:
     dependencies:
       is-typedarray: 1.0.0
 
-  typescript@5.9.3: {}
+  typescript@6.0.2: {}
 
   unbash@2.2.0: {}
 
@@ -6734,10 +6734,10 @@ snapshots:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
 
-  vite-plugin-svgo@2.0.0(typescript@5.9.3)(vite@8.0.2(@types/node@22.17.2)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3)):
+  vite-plugin-svgo@2.0.0(typescript@6.0.2)(vite@8.0.2(@types/node@22.17.2)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3)):
     dependencies:
       svgo: 3.3.2
-      typescript: 5.9.3
+      typescript: 6.0.2
       vite: 8.0.2(@types/node@22.17.2)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3)
 
   vite@8.0.2(@types/node@22.17.2)(jiti@2.6.1)(sass@1.98.0)(yaml@2.8.3):

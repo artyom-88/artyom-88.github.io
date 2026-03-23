@@ -46,6 +46,18 @@ export interface CollectedPackagesResult {
 }
 
 /**
+ * Minimal project dependency state consumed by the updater when translating
+ * advisory ranges into exact package@version entries for the current project.
+ */
+export interface ProjectDependencyStateLike {
+  packageNames: Set<string>;
+  exactPackages: Array<{
+    name: string;
+    version: string;
+  }>;
+}
+
+/**
  * Result of merging existing and newly discovered package entries.
  */
 export interface MergePackagesResult {
@@ -69,8 +81,13 @@ export interface PartitionedProjectEntries {
  */
 export function collectPackagesFromAdvisories(
   advisories: NpmAdvisory[],
-  projectPackageNames: Set<string>,
+  projectDependencyState: ProjectDependencyStateLike,
 ): CollectedPackagesResult;
+
+/**
+ * Fetches every page from the GitHub Security Advisories API.
+ */
+export function fetchGitHubAdvisories(): Promise<object[]>;
 
 /**
  * Returns `true` only for exact `package@version` entries.

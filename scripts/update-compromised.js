@@ -53,12 +53,30 @@ const GITHUB_API_HEADERS = {
   'User-Agent': 'compromised-packages-updater',
 };
 
+function isScopedPackageSpecifier(arg) {
+  if (typeof arg !== 'string' || !arg.startsWith('@') || arg.includes('\\')) {
+    return false;
+  }
+
+  const { name } = parsePackageNameVersion(arg);
+  if (typeof name !== 'string') {
+    return false;
+  }
+
+  const separatorIndex = name.indexOf('/');
+  return separatorIndex > 1 && separatorIndex === name.lastIndexOf('/');
+}
+
 /**
  * Check if an argument looks like a file path
  * @param {string} arg - Argument to check
  * @returns {boolean} True if argument appears to be a file path
  */
 function isFilePath(arg) {
+  if (isScopedPackageSpecifier(arg)) {
+    return false;
+  }
+
   return arg.endsWith('.txt') || arg.includes('/') || arg.includes('\\') || fs.existsSync(path.resolve(process.cwd(), arg));
 }
 
@@ -248,6 +266,168 @@ async function retryWithBackoff(fn, maxRetries = DEFAULT_MAX_RETRIES, initialDel
   throw lastError;
 }
 
+function parseComparableVersion(version) {
+  if (typeof version !== 'string') {
+    return null;
+  }
+
+  const trimmedVersion = version.trim().replace(/^v(?=\d)/, '');
+  if (!trimmedVersion) {
+    return null;
+  }
+
+  const [versionWithoutBuildMetadata] = trimmedVersion.split('+');
+  const prereleaseSeparatorIndex = versionWithoutBuildMetadata.indexOf('-');
+  const releaseVersion =
+    prereleaseSeparatorIndex === -1
+      ? versionWithoutBuildMetadata
+      : versionWithoutBuildMetadata.slice(0, prereleaseSeparatorIndex);
+  const prereleaseVersion =
+    prereleaseSeparatorIndex === -1 ? '' : versionWithoutBuildMetadata.slice(prereleaseSeparatorIndex + 1);
+
+  const releaseParts = releaseVersion.split('.');
+  if (releaseParts.length > 3 || releaseParts.some((part) => !/^\d+$/.test(part))) {
+    return null;
+  }
+
+  const [major = '0', minor = '0', patch = '0'] = releaseParts;
+  const prerelease = prereleaseVersion
+    ? prereleaseVersion.split('.').map((part) => (/^\d+$/.test(part) ? Number(part) : part))
+    : [];
+
+  return {
+    major: Number(major),
+    minor: Number(minor),
+    patch: Number(patch),
+    prerelease,
+  };
+}
+
+function comparePrereleaseIdentifiers(left, right) {
+  const leftIsNumber = typeof left === 'number';
+  const rightIsNumber = typeof right === 'number';
+
+  if (leftIsNumber && rightIsNumber) {
+    return left - right;
+  }
+
+  if (leftIsNumber) {
+    return -1;
+  }
+
+  if (rightIsNumber) {
+    return 1;
+  }
+
+  return left.localeCompare(right);
+}
+
+function compareComparableVersions(leftVersion, rightVersion) {
+  const left = parseComparableVersion(leftVersion);
+  const right = parseComparableVersion(rightVersion);
+
+  if (!left || !right) {
+    return null;
+  }
+
+  if (left.major !== right.major) {
+    return left.major - right.major;
+  }
+  if (left.minor !== right.minor) {
+    return left.minor - right.minor;
+  }
+  if (left.patch !== right.patch) {
+    return left.patch - right.patch;
+  }
+
+  if (left.prerelease.length === 0 && right.prerelease.length === 0) {
+    return 0;
+  }
+  if (left.prerelease.length === 0) {
+    return 1;
+  }
+  if (right.prerelease.length === 0) {
+    return -1;
+  }
+
+  const maxLength = Math.max(left.prerelease.length, right.prerelease.length);
+  for (let index = 0; index < maxLength; index++) {
+    const leftIdentifier = left.prerelease[index];
+    const rightIdentifier = right.prerelease[index];
+
+    if (leftIdentifier === undefined) {
+      return -1;
+    }
+    if (rightIdentifier === undefined) {
+      return 1;
+    }
+
+    const comparison = comparePrereleaseIdentifiers(leftIdentifier, rightIdentifier);
+    if (comparison !== 0) {
+      return comparison;
+    }
+  }
+
+  return 0;
+}
+
+function parseRangeComparators(rangeClause) {
+  const normalizedClause = rangeClause.trim();
+  if (!normalizedClause) {
+    return [];
+  }
+
+  if (normalizedClause === '*') {
+    return [{ operator: '*', version: '*' }];
+  }
+
+  const expandedHyphenRanges = normalizedClause.replace(/([0-9A-Za-z.+-]+)\s+-\s+([0-9A-Za-z.+-]+)/g, '>=$1 <=$2');
+  const comparatorPattern = /(<=|>=|<|>|=)?\s*([0-9A-Za-z][0-9A-Za-z.+-]*)/g;
+
+  return [...expandedHyphenRanges.matchAll(comparatorPattern)].map((match) => ({
+    operator: match[1] || '=',
+    version: match[2],
+  }));
+}
+
+function matchesComparator(version, comparator) {
+  if (comparator.operator === '*') {
+    return true;
+  }
+
+  const comparison = compareComparableVersions(version, comparator.version);
+  if (comparison === null) {
+    return false;
+  }
+
+  switch (comparator.operator) {
+    case '<':
+      return comparison < 0;
+    case '<=':
+      return comparison <= 0;
+    case '>':
+      return comparison > 0;
+    case '>=':
+      return comparison >= 0;
+    case '=':
+      return comparison === 0;
+    default:
+      return false;
+  }
+}
+
+function versionSatisfiesRange(version, range) {
+  if (typeof range !== 'string' || !range.trim()) {
+    return false;
+  }
+
+  return range
+    .split('||')
+    .map((rangeClause) => parseRangeComparators(rangeClause.replace(/,/g, ' ')))
+    .filter((comparators) => comparators.length > 0)
+    .some((comparators) => comparators.every((comparator) => matchesComparator(version, comparator)));
+}
+
 /**
  * Determine whether a version string is specific enough to store as package@version.
  * @param {string} version - Vulnerable version entry from GitHub
@@ -293,6 +473,12 @@ function getExplicitVersionEntries(packageName, vulnerableVersions) {
   return { exactEntries, skippedNonExact };
 }
 
+function getMatchingProjectEntriesForRange(packageName, vulnerableVersionRange, projectDependencyState) {
+  return projectDependencyState.exactPackages
+    .filter((pkg) => pkg.name === packageName && versionSatisfiesRange(pkg.version, vulnerableVersionRange))
+    .map((pkg) => `${pkg.name}@${pkg.version}`);
+}
+
 /**
  * Normalize GitHub advisory shapes into a single package-entry format.
  * @param {object} advisory - Advisory from the GitHub API
@@ -325,10 +511,10 @@ function extractNpmPackageEntries(advisory) {
 /**
  * Convert GitHub advisories into confirmed compromised package entries for the current project scope.
  * @param {object[]} advisories - Advisories returned from GitHub
- * @param {Set<string>} projectPackageNames - Package names present in the current project dependency graph
+ * @param {{packageNames: Set<string>, exactPackages: Array<{name: string, version: string}>}} projectDependencyState - Current project dependency state
  * @returns {{packages: string[], count: number, skippedNonExact: number, skippedOutOfScope: number}} Confirmed packages plus skip counts
  */
-function collectPackagesFromAdvisories(advisories, projectPackageNames) {
+function collectPackagesFromAdvisories(advisories, projectDependencyState) {
   const vulnerablePackages = new Set();
   let skippedNonExact = 0;
   let skippedOutOfScope = 0;
@@ -336,14 +522,21 @@ function collectPackagesFromAdvisories(advisories, projectPackageNames) {
   advisories.forEach((advisory) => {
     extractNpmPackageEntries(advisory).forEach(({ packageName, vulnerableVersionRange, vulnerableVersions }) => {
       if (vulnerableVersionRange) {
-        vulnerableVersionRange
-          .split(',')
-          .map((range) => range.trim())
-          .filter(Boolean)
-          .forEach((range) => {
-            warnSkippedNonExactAdvisory(packageName, range);
-            skippedNonExact++;
-          });
+        if (!projectDependencyState.packageNames.has(packageName)) {
+          skippedOutOfScope++;
+          return;
+        }
+
+        const exactEntries = getMatchingProjectEntriesForRange(packageName, vulnerableVersionRange, projectDependencyState);
+        if (exactEntries.length === 0) {
+          warnSkippedNonExactAdvisory(packageName, vulnerableVersionRange);
+          skippedNonExact++;
+          return;
+        }
+
+        exactEntries.forEach((entry) => {
+          vulnerablePackages.add(entry);
+        });
         return;
       }
 
@@ -354,7 +547,7 @@ function collectPackagesFromAdvisories(advisories, projectPackageNames) {
         );
         skippedNonExact += skippedVersionEntries;
 
-        if (!projectPackageNames.has(packageName)) {
+        if (!projectDependencyState.packageNames.has(packageName)) {
           skippedOutOfScope += exactEntries.length;
           return;
         }
@@ -378,33 +571,59 @@ function collectPackagesFromAdvisories(advisories, projectPackageNames) {
   };
 }
 
+function getNextGitHubPageUrl(linkHeader) {
+  if (!linkHeader) {
+    return null;
+  }
+
+  const nextPageEntry = linkHeader
+    .split(',')
+    .map((entry) => entry.trim())
+    .find((entry) => entry.includes('rel="next"'));
+
+  if (!nextPageEntry) {
+    return null;
+  }
+
+  const match = nextPageEntry.match(/<([^>]+)>/);
+  return match ? match[1] : null;
+}
+
 /**
  * Fetch raw advisories from the GitHub Security Advisories API.
  * @returns {Promise<object[]>} Advisories returned by the API
  */
 async function fetchGitHubAdvisories() {
-  const response = await retryWithBackoff(
-    async () => {
-      const res = await fetch(GITHUB_ADVISORIES_URL, { headers: GITHUB_API_HEADERS });
+  const advisories = [];
+  let pageUrl = GITHUB_ADVISORIES_URL;
 
-      if (!res.ok) {
-        if (res.status === 403) {
-          throw new Error(RATE_LIMIT_ERROR);
+  while (pageUrl) {
+    const response = await retryWithBackoff(
+      async () => {
+        const res = await fetch(pageUrl, { headers: GITHUB_API_HEADERS });
+
+        if (!res.ok) {
+          if (res.status === 403) {
+            throw new Error(RATE_LIMIT_ERROR);
+          }
+          if (res.status >= 500) {
+            throw new Error(`GitHub API server error: ${res.status} ${res.statusText}`);
+          }
+          throw new Error(`GitHub API error: ${res.status} ${res.statusText}`);
         }
-        if (res.status >= 500) {
-          throw new Error(`GitHub API server error: ${res.status} ${res.statusText}`);
-        }
-        throw new Error(`GitHub API error: ${res.status} ${res.statusText}`);
-      }
 
-      return res;
-    },
-    DEFAULT_MAX_RETRIES,
-    DEFAULT_RETRY_DELAY_MS,
-  );
+        return res;
+      },
+      DEFAULT_MAX_RETRIES,
+      DEFAULT_RETRY_DELAY_MS,
+    );
 
-  const data = await response.json();
-  return Array.isArray(data) ? data : data.items || [];
+    const data = await response.json();
+    advisories.push(...(Array.isArray(data) ? data : data.items || []));
+    pageUrl = getNextGitHubPageUrl(response.headers.get('link'));
+  }
+
+  return advisories;
 }
 
 /**
@@ -417,7 +636,7 @@ async function fetchGitHubAdvisories() {
  * - Rate limiting (falls back to curated list)
  * - Server errors (retries with exponential backoff)
  *
- * @param {Set<string>} projectPackageNames - Package names present in the current project dependency graph
+ * @param {{packageNames: Set<string>, exactPackages: Array<{name: string, version: string}>}} projectDependencyState - Current project dependency state
  * @returns {Promise<string[]>} Array of confirmed compromised package strings (package@version)
  * @throws {Error} If API fails after all retries and no fallback is available
  *
@@ -425,7 +644,7 @@ async function fetchGitHubAdvisories() {
  * const packages = await fetchVulnerablePackages(new Set(['package1', 'package3']));
  * // Returns: ['package1@1.0.0', 'package3@2.0.0']
  */
-async function fetchVulnerablePackages(projectPackageNames) {
+async function fetchVulnerablePackages(projectDependencyState) {
   console.log('🔍 Fetching vulnerable packages from GitHub Security Advisories...');
 
   try {
@@ -437,7 +656,7 @@ async function fetchVulnerablePackages(projectPackageNames) {
 
     const { packages, count, skippedNonExact, skippedOutOfScope } = collectPackagesFromAdvisories(
       advisories,
-      projectPackageNames,
+      projectDependencyState,
     );
     console.log(`✅ Found ${count} confirmed compromised package version(s) from GitHub for current project dependencies`);
     if (skippedNonExact > 0) {
@@ -532,8 +751,8 @@ function mergePackages(existing, newPackages) {
   };
 }
 
-function collectNewPackages(packagesToAdd, fetchFromAPI, projectPackageNames) {
-  validateManualPackages(packagesToAdd, projectPackageNames);
+function collectNewPackages(packagesToAdd, fetchFromAPI, projectDependencyState) {
+  validateManualPackages(packagesToAdd, projectDependencyState.packageNames);
   const newPackages = [...packagesToAdd];
 
   if (packagesToAdd.length > 0) {
@@ -544,7 +763,7 @@ function collectNewPackages(packagesToAdd, fetchFromAPI, projectPackageNames) {
     return Promise.resolve(newPackages);
   }
 
-  return fetchVulnerablePackages(projectPackageNames)
+  return fetchVulnerablePackages(projectDependencyState)
     .then((fetchedPackages) => {
       newPackages.push(...fetchedPackages);
       return newPackages;
@@ -614,7 +833,7 @@ async function main() {
       );
     }
 
-    const newPackages = await collectNewPackages(packagesToAdd, fetchFromAPI, projectDependencyState.packageNames);
+    const newPackages = await collectNewPackages(packagesToAdd, fetchFromAPI, projectDependencyState);
 
     if (newPackages.length === 0 && removedNonExact.length === 0 && removedOutOfScope.length === 0) {
       console.log('⚠️  No new packages to add');
@@ -649,10 +868,13 @@ module.exports = {
   extractNpmPackageEntries,
   fetchGitHubAdvisories,
   fetchVulnerablePackages,
+  getMatchingProjectEntriesForRange,
+  getNextGitHubPageUrl,
   getExplicitVersionEntries,
   isConfirmedPackageEntry,
   isFilePath,
   isPackageName,
+  isScopedPackageSpecifier,
   isSpecificVersion,
   logUpdateSummary,
   main,
@@ -662,6 +884,7 @@ module.exports = {
   resolveOutputFilePath,
   retryWithBackoff,
   validateManualPackages,
+  versionSatisfiesRange,
   warnSkippedNonExactAdvisory,
   logDependencyStateSource,
 };

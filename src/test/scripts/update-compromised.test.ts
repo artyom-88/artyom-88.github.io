@@ -2,6 +2,7 @@ import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   collectPackagesFromAdvisories,
+  fetchGitHubAdvisories,
   isConfirmedPackageEntry,
   mergePackages,
   parseArguments,
@@ -20,6 +21,16 @@ describe('update-compromised helpers', () => {
     expect(result).toEqual({
       filePath: resolve(process.cwd(), 'security/compromised.txt'),
       packagesToAdd: ['@angular/ssr@19.0.0', 'lodash@4.17.21'],
+      fetchFromAPI: false,
+    });
+  });
+
+  it('should treat scoped package entries as packages rather than output paths', () => {
+    const result = parseArguments(['--no-fetch', '@angular/ssr@19.0.0']);
+
+    expect(result).toEqual({
+      filePath: resolve(process.cwd(), 'compromised.txt'),
+      packagesToAdd: ['@angular/ssr@19.0.0'],
       fetchFromAPI: false,
     });
   });
@@ -50,16 +61,48 @@ describe('update-compromised helpers', () => {
           vulnerable_versions: '19.2.0',
         },
       ],
-      new Set(['lodash']),
+      {
+        packageNames: new Set(['@angular/ssr', 'lodash']),
+        exactPackages: [
+          { name: '@angular/ssr', version: '19.0.0' },
+          { name: '@angular/ssr', version: '19.0.1' },
+          { name: 'lodash', version: '4.17.21' },
+        ],
+      },
     );
 
     expect(result).toEqual({
-      packages: ['lodash@4.17.21'],
-      count: 1,
-      skippedNonExact: 2,
+      packages: ['@angular/ssr@19.0.0', 'lodash@4.17.21'],
+      count: 2,
+      skippedNonExact: 1,
       skippedOutOfScope: 1,
     });
-    expect(warnSpy).toHaveBeenCalledTimes(2);
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should warn when a vulnerable range cannot be materialized to a project exact version', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    const result = collectPackagesFromAdvisories(
+      [
+        {
+          package: { ecosystem: 'npm', name: 'vite' },
+          vulnerable_version_range: '< 7.1.0',
+        },
+      ],
+      {
+        packageNames: new Set(['vite']),
+        exactPackages: [{ name: 'vite', version: '8.0.2' }],
+      },
+    );
+
+    expect(result).toEqual({
+      packages: [],
+      count: 0,
+      skippedNonExact: 1,
+      skippedOutOfScope: 0,
+    });
+    expect(warnSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should treat only exact package@version entries as confirmed', () => {
@@ -101,5 +144,28 @@ describe('update-compromised helpers', () => {
       added: 1,
       skipped: 1,
     });
+  });
+
+  it('should follow paginated GitHub advisory responses', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify([{ ghsa_id: 'GHSA-first' }]), {
+          status: 200,
+          headers: {
+            link: '<https://api.github.com/advisories?per_page=100&ecosystem=npm&page=2>; rel="next"',
+          },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify([{ ghsa_id: 'GHSA-second' }]), {
+          status: 200,
+        }),
+      );
+
+    vi.stubGlobal('fetch', fetchMock);
+
+    await expect(fetchGitHubAdvisories()).resolves.toEqual([{ ghsa_id: 'GHSA-first' }, { ghsa_id: 'GHSA-second' }]);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 });

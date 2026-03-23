@@ -18,5 +18,3 @@ export interface BaseModel {
 export interface WithClassName {
   className?: string;
 }
-
-export type Object<TValue = unknown> = Record<string, TValue>;

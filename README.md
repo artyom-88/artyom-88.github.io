@@ -65,3 +65,20 @@ Husky hooks and CI enforce the main quality gates.
 Before pushing, expect `pnpm build:ci`, `pnpm test:coverage`, linting, and compromised-package checks to pass.
 
 Pull requests also run Playwright in GitHub Actions.
+
+## Compromised packages protection
+This repository treats compromised-package detection as a separate defense-in-depth control for npm supply-chain incidents. The goal is not only to catch known vulnerable libraries in general, but to explicitly block exact package versions that should never appear anywhere in this project's dependency graph.
+
+The blocklist lives in `compromised.txt`. The normal format is one exact `package@version` per line. Comments and empty lines are ignored. The checker also understands package-only entries and would treat them as "block every version of this package", but the repository policy is to keep the file exact and project-scoped so the list stays actionable and does not over-block unrelated versions.
+
+`pnpm compromised:check` runs `scripts/check-compromised.js` and scans the current project dependency state using `package.json`, `pnpm-lock.yaml`, and the installed dependency tree when available. If any resolved package matches an entry from `compromised.txt`, the script exits with a non-zero status and prints the matched package version and its source. That makes the check suitable for local hooks and CI gates.
+
+`pnpm compromised:update` runs `scripts/update-compromised.js` and refreshes `compromised.txt`. The updater fetches npm advisories from the GitHub Security Advisories API, keeps only exact compromised versions, filters them to packages that are actually part of this repository's dependency graph, removes stale non-exact or out-of-scope entries, and writes back a sorted file. Exact manual additions are also supported when a package needs to be blocked immediately.
+
+This protection is enforced in several places:
+
+- `preinstall` refreshes the compromised list and checks it before dependency installation continues.
+- `pre-commit` runs `pnpm compromised:check` so known bad versions are blocked before code is committed.
+- `.github/workflows/nodejs.yml` runs the same check in pull request CI.
+- `.github/workflows/update-compromised.yml` refreshes `compromised.txt` weekly and can commit updates automatically.
+- CodeQL and Dependabot complement this setup, but they are separate controls; the compromised-package scripts provide an explicit hard block for versions already known to be unsafe for this project.

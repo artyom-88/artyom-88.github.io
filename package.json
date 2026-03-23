@@ -52,7 +52,7 @@
     "react-router-dom": "6.28.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.2",
+    "@biomejs/biome": "2.4.8",
     "@playwright/test": "1.48.2",
     "@tailwindcss/postcss": "4.1.13",
     "@testing-library/jest-dom": "6.8.0",
@@ -66,11 +66,11 @@
     "@vitest/ui": "3.2.4",
     "autoprefixer": "10.4.27",
     "dotenv": "16.4.5",
-    "gh-pages": "6.2.0",
+    "gh-pages": "6.3.0",
     "husky": "9.1.7",
     "jsdom": "26.1.0",
     "knip": "5.63.1",
-    "lint-staged": "16.1.6",
+    "lint-staged": "16.4.0",
     "npm-check": "6.0.1",
     "postcss": "8.5.8",
     "rollup-plugin-visualizer": "5.12.0",

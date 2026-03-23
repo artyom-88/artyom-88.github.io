@@ -16,7 +16,7 @@ const CareerItem = ({ item }: CareerItemProps): JSX.Element => {
     </Space>
   );
   return (
-    <Space data-testid={`career-item-${id}`} direction='vertical'>
+    <Space data-testid={`career-item-${id}`} orientation='vertical'>
       {postRender}
       {descriptionRender}
       {toolsRender}

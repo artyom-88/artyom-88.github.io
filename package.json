@@ -41,10 +41,10 @@
     "update": "npm-check -u -E -s"
   },
   "dependencies": {
-    "@ant-design/icons": "5.5.1",
+    "@ant-design/icons": "6.1.0",
     "@stackoverflow/stacks-icons": "2.27.0",
     "@tanstack/react-query": "5.95.2",
-    "antd": "5.22.1",
+    "antd": "6.3.3",
     "dayjs": "1.11.20",
     "ky": "1.14.3",
     "react": "19.2.4",

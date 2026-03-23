@@ -20,7 +20,63 @@
  */
 
 const path = require('node:path');
-const { getCompromisedFilePath, parseCompromisedPackages, getInstalledPackages, isCompromised } = require('./compromised-utils');
+const {
+  buildCompromisedLookup,
+  findCompromisedMatch,
+  getCompromisedFilePath,
+  getProjectDependencyState,
+  parseCompromisedPackages,
+} = require('./compromised-utils');
+
+/**
+ * Find installed packages that match the compromised package list.
+ * @param {Array<{name: string, version: string}>} installedPackages - Installed packages from pnpm
+ * @param {Map<string, Map<string, string>>} compromisedLookup - Lookup built from compromised entries
+ * @returns {Array<{package: string, compromised: string}>} Matched packages with the entry they matched
+ */
+function findCompromisedPackages(projectPackages, compromisedLookup) {
+  return projectPackages.reduce((matches, pkg) => {
+    const matchedEntry = findCompromisedMatch(pkg, compromisedLookup);
+    if (matchedEntry) {
+      const match = {
+        package: `${pkg.name}@${pkg.version}`,
+        compromised: matchedEntry,
+      };
+      if (pkg.sources) {
+        match.sources = pkg.sources;
+      }
+      matches.push(match);
+    }
+    return matches;
+  }, []);
+}
+
+function formatPackageSources(sources = []) {
+  if (sources.length === 0) {
+    return '';
+  }
+
+  return ` [sources: ${sources.join(', ')}]`;
+}
+
+/**
+ * Print scan results and return the exit code for the CLI.
+ * @param {Array<{package: string, compromised: string, sources?: string[]}>} foundPackages - Compromised packages found in the tree
+ * @returns {number} Process exit code
+ */
+function reportResults(foundPackages) {
+  if (foundPackages.length === 0) {
+    console.log('✅ No compromised packages found in dependency tree');
+    return 0;
+  }
+
+  console.error('\n❌ SECURITY ALERT: Found compromised packages in dependency tree:\n');
+  foundPackages.forEach(({ package: pkg, compromised, sources }) => {
+    console.error(`  ⚠️  ${pkg} (matches: ${compromised})${formatPackageSources(sources)}`);
+  });
+  console.error('\n🚨 Action required: Remove or update these packages immediately!\n');
+  return 1;
+}
 
 /**
  * Main function
@@ -28,51 +84,36 @@ const { getCompromisedFilePath, parseCompromisedPackages, getInstalledPackages, 
 function main() {
   try {
     const compromisedFilePath = getCompromisedFilePath();
+    const compromisedPackages = parseCompromisedPackages(compromisedFilePath);
 
-    // Read compromised packages list
-    const compromised = parseCompromisedPackages(compromisedFilePath);
-
-    if (compromised.length === 0) {
+    if (compromisedPackages.length === 0) {
       console.log(`⚠️  Warning: No compromised packages defined in ${path.basename(compromisedFilePath)}`);
       process.exit(0);
     }
 
     console.log(`📋 Using compromised packages list: ${compromisedFilePath}`);
+    console.log('🔍 Scanning project dependency state for compromised packages...');
 
-    // Get all installed packages
-    console.log('🔍 Scanning dependency tree for compromised packages...');
-    const allPackages = getInstalledPackages();
-
-    // Check for compromised packages
-    const found = [];
-
-    compromised.forEach((comp) => {
-      allPackages.forEach((pkg) => {
-        if (isCompromised(pkg, comp)) {
-          found.push({
-            package: `${pkg.name}@${pkg.version}`,
-            compromised: comp.original,
-          });
-        }
-      });
-    });
-
-    // Report results
-    if (found.length > 0) {
-      console.error('\n❌ SECURITY ALERT: Found compromised packages in dependency tree:\n');
-      found.forEach(({ package: pkg, compromised: comp }) => {
-        console.error(`  ⚠️  ${pkg} (matches: ${comp})`);
-      });
-      console.error('\n🚨 Action required: Remove or update these packages immediately!\n');
-      process.exit(1);
-    } else {
-      console.log('✅ No compromised packages found in dependency tree');
-      process.exit(0);
+    const projectDependencyState = getProjectDependencyState();
+    if (projectDependencyState.installedError) {
+      console.log('ℹ️  Installed dependency tree unavailable or stale, using package.json + pnpm-lock.yaml + manifest state');
     }
+    const compromisedLookup = buildCompromisedLookup(compromisedPackages);
+    const foundPackages = findCompromisedPackages(projectDependencyState.exactPackages, compromisedLookup);
+
+    process.exit(reportResults(foundPackages));
   } catch (error) {
     console.error('❌ Error checking for compromised packages:', error.message);
     process.exit(1);
   }
 }
 
-main();
+if (require.main === module) {
+  main();
+}
+
+module.exports = {
+  findCompromisedPackages,
+  main,
+  reportResults,
+};

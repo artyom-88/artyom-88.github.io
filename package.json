@@ -1,7 +1,7 @@
 {
   "name": "artem-ganev-site",
   "version": "2.0.0",
-  "private": false,
+  "private": true,
   "author": "Artem Ganev",
   "license": "GPL-3.0",
   "homepage": "https://artyom-88.github.io",
@@ -11,9 +11,9 @@
   },
   "engines": {
     "node": ">=22",
-    "pnpm": ">=9"
+    "pnpm": ">=10"
   },
-  "packageManager": "pnpm@9.13.2",
+  "packageManager": "pnpm@10.32.1",
   "scripts": {
     "analyze": "pnpm run build --mode analyze",
     "build": "vite build",
@@ -22,13 +22,13 @@
     "build:dev": "vite build --mode development",
     "compromised:check": "node scripts/check-compromised.js compromised.txt",
     "compromised:update": "node scripts/update-compromised.js compromised.txt",
-    "depcheck": "pnpm dlx depcheck",
+    "depcheck": "knip",
     "deploy:local": "pnpm build:ci && echo $(git rev-parse HEAD)  > ./dist/version && pnpm gh-pages -d dist -u \"Artёm <artem_ganev@epam.com>\" -m \"Manual deploy\"",
     "lint": "biome check",
     "lint:fix": "biome check --write",
-    "pre-commit": "tsc && lint-staged",
+    "pre-commit": "pnpm compromised:check && tsc && lint-staged",
     "predeploy": "pnpm build",
-    "preinstall": "npx only-allow pnpm",
+    "preinstall": "npx --yes only-allow@1.2.2 pnpm && pnpm run compromised:update && pnpm run compromised:check",
     "prepare": "husky",
     "preview": "vite preview",
     "start": "vite",
@@ -38,7 +38,7 @@
     "test:e2e": "playwright test",
     "test:ui": "vitest --ui",
     "test:watch": "vitest watch",
-    "update": "pnpm dlx npm-check -u -E -s"
+    "update": "npm-check -u -E -s"
   },
   "dependencies": {
     "@ant-design/icons": "5.5.1",
@@ -52,6 +52,7 @@
     "react-router-dom": "6.28.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.2.2",
     "@playwright/test": "1.48.2",
     "@tailwindcss/postcss": "4.1.13",
     "@testing-library/jest-dom": "6.8.0",
@@ -64,13 +65,14 @@
     "@vitejs/plugin-react": "5.1.1",
     "@vitest/coverage-v8": "3.2.4",
     "@vitest/ui": "3.2.4",
-    "@biomejs/biome": "2.2.2",
     "autoprefixer": "10.4.21",
     "dotenv": "16.4.5",
     "gh-pages": "6.2.0",
     "husky": "9.1.7",
     "jsdom": "26.1.0",
+    "knip": "5.63.1",
     "lint-staged": "16.1.6",
+    "npm-check": "6.0.1",
     "postcss": "8.5.6",
     "rollup-plugin-visualizer": "5.12.0",
     "sass": "1.81.0",

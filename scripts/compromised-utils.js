@@ -11,24 +11,60 @@ const { execSync } = require('node:child_process');
 
 const ROOT_DIR = path.join(__dirname, '..');
 
+// Constants
+const DEFAULT_MAX_BUFFER_SIZE = 10 * 1024 * 1024; // 10MB
+const DEFAULT_COMPROMISED_FILE = 'compromised.txt';
+const ANY_VERSION = '*';
+const MANIFEST_DEPENDENCY_FIELDS = ['dependencies', 'devDependencies', 'optionalDependencies'];
+
 /**
  * Get compromised file path from command line argument or use default
  * @param {string[]} args - Command line arguments (defaults to process.argv.slice(2))
  * @param {string} defaultFile - Default filename (defaults to 'compromised.txt')
  * @returns {string} Absolute path to compromised packages file
  */
-function getCompromisedFilePath(args = process.argv.slice(2), defaultFile = 'compromised.txt') {
+function getCompromisedFilePath(args = process.argv.slice(2), defaultFile = DEFAULT_COMPROMISED_FILE) {
+  let outPath;
   if (args.length > 0) {
     const filePath = args[0];
-    // If relative path, resolve from project root
-    if (path.isAbsolute(filePath)) {
-      return filePath;
-    }
-    return path.resolve(ROOT_DIR, filePath);
+    // If absolute, use as is, else resolve relative to ROOT_DIR
+    outPath = path.isAbsolute(filePath) ? filePath : path.resolve(ROOT_DIR, filePath);
+  } else {
+    outPath = path.join(ROOT_DIR, defaultFile);
+  }
+  if (outPath.includes('..')) {
+    throw new Error('Parent directory traversal is not allowed in compromised file path');
+  }
+  // Normalize and prevent from escaping the workspace
+  if (!outPath.startsWith(ROOT_DIR)) {
+    throw new Error('Compromised file path must be inside the project root/workspace');
+  }
+  return outPath;
+}
+
+/**
+ * Find the separator between a package name and version, if present.
+ * Returns -1 for package-only entries, including bare scoped packages.
+ * @param {string} packageString - Package string in format "package@version" or "package"
+ * @returns {number} Index of the version separator, or -1 when no version exists
+ */
+function findVersionSeparatorIndex(packageString) {
+  const lastAtIndex = packageString.lastIndexOf('@');
+
+  if (lastAtIndex <= 0) {
+    return -1;
   }
 
-  // Default to compromised.txt in project root
-  return path.join(ROOT_DIR, defaultFile);
+  if (!packageString.startsWith('@')) {
+    return lastAtIndex;
+  }
+
+  const scopeSeparatorIndex = packageString.indexOf('/');
+  if (scopeSeparatorIndex === -1 || lastAtIndex < scopeSeparatorIndex) {
+    return -1;
+  }
+
+  return lastAtIndex;
 }
 
 /**
@@ -41,13 +77,51 @@ function parsePackageNameVersion(packageString) {
     return { name: packageString, version: null };
   }
 
-  if (packageString.includes('@')) {
-    const [name, ...versionParts] = packageString.split('@');
-    const version = versionParts.join('@'); // Handle scoped packages like @scope/package@version
-    return { name, version: version || null };
+  const versionSeparatorIndex = findVersionSeparatorIndex(packageString);
+  if (versionSeparatorIndex === -1) {
+    return { name: packageString, version: null };
   }
 
-  return { name: packageString, version: null };
+  const name = packageString.substring(0, versionSeparatorIndex);
+  const version = packageString.substring(versionSeparatorIndex + 1);
+  return { name, version: version || null };
+}
+
+/**
+ * Read non-empty, non-comment compromised package entries from a file.
+ * @param {string} filePath - Path to compromised packages file
+ * @param {{ allowMissing?: boolean }} [options] - Read options
+ * @returns {string[]} Normalized package entries
+ */
+function readPackageEntries(filePath, options = {}) {
+  const { allowMissing = false } = options;
+
+  if (!fs.existsSync(filePath)) {
+    if (allowMissing) {
+      return [];
+    }
+    throw new Error(`Compromised packages file not found: ${filePath}`);
+  }
+
+  const content = fs.readFileSync(filePath, 'utf8');
+  return content
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith('#'));
+}
+
+/**
+ * Convert a package entry string into the structured format used by the scripts.
+ * @param {string} packageEntry - Package string from compromised.txt
+ * @returns {{name: string, version: string|null, original: string}} Structured compromised entry
+ */
+function toCompromisedEntry(packageEntry) {
+  const { name, version } = parsePackageNameVersion(packageEntry);
+  return { name, version, original: packageEntry };
+}
+
+function toPackageKey(pkg) {
+  return `${pkg.name}@${pkg.version}`;
 }
 
 /**
@@ -57,20 +131,7 @@ function parsePackageNameVersion(packageString) {
  * @returns {Array<{name: string, version: string|null, original: string}>} Array of compromised package entries
  */
 function parseCompromisedPackages(filePath) {
-  if (!fs.existsSync(filePath)) {
-    console.error(`❌ Error: ${filePath} not found`);
-    process.exit(1);
-  }
-
-  const content = fs.readFileSync(filePath, 'utf8');
-  return content
-    .split('\n')
-    .map((line) => line.trim())
-    .filter((line) => line && !line.startsWith('#'))
-    .map((line) => {
-      const { name, version } = parsePackageNameVersion(line);
-      return { name, version, original: line };
-    });
+  return readPackageEntries(filePath).map(toCompromisedEntry);
 }
 
 /**
@@ -80,17 +141,188 @@ function parseCompromisedPackages(filePath) {
  * @returns {Set<string>} Set of package entries
  */
 function parseExistingPackages(filePath) {
-  if (!fs.existsSync(filePath)) {
-    return new Set();
+  return new Set(readPackageEntries(filePath, { allowMissing: true }));
+}
+
+function readProjectManifest(filePath = path.join(ROOT_DIR, 'package.json')) {
+  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function getManifestDependencyNames(manifest = readProjectManifest()) {
+  return new Set([
+    ...MANIFEST_DEPENDENCY_FIELDS.flatMap((field) => Object.keys(manifest[field] || {})),
+    ...getManifestOverrideEntries(manifest).map(({ name }) => name),
+  ]);
+}
+
+function isExactVersionSpecifier(specifier) {
+  return (
+    typeof specifier === 'string' &&
+    specifier.length > 0 &&
+    !specifier.startsWith('$') &&
+    !specifier.startsWith('workspace:') &&
+    !specifier.startsWith('file:') &&
+    !specifier.startsWith('link:') &&
+    !specifier.startsWith('git+') &&
+    !specifier.startsWith('npm:') &&
+    !/[~^*<>=| ]/.test(specifier)
+  );
+}
+
+function getOverridePackageName(selector) {
+  if (typeof selector !== 'string' || selector.length === 0) {
+    return null;
   }
 
-  const content = fs.readFileSync(filePath, 'utf8');
-  return new Set(
-    content
-      .split('\n')
-      .map((line) => line.trim())
-      .filter((line) => line && !line.startsWith('#')),
+  const packageSelector = selector.split('>').pop()?.trim();
+  return packageSelector ? parsePackageNameVersion(packageSelector).name : null;
+}
+
+function getManifestOverrideEntries(manifest = readProjectManifest()) {
+  return Object.entries(manifest.pnpm?.overrides || {})
+    .map(([selector, specifier]) => ({
+      name: getOverridePackageName(selector),
+      specifier,
+    }))
+    .filter(({ name }) => Boolean(name));
+}
+
+function getExactManifestPackages(manifest = readProjectManifest()) {
+  const dependencyPackages = MANIFEST_DEPENDENCY_FIELDS.flatMap((field) =>
+    Object.entries(manifest[field] || {})
+      .filter(([, specifier]) => isExactVersionSpecifier(specifier))
+      .map(([name, version]) => ({ name, version })),
   );
+
+  const overridePackages = getManifestOverrideEntries(manifest)
+    .filter(({ specifier }) => isExactVersionSpecifier(specifier))
+    .map(({ name, specifier }) => ({ name, version: specifier }));
+
+  return [...dependencyPackages, ...overridePackages];
+}
+
+function normalizeResolvedVersion(version) {
+  return typeof version === 'string' ? version.split('(')[0] : version;
+}
+
+function stripPeerDependencySuffix(value) {
+  return typeof value === 'string' ? value.split('(')[0] : value;
+}
+
+function stripYamlQuotes(value) {
+  return value.startsWith("'") && value.endsWith("'") ? value.slice(1, -1).replace(/''/g, "'") : value;
+}
+
+function getPackagesFromPnpmLockfileContent(content) {
+  const packages = new Map();
+  let inPackagesSection = false;
+
+  content.split('\n').forEach((line) => {
+    if (!inPackagesSection) {
+      if (line === 'packages:') {
+        inPackagesSection = true;
+      }
+      return;
+    }
+
+    if (line && !line.startsWith(' ')) {
+      inPackagesSection = false;
+      return;
+    }
+
+    const packageKeyMatch = line.match(/^ {2}(.+):$/);
+    if (!packageKeyMatch) {
+      return;
+    }
+
+    const packageKey = stripPeerDependencySuffix(stripYamlQuotes(packageKeyMatch[1]));
+    const { name, version } = parsePackageNameVersion(packageKey);
+    if (!name || !version) {
+      return;
+    }
+
+    const normalizedVersion = normalizeResolvedVersion(version);
+    packages.set(toPackageKey({ name, version: normalizedVersion }), {
+      name,
+      version: normalizedVersion,
+    });
+  });
+
+  return Array.from(packages.values());
+}
+
+function getPackagesFromPnpmLockfile(filePath = path.join(ROOT_DIR, 'pnpm-lock.yaml')) {
+  if (!fs.existsSync(filePath)) {
+    return [];
+  }
+
+  return getPackagesFromPnpmLockfileContent(fs.readFileSync(filePath, 'utf8'));
+}
+
+function createProjectDependencyState({
+  manifestDependencyNames = new Set(),
+  manifestPackages = [],
+  lockfilePackages = [],
+  installedPackages = [],
+} = {}) {
+  const packageNames = new Set(manifestDependencyNames);
+  const exactPackages = new Map();
+
+  function addPackages(packages, source) {
+    packages.forEach((pkg) => {
+      packageNames.add(pkg.name);
+
+      const key = toPackageKey(pkg);
+      const existingPackage = exactPackages.get(key) || {
+        name: pkg.name,
+        version: pkg.version,
+        sources: [],
+      };
+
+      if (!existingPackage.sources.includes(source)) {
+        existingPackage.sources.push(source);
+      }
+
+      exactPackages.set(key, existingPackage);
+    });
+  }
+
+  addPackages(manifestPackages, 'manifest');
+  addPackages(lockfilePackages, 'lockfile');
+  addPackages(installedPackages, 'installed');
+
+  return {
+    packageNames,
+    exactPackages: Array.from(exactPackages.values()),
+  };
+}
+
+function getProjectDependencyState(options = {}) {
+  const { manifestPath, lockfilePath, includeInstalled = true } = options;
+  const manifest = readProjectManifest(manifestPath);
+  const manifestDependencyNames = getManifestDependencyNames(manifest);
+  const manifestPackages = getExactManifestPackages(manifest);
+  const lockfilePackages = getPackagesFromPnpmLockfile(lockfilePath);
+
+  let installedPackages = [];
+  let installedError = null;
+  if (includeInstalled) {
+    try {
+      installedPackages = getInstalledPackages();
+    } catch (error) {
+      installedError = error;
+    }
+  }
+
+  return {
+    ...createProjectDependencyState({
+      manifestDependencyNames,
+      manifestPackages,
+      lockfilePackages,
+      installedPackages,
+    }),
+    installedError,
+  };
 }
 
 /**
@@ -132,7 +364,7 @@ function extractAllPackages(packages) {
  * @returns {Array<{name: string, version: string}>} Array of all installed packages
  */
 function getInstalledPackages(options = {}) {
-  const { maxBuffer = 10 * 1024 * 1024 } = options;
+  const { maxBuffer = DEFAULT_MAX_BUFFER_SIZE } = options;
 
   const output = execSync('pnpm list --recursive --depth=Infinity --json', {
     encoding: 'utf8',
@@ -164,11 +396,57 @@ function isCompromised(pkg, compromised) {
 }
 
 /**
- * Check if two package strings represent the same package
- * Handles version-specific and version-agnostic comparisons
- * @param {string} pkg1 - First package string (package@version or package)
- * @param {string} pkg2 - Second package string (package@version or package)
- * @returns {boolean} True if packages are duplicates
+ * Build a fast lookup table for compromised entries keyed by name and version.
+ * @param {Array<{name: string, version: string|null, original: string}>} compromisedPackages - Parsed compromised entries
+ * @returns {Map<string, Map<string, string>>} Lookup keyed by package name, then version or wildcard
+ */
+function buildCompromisedLookup(compromisedPackages) {
+  const compromisedLookup = new Map();
+
+  compromisedPackages.forEach((compromisedPackage) => {
+    const versionKey = compromisedPackage.version ?? ANY_VERSION;
+    if (!compromisedLookup.has(compromisedPackage.name)) {
+      compromisedLookup.set(compromisedPackage.name, new Map());
+    }
+    compromisedLookup.get(compromisedPackage.name).set(versionKey, compromisedPackage.original);
+  });
+
+  return compromisedLookup;
+}
+
+/**
+ * Find the compromised entry that matches an installed package.
+ * @param {{name: string, version: string}} pkg - Installed package to check
+ * @param {Map<string, Map<string, string>>} compromisedLookup - Lookup created by buildCompromisedLookup
+ * @returns {string|null} Original compromised entry string, or null if no match exists
+ */
+function findCompromisedMatch(pkg, compromisedLookup) {
+  const compromisedVersions = compromisedLookup.get(pkg.name);
+  if (!compromisedVersions) {
+    return null;
+  }
+
+  return compromisedVersions.get(pkg.version) ?? compromisedVersions.get(ANY_VERSION) ?? null;
+}
+
+/**
+ * Check if two package strings represent the same package (duplicate detection)
+ *
+ * Handles version-specific and version-agnostic comparisons:
+ * - Same package@version → duplicate
+ * - Package-only vs package@version → duplicate (package-only is less specific)
+ * - Different versions → not duplicate
+ * - Both package-only → not duplicate (could be intentional)
+ *
+ * @param {string} pkg1 - First package string (format: "package@version" or "package")
+ * @param {string} pkg2 - Second package string (format: "package@version" or "package")
+ * @returns {boolean} True if packages are considered duplicates
+ *
+ * @example
+ * isPackageDuplicate('package@1.0.0', 'package@1.0.0') // true
+ * isPackageDuplicate('package', 'package@1.0.0') // true (package-only is duplicate)
+ * isPackageDuplicate('package@1.0.0', 'package') // false (version-specific is not duplicate of package-only)
+ * isPackageDuplicate('package@1.0.0', 'package@2.0.0') // false (different versions)
  */
 function isPackageDuplicate(pkg1, pkg2) {
   const { name: name1, version: version1 } = parsePackageNameVersion(pkg1);
@@ -203,14 +481,36 @@ function writePackagesToFile(filePath, packages) {
 }
 
 module.exports = {
+  DEFAULT_COMPROMISED_FILE,
   ROOT_DIR,
+  ANY_VERSION,
+  MANIFEST_DEPENDENCY_FIELDS,
   getCompromisedFilePath,
+  findVersionSeparatorIndex,
   parsePackageNameVersion,
+  readPackageEntries,
+  toCompromisedEntry,
+  toPackageKey,
   parseCompromisedPackages,
   parseExistingPackages,
+  readProjectManifest,
+  getManifestDependencyNames,
+  isExactVersionSpecifier,
+  getOverridePackageName,
+  getManifestOverrideEntries,
+  getExactManifestPackages,
+  normalizeResolvedVersion,
+  stripPeerDependencySuffix,
+  stripYamlQuotes,
+  getPackagesFromPnpmLockfileContent,
+  getPackagesFromPnpmLockfile,
+  createProjectDependencyState,
+  getProjectDependencyState,
   extractAllPackages,
   getInstalledPackages,
   isCompromised,
+  buildCompromisedLookup,
+  findCompromisedMatch,
   isPackageDuplicate,
   writePackagesToFile,
 };

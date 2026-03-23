@@ -13,6 +13,7 @@
     "ignoreUnknown": false,
     "includes": [
       "**",
+      "!**/*.md",
       "!.github",
       "!build",
       "!coverage",

@@ -80,5 +80,5 @@ This protection is enforced in several places:
 - `preinstall` refreshes the compromised list and checks it before dependency installation continues.
 - `pre-commit` runs `pnpm compromised:check` so known bad versions are blocked before code is committed.
 - `.github/workflows/nodejs.yml` runs the same check in pull request CI.
-- `.github/workflows/update-compromised.yml` refreshes `compromised.txt` weekly and can commit updates automatically.
+- `pnpm compromised:update` a manual maintenance command when the blocklist needs to be refreshed outside the normal install flow.
 - CodeQL and Dependabot complement this setup, but they are separate controls; the compromised-package scripts provide an explicit hard block for versions already known to be unsafe for this project.

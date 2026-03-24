@@ -1,0 +1,51 @@
+name: Compromised Packages
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      HUSKY: 0
+      SKIP_PREINSTALL_SECURITY: 1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        name: Install NodeJS
+        with:
+          node-version-file: '.nvmrc'
+      - uses: pnpm/action-setup@v4
+        name: Install PNPM
+        with:
+          run_install: false
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - uses: actions/cache@v4
+        name: PNPM cache
+        with:
+          path: |
+            ${{ env.STORE_PATH }}
+            ./node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Refresh compromised packages
+        run: pnpm compromised:update
+      - name: Check for compromised packages
+        run: pnpm compromised:check
+      - name: Verify compromised.txt is up to date
+        run: git diff --exit-code -- compromised.txt
+      - uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: compromised-packages-report
+          path: compromised.txt
+          retention-days: 10

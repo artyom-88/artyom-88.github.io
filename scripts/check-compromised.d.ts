@@ -1,4 +1,4 @@
-import type { CompromisedLookup, ProjectPackage } from './compromised-utils.js';
+import type { CompromisedLookup, ProjectPackage } from './compromised/compromised-script-types';
 
 /**
  * A compromised package found in the current project dependency state.

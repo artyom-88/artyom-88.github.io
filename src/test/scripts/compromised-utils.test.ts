@@ -1,25 +1,25 @@
-/**
- * Tests for compromised-utils.js
- */
-
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
+  isExactVersionSpecifier,
+  isPackageDuplicate,
+  parsePackageNameVersion,
+} from '../../../scripts/compromised/compromised-package-entry.js';
+import { parseCompromisedPackages } from '../../../scripts/compromised/compromised-package-file.js';
+import {
   buildCompromisedLookup,
-  createProjectDependencyState,
   findCompromisedMatch,
-  getCompromisedFilePath,
+  isCompromised,
+} from '../../../scripts/compromised/compromised-package-matching.js';
+import { getCompromisedFilePath } from '../../../scripts/compromised/compromised-path-safety.js';
+import {
+  createProjectDependencyState,
   getExactManifestPackages,
   getManifestDependencyNames,
   getPackagesFromPnpmLockfileContent,
-  isCompromised,
-  isExactVersionSpecifier,
-  isPackageDuplicate,
-  parseCompromisedPackages,
-  parsePackageNameVersion,
-} from '../../../scripts/compromised-utils.js';
+} from '../../../scripts/compromised/compromised-project-state.js';
 
 const tempDirs: string[] = [];
 
@@ -32,7 +32,7 @@ function createCompromisedFile(contents: string) {
   return filePath;
 }
 
-describe('compromised-utils', () => {
+describe('compromised script modules', () => {
   afterEach(() => {
     tempDirs.splice(0).forEach((dir) => {
       rmSync(dir, { recursive: true, force: true });

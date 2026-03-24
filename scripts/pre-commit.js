@@ -1,6 +1,6 @@
 const { execSync } = require('node:child_process');
 
-const { ROOT_DIR } = require('./compromised-utils');
+const { ROOT_DIR } = require('./compromised/compromised-script-constants');
 
 const DEPENDENCY_TRIGGER_FILES = new Set(['package.json', 'pnpm-lock.yaml']);
 

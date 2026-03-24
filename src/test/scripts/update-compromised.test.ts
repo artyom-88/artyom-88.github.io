@@ -3,23 +3,31 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   collectPackagesFromAdvisories,
   fetchAdvisoryRefreshData,
+  fetchVulnerablePackages,
+} from '../../../scripts/compromised/compromised-advisory-processing.js';
+import {
   fetchGitHubAdvisories,
   fetchGitHubAdvisoryType,
-  fetchVulnerablePackages,
-  filterExistingPackagesForRefresh,
-  getExplicitVersionEntries,
   getGitHubApiHeaders,
   getGitHubAuthToken,
-  getNormalizedExactVersions,
-  isConfirmedPackageEntry,
+} from '../../../scripts/compromised/compromised-github-advisories.js';
+import {
+  filterExistingPackagesForRefresh,
   isPackageEntryConfirmedByAdvisories,
   mergePackages,
-  normalizeExactVersionToken,
+} from '../../../scripts/compromised/compromised-refresh-policy.js';
+import {
+  isConfirmedPackageEntry,
   parseArguments,
   partitionProjectScopedPackageEntries,
   validateManualPackages,
+} from '../../../scripts/compromised/compromised-update-cli.js';
+import {
+  getExplicitVersionEntries,
+  getNormalizedExactVersions,
+  normalizeExactVersionToken,
   versionSatisfiesRange,
-} from '../../../scripts/update-compromised.js';
+} from '../../../scripts/compromised/compromised-version-range.js';
 
 afterEach(() => {
   vi.restoreAllMocks();

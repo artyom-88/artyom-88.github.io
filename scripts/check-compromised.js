@@ -20,13 +20,10 @@
  */
 
 const path = require('node:path');
-const {
-  buildCompromisedLookup,
-  findCompromisedMatch,
-  getCompromisedFilePath,
-  getProjectDependencyState,
-  parseCompromisedPackages,
-} = require('./compromised-utils');
+const { getCompromisedFilePath } = require('./compromised/compromised-path-safety');
+const { parseCompromisedPackages } = require('./compromised/compromised-package-file');
+const { getProjectDependencyState } = require('./compromised/compromised-project-state');
+const { buildCompromisedLookup, findCompromisedMatch } = require('./compromised/compromised-package-matching');
 
 /**
  * Find installed packages that match the compromised package list.

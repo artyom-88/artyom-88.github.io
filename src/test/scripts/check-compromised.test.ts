@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { assertCompromisedPackagesDefined, findCompromisedPackages } from '../../../scripts/check-compromised.js';
-import { buildCompromisedLookup } from '../../../scripts/compromised-utils.js';
+import { buildCompromisedLookup } from '../../../scripts/compromised/compromised-package-matching.js';
 
 describe('check-compromised helpers', () => {
   it('should fail when compromised.txt contains no defined packages', () => {

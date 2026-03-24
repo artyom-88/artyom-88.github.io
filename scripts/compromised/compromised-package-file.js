@@ -1,12 +1,11 @@
 const fs = require('node:fs');
 
-const { COMPROMISED_FILE_MANUAL_ENTRY_PREFIX, COMPROMISED_FILE_REFRESHED_AT_PREFIX } = require('./compromised-script-constants');
+const { COMPROMISED_FILE_MANUAL_ENTRY_PREFIX } = require('./compromised-script-constants');
 const { toCompromisedEntry } = require('./compromised-package-entry');
 
 function createCompromisedPackageFileState() {
   return {
     packageEntries: [],
-    refreshedAt: null,
     manualPackages: new Set(),
   };
 }
@@ -28,12 +27,6 @@ function parseCompromisedPackageFile(filePath, options = {}) {
     const line = rawLine.trim();
 
     if (!line) {
-      return;
-    }
-
-    if (line.startsWith(COMPROMISED_FILE_REFRESHED_AT_PREFIX)) {
-      const refreshedAt = line.slice(COMPROMISED_FILE_REFRESHED_AT_PREFIX.length).trim();
-      fileState.refreshedAt = refreshedAt || null;
       return;
     }
 
@@ -72,13 +65,9 @@ function parseExistingPackages(filePath) {
 }
 
 function writePackagesToFile(filePath, packages, options = {}) {
-  const { refreshedAt = new Date().toISOString(), manualPackages = [] } = options;
+  const { manualPackages = [] } = options;
   const manualPackageEntries = [...new Set(manualPackages)].filter((packageEntry) => packages.includes(packageEntry)).sort();
   const metadataLines = [];
-
-  if (refreshedAt) {
-    metadataLines.push(`${COMPROMISED_FILE_REFRESHED_AT_PREFIX} ${refreshedAt}`);
-  }
 
   manualPackageEntries.forEach((packageEntry) => {
     metadataLines.push(`${COMPROMISED_FILE_MANUAL_ENTRY_PREFIX} ${packageEntry}`);

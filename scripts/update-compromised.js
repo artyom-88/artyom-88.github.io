@@ -42,12 +42,24 @@ function assertUpdatedPackagesDefined(outputFilePath, packages) {
   }
 }
 
-function shouldWriteUpdatedPackages(fetchFromAPI, newPackages, removedCounts) {
-  if (fetchFromAPI) {
+function arePackageEntrySetsEqual(leftEntries, rightEntries) {
+  if (leftEntries.size !== rightEntries.size) {
+    return false;
+  }
+
+  return [...leftEntries].every((packageEntry) => rightEntries.has(packageEntry));
+}
+
+function shouldWriteUpdatedPackages(packages, existingPackages, manualPackages, existingManualPackages, removedCounts) {
+  if (removedCounts.some((count) => count > 0)) {
     return true;
   }
 
-  return newPackages.length > 0 || removedCounts.some((count) => count > 0);
+  if (!arePackageEntrySetsEqual(new Set(packages), existingPackages)) {
+    return true;
+  }
+
+  return !arePackageEntrySetsEqual(manualPackages, existingManualPackages);
 }
 
 async function main() {
@@ -105,23 +117,18 @@ async function main() {
       );
     }
 
-    if (
-      !shouldWriteUpdatedPackages(fetchFromAPI, newPackages, [
-        removedNonExact.length,
-        removedOutOfScope.length,
-        removedStaleConfirmed.length,
-      ])
-    ) {
-      console.log('⚠️  No new packages to add');
-      process.exit(0);
-    }
-
     const { packages, added, skipped } = mergePackages(packagesToPreserve, newPackages);
-    assertUpdatedPackagesDefined(outputFilePath, packages);
-    const preservedCount = packages.filter((packageEntry) => existingPackages.has(packageEntry)).length;
     const manualPackages = new Set(
       [...existingManualPackages, ...packagesToAdd].filter((packageEntry) => packages.includes(packageEntry)),
     );
+    const removedCounts = [removedNonExact.length, removedOutOfScope.length, removedStaleConfirmed.length];
+    assertUpdatedPackagesDefined(outputFilePath, packages);
+    if (!shouldWriteUpdatedPackages(packages, existingPackages, manualPackages, existingManualPackages, removedCounts)) {
+      console.log('ℹ️  No semantic changes to compromised.txt');
+      process.exit(0);
+    }
+
+    const preservedCount = packages.filter((packageEntry) => existingPackages.has(packageEntry)).length;
 
     writePackagesToFile(outputFilePath, packages, {
       manualPackages,
@@ -149,6 +156,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+  arePackageEntrySetsEqual,
   assertUpdatedPackagesDefined,
   logUpdateSummary,
   main,

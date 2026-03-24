@@ -1,8 +1,12 @@
 const { execSync } = require('node:child_process');
-const path = require('node:path');
 
 const { ROOT_DIR } = require('./compromised/compromised-script-constants');
-const { parseCompromisedPackageFile } = require('./compromised/compromised-package-file');
+const {
+  computeCompromisedRefreshFingerprint,
+  readCompromisedRefreshState,
+  shouldRefreshCompromisedFromState,
+  writeCompromisedRefreshState,
+} = require('./compromised/compromised-refresh-state');
 
 const DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 
@@ -22,20 +26,19 @@ function getCompromisedRefreshMaxAgeMs(env = process.env) {
 }
 
 function shouldRefreshCompromisedPackages(options = {}) {
-  const { env = process.env, now = Date.now(), readFileState = parseCompromisedPackageFile } = options;
-  const compromisedFilePath = path.join(ROOT_DIR, 'compromised.txt');
+  const {
+    env = process.env,
+    now = Date.now(),
+    readRefreshState = readCompromisedRefreshState,
+    computeFingerprint = computeCompromisedRefreshFingerprint,
+  } = options;
 
   try {
-    const { refreshedAt } = readFileState(compromisedFilePath, { allowMissing: true });
-    const refreshedAtMs = refreshedAt ? Date.parse(refreshedAt) : Number.NaN;
     const maxAgeMs = getCompromisedRefreshMaxAgeMs(env);
-    const fileAgeMs = now - refreshedAtMs;
+    const refreshState = readRefreshState();
+    const dependencyGraphFingerprint = computeFingerprint();
 
-    if (!Number.isFinite(refreshedAtMs) || fileAgeMs < 0) {
-      return true;
-    }
-
-    return fileAgeMs > maxAgeMs;
+    return shouldRefreshCompromisedFromState(refreshState, dependencyGraphFingerprint, now, maxAgeMs);
   } catch {
     return true;
   }
@@ -51,7 +54,13 @@ function runCommand(command, options = {}) {
 }
 
 function runPreinstall(options = {}) {
-  const { env = process.env } = options;
+  const {
+    env = process.env,
+    now = Date.now(),
+    readRefreshState = readCompromisedRefreshState,
+    computeFingerprint = computeCompromisedRefreshFingerprint,
+    writeRefreshState = writeCompromisedRefreshState,
+  } = options;
 
   if (shouldSkipPreinstallSecurity(env)) {
     console.log('ℹ️  Skipping preinstall security checks in CI');
@@ -60,11 +69,27 @@ function runPreinstall(options = {}) {
 
   runCommand('npx --yes only-allow@1.2.2 pnpm', options);
 
-  if (shouldRefreshCompromisedPackages(options)) {
+  if (
+    shouldRefreshCompromisedPackages({
+      env,
+      now,
+      readRefreshState,
+      computeFingerprint,
+    })
+  ) {
     console.log('🔄 Refreshing compromised package data before install');
     runCommand('pnpm compromised:update', options);
+
+    try {
+      writeRefreshState({
+        refreshedAt: new Date(now).toISOString(),
+        dependencyGraphFingerprint: computeFingerprint(),
+      });
+    } catch (error) {
+      console.warn(`⚠️  Unable to persist local compromised refresh state: ${error.message}`);
+    }
   } else {
-    console.log('ℹ️  Skipping compromised package refresh: compromised.txt was updated recently');
+    console.log('ℹ️  Skipping compromised package refresh: dependency graph is still current locally');
   }
 
   runCommand('pnpm compromised:check', options);

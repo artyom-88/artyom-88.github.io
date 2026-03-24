@@ -38,50 +38,73 @@ describe('preinstall hook helpers', () => {
   });
 
   it('should refresh compromised packages locally when the file is stale', () => {
-    const staleReadFileState = vi.fn().mockReturnValue({
+    const staleReadRefreshState = vi.fn().mockReturnValue({
       refreshedAt: new Date(Date.now() - DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS - 1).toISOString(),
+      dependencyGraphFingerprint: 'fingerprint-1',
     });
 
     expect(
       shouldRefreshCompromisedPackages({
-        readFileState: staleReadFileState,
+        readRefreshState: staleReadRefreshState,
+        computeFingerprint: () => 'fingerprint-1',
       }),
     ).toBe(true);
   });
 
-  it('should skip the compromised refresh locally when the file is recent', () => {
-    const recentReadFileState = vi.fn().mockReturnValue({
+  it('should skip the compromised refresh locally when the state is recent and the dependency graph matches', () => {
+    const recentReadRefreshState = vi.fn().mockReturnValue({
       refreshedAt: new Date().toISOString(),
+      dependencyGraphFingerprint: 'fingerprint-1',
     });
 
     expect(
       shouldRefreshCompromisedPackages({
-        readFileState: recentReadFileState,
+        readRefreshState: recentReadRefreshState,
+        computeFingerprint: () => 'fingerprint-1',
       }),
     ).toBe(false);
   });
 
-  it('should refresh compromised packages locally when the file has no refresh metadata', () => {
-    const readFileState = vi.fn().mockReturnValue({
-      refreshedAt: null,
-    });
+  it('should refresh compromised packages locally when no refresh state exists', () => {
+    const readRefreshState = vi.fn().mockReturnValue(null);
 
     expect(
       shouldRefreshCompromisedPackages({
-        readFileState,
+        readRefreshState,
+        computeFingerprint: () => 'fingerprint-1',
       }),
     ).toBe(true);
   });
 
-  it('should run only-allow, refresh, and compromised check locally when the file is stale', () => {
+  it('should refresh compromised packages locally when the dependency graph fingerprint changed', () => {
+    const readRefreshState = vi.fn().mockReturnValue({
+      refreshedAt: new Date().toISOString(),
+      dependencyGraphFingerprint: 'fingerprint-1',
+    });
+
+    expect(
+      shouldRefreshCompromisedPackages({
+        readRefreshState,
+        computeFingerprint: () => 'fingerprint-2',
+      }),
+    ).toBe(true);
+  });
+
+  it('should run only-allow, refresh, persist local state, and compromised check locally when state is stale', () => {
     const exec = vi.fn();
+    const writeRefreshState = vi.fn();
+    const now = Date.UTC(2026, 2, 23, 12, 0, 0);
 
     runPreinstall({
       env: {} as NodeJS.ProcessEnv,
       exec,
-      readFileState: () => ({
-        refreshedAt: new Date(Date.now() - DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS - 1).toISOString(),
+      now,
+      readRefreshState: () => ({
+        refreshedAt: new Date(now - DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS - 1).toISOString(),
+        dependencyGraphFingerprint: 'fingerprint-1',
       }),
+      computeFingerprint: () => 'fingerprint-1',
+      writeRefreshState,
     });
 
     expect(exec.mock.calls.map(([command]) => command)).toEqual([
@@ -89,19 +112,28 @@ describe('preinstall hook helpers', () => {
       'pnpm compromised:update',
       'pnpm compromised:check',
     ]);
+    expect(writeRefreshState).toHaveBeenCalledWith({
+      refreshedAt: '2026-03-23T12:00:00.000Z',
+      dependencyGraphFingerprint: 'fingerprint-1',
+    });
   });
 
-  it('should skip the refresh but still run the check locally when the file is recent', () => {
+  it('should skip the refresh but still run the check locally when the state is recent', () => {
     const exec = vi.fn();
+    const writeRefreshState = vi.fn();
 
     runPreinstall({
       env: {} as NodeJS.ProcessEnv,
       exec,
-      readFileState: () => ({
+      readRefreshState: () => ({
         refreshedAt: new Date().toISOString(),
+        dependencyGraphFingerprint: 'fingerprint-1',
       }),
+      computeFingerprint: () => 'fingerprint-1',
+      writeRefreshState,
     });
 
     expect(exec.mock.calls.map(([command]) => command)).toEqual(['npx --yes only-allow@1.2.2 pnpm', 'pnpm compromised:check']);
+    expect(writeRefreshState).not.toHaveBeenCalled();
   });
 });

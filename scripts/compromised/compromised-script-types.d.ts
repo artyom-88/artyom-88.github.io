@@ -18,8 +18,12 @@ export interface CompromisedEntry extends PackageEntry {
 
 export interface CompromisedPackageFileState {
   packageEntries: string[];
-  refreshedAt: string | null;
   manualPackages: Set<string>;
+}
+
+export interface CompromisedRefreshState {
+  refreshedAt: string;
+  dependencyGraphFingerprint: string;
 }
 
 export interface ProjectDependencyStateInput {

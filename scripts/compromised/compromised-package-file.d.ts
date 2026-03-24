@@ -5,8 +5,4 @@ export function parseCompromisedPackageFile(filePath: string, options?: { allowM
 export function readPackageEntries(filePath: string, options?: { allowMissing?: boolean }): string[];
 export function parseCompromisedPackages(filePath: string): CompromisedEntry[];
 export function parseExistingPackages(filePath: string): Set<string>;
-export function writePackagesToFile(
-  filePath: string,
-  packages: string[],
-  options?: { refreshedAt?: string | null; manualPackages?: Iterable<string> },
-): void;
+export function writePackagesToFile(filePath: string, packages: string[], options?: { manualPackages?: Iterable<string> }): void;

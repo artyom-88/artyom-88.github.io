@@ -1,9 +1,7 @@
 import { resolve } from 'node:path';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
-import { visualizer } from 'rollup-plugin-visualizer';
 import { loadEnv, type PluginOption } from 'vite';
-import svg from 'vite-plugin-svgo';
 import { defineConfig } from 'vitest/config';
 
 const DEFAULT_DOMAIN = 'artyom-88.github.io';
@@ -25,14 +23,10 @@ const VENDORS_CHUNK_RE = /node_modules[\\/](?:@tanstack\/react-query|@tanstack\/
 
 const getIsDevelopment = (mode: string): boolean => mode !== PROD;
 
-const defaultPlugins = [react(), svg()];
+const defaultPlugins = [react()];
 
 const getPlugins = (mode: string): PluginOption[] => {
-  return mode === 'analyze'
-    ? [...defaultPlugins, visualizer({ filename: './dist/report.html', gzipSize: true, open: true })]
-    : getIsDevelopment(mode)
-      ? [...defaultPlugins, basicSsl()]
-      : defaultPlugins;
+  return getIsDevelopment(mode) ? [...defaultPlugins, basicSsl()] : defaultPlugins;
 };
 
 export default defineConfig(({ mode }) => {

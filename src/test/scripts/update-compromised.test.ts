@@ -105,6 +105,29 @@ describe('update-compromised helpers', () => {
     expect(warnSpy).toHaveBeenCalledTimes(1);
   });
 
+  it('should ignore withdrawn advisories', () => {
+    const result = collectPackagesFromAdvisories(
+      [
+        {
+          package: { ecosystem: 'npm', name: 'cacheable-request' },
+          vulnerable_version_range: '<= 6.1.0',
+          withdrawn_at: '2025-01-01T00:00:00Z',
+        },
+      ],
+      {
+        packageNames: new Set(['cacheable-request']),
+        exactPackages: [{ name: 'cacheable-request', version: '6.1.0' }],
+      },
+    );
+
+    expect(result).toEqual({
+      packages: [],
+      count: 0,
+      skippedNonExact: 0,
+      skippedOutOfScope: 0,
+    });
+  });
+
   it('should treat only exact package@version entries as confirmed', () => {
     expect(isConfirmedPackageEntry('@angular/ssr@19.0.0')).toBe(true);
     expect(isConfirmedPackageEntry('@angular/ssr')).toBe(false);

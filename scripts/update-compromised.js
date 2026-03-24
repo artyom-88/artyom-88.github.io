@@ -508,6 +508,10 @@ function extractNpmPackageEntries(advisory) {
   return [];
 }
 
+function isWithdrawnAdvisory(advisory) {
+  return Boolean(advisory?.withdrawn_at || advisory?.withdrawnAt);
+}
+
 /**
  * Convert GitHub advisories into confirmed compromised package entries for the current project scope.
  * @param {object[]} advisories - Advisories returned from GitHub
@@ -520,6 +524,10 @@ function collectPackagesFromAdvisories(advisories, projectDependencyState) {
   let skippedOutOfScope = 0;
 
   advisories.forEach((advisory) => {
+    if (isWithdrawnAdvisory(advisory)) {
+      return;
+    }
+
     extractNpmPackageEntries(advisory).forEach(({ packageName, vulnerableVersionRange, vulnerableVersions }) => {
       if (vulnerableVersionRange) {
         if (!projectDependencyState.packageNames.has(packageName)) {
@@ -876,6 +884,7 @@ module.exports = {
   isPackageName,
   isScopedPackageSpecifier,
   isSpecificVersion,
+  isWithdrawnAdvisory,
   logUpdateSummary,
   main,
   mergePackages,

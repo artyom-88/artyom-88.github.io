@@ -24,6 +24,8 @@ export interface NpmAdvisory {
   vulnerabilities?: NpmAdvisoryVulnerability[];
   vulnerable_version_range?: string;
   vulnerable_versions?: string;
+  withdrawn_at?: string;
+  withdrawnAt?: string;
 }
 
 /**

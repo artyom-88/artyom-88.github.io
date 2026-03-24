@@ -11,10 +11,4 @@ export function stripYamlQuotes(value: string): string;
 export function getPackagesFromPnpmLockfileContent(content: string): ExactPackageEntry[];
 export function getPackagesFromPnpmLockfile(filePath?: string): ExactPackageEntry[];
 export function createProjectDependencyState(input?: ProjectDependencyStateInput): ProjectDependencyState;
-export function extractAllPackages(packages: Array<Record<string, unknown>>): ExactPackageEntry[];
-export function getInstalledPackages(options?: { maxBuffer?: number }): ExactPackageEntry[];
-export function getProjectDependencyState(options?: {
-  manifestPath?: string;
-  lockfilePath?: string;
-  includeInstalled?: boolean;
-}): ProjectDependencyState;
+export function getProjectDependencyState(options?: { manifestPath?: string; lockfilePath?: string }): ProjectDependencyState;

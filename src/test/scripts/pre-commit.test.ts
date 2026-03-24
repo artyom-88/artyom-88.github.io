@@ -26,7 +26,7 @@ describe('pre-commit hook helpers', () => {
     });
   });
 
-  it('should skip compromised refresh when dependency metadata is not staged', () => {
+  it('should skip compromised refresh but still run the check when dependency metadata is not staged', () => {
     const exec = vi.fn();
 
     runPreCommit({
@@ -34,7 +34,7 @@ describe('pre-commit hook helpers', () => {
       exec,
     });
 
-    expect(exec.mock.calls.map(([command]) => command)).toEqual(['tsc', 'lint-staged']);
+    expect(exec.mock.calls.map(([command]) => command)).toEqual(['pnpm compromised:check', 'tsc', 'lint-staged']);
   });
 
   it('should refresh and restage compromised packages when dependency metadata is staged', () => {
@@ -47,8 +47,8 @@ describe('pre-commit hook helpers', () => {
 
     expect(exec.mock.calls.map(([command]) => command)).toEqual([
       'pnpm compromised:update',
-      'pnpm compromised:check',
       'git add compromised.txt',
+      'pnpm compromised:check',
       'tsc',
       'lint-staged',
     ]);

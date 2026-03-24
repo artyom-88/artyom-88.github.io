@@ -45,12 +45,12 @@ function runPreCommit(options = {}) {
   if (hasDependencyGraphChanges(stagedFiles)) {
     console.log('📦 Dependency graph changes staged. Refreshing compromised package data...');
     runCommand('pnpm compromised:update', options);
-    runCommand('pnpm compromised:check', options);
     runCommand('git add compromised.txt', options);
   } else {
     console.log('ℹ️  Skipping compromised package refresh: no staged package manifest or lockfile changes');
   }
 
+  runCommand('pnpm compromised:check', options);
   runCommand('tsc', options);
   runCommand('lint-staged', options);
 }

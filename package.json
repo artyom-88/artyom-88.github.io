@@ -27,7 +27,7 @@
     "lint:fix": "biome check --write",
     "pre-commit": "node scripts/pre-commit.js",
     "predeploy": "pnpm build",
-    "preinstall": "npx --yes only-allow@1.2.2 pnpm && pnpm compromised:update && pnpm compromised:check",
+    "preinstall": "node scripts/preinstall.js",
     "prepare": "husky",
     "preview": "vite preview",
     "start": "vite",

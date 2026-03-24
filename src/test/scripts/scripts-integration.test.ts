@@ -62,11 +62,13 @@ describe('scripts CLI integration', () => {
     const result = runNodeScript(fixtureDir, 'scripts/update-compromised.js', ['--no-fetch', 'compromised.txt', 'vite@8.0.2']);
 
     expect(result.status).toBe(0);
-    expect(readFileSync(join(fixtureDir, 'compromised.txt'), 'utf8')).toBe('vite@8.0.2\n');
+    expect(readFileSync(join(fixtureDir, 'compromised.txt'), 'utf8')).not.toContain('# refreshed-at:');
+    expect(readFileSync(join(fixtureDir, 'compromised.txt'), 'utf8')).toContain('# manual-entry: vite@8.0.2');
+    expect(readFileSync(join(fixtureDir, 'compromised.txt'), 'utf8')).toContain('\nvite@8.0.2\n');
     expect(result.stdout).toContain('✅ Update complete!');
   });
 
-  it('should fail through the check-compromised CLI when manifest state matches a compromised package', () => {
+  it('should fail through the check-compromised CLI when manifest or lockfile state matches a compromised package', () => {
     const fixtureDir = createFixtureRepo();
 
     writeJson(join(fixtureDir, 'package.json'), {

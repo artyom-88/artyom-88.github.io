@@ -77,13 +77,8 @@ function partitionProjectScopedPackageEntries(packageEntries, projectPackageName
   );
 }
 
-function logDependencyStateSource(projectDependencyState) {
-  if (projectDependencyState.installedError) {
-    console.log('ℹ️  Installed dependency tree unavailable or stale, using package.json + pnpm-lock.yaml project scope');
-    return;
-  }
-
-  console.log('ℹ️  Using package.json + pnpm-lock.yaml + installed dependency tree project scope');
+function logDependencyStateSource() {
+  console.log('ℹ️  Using package.json + pnpm-lock.yaml project scope');
 }
 
 function resolveOutputFilePath(filePathArg) {

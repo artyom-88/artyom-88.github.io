@@ -9,6 +9,6 @@ export function partitionProjectScopedPackageEntries(
   packageEntries: Iterable<string>,
   projectPackageNames: Set<string>,
 ): PartitionedProjectEntries;
-export function logDependencyStateSource(projectDependencyState: { installedError?: unknown }): void;
+export function logDependencyStateSource(): void;
 export function resolveOutputFilePath(filePathArg: string | null): string;
 export function parseArguments(args?: string[]): ParsedArguments;

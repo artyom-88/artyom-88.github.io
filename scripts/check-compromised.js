@@ -27,7 +27,7 @@ const { buildCompromisedLookup, findCompromisedMatch } = require('./compromised/
 
 /**
  * Find installed packages that match the compromised package list.
- * @param {Array<{name: string, version: string}>} installedPackages - Installed packages from pnpm
+ * @param {Array<{name: string, version: string}>} projectPackages - Exact project packages from package.json and pnpm-lock.yaml
  * @param {Map<string, Map<string, string>>} compromisedLookup - Lookup built from compromised entries
  * @returns {Array<{package: string, compromised: string}>} Matched packages with the entry they matched
  */
@@ -96,9 +96,6 @@ function main() {
     console.log('🔍 Scanning project dependency state for compromised packages...');
 
     const projectDependencyState = getProjectDependencyState();
-    if (projectDependencyState.installedError) {
-      console.log('ℹ️  Installed dependency tree unavailable or stale, using package.json + pnpm-lock.yaml + manifest state');
-    }
     const compromisedLookup = buildCompromisedLookup(compromisedPackages);
     const foundPackages = findCompromisedPackages(projectDependencyState.exactPackages, compromisedLookup);
 

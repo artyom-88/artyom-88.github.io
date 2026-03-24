@@ -6,7 +6,9 @@
  * stays focused on CLI orchestration and backward-compatible exports.
  */
 
-const { parseExistingPackages, writePackagesToFile } = require('./compromised/compromised-package-file');
+const path = require('node:path');
+
+const { parseCompromisedPackageFile, writePackagesToFile } = require('./compromised/compromised-package-file');
 const { getProjectDependencyState } = require('./compromised/compromised-project-state');
 const {
   logDependencyStateSource,
@@ -32,6 +34,34 @@ function logUpdateSummary(outputFilePath, packages, preservedCount, added, skipp
   console.log(`   📄 Updated file: ${outputFilePath}`);
 }
 
+function assertUpdatedPackagesDefined(outputFilePath, packages) {
+  if (packages.length === 0) {
+    throw new Error(
+      `Refusing to write an empty ${path.basename(outputFilePath)}. Empty lists are treated as configuration errors.`,
+    );
+  }
+}
+
+function arePackageEntrySetsEqual(leftEntries, rightEntries) {
+  if (leftEntries.size !== rightEntries.size) {
+    return false;
+  }
+
+  return [...leftEntries].every((packageEntry) => rightEntries.has(packageEntry));
+}
+
+function shouldWriteUpdatedPackages(packages, existingPackages, manualPackages, existingManualPackages, removedCounts) {
+  if (removedCounts.some((count) => count > 0)) {
+    return true;
+  }
+
+  if (!arePackageEntrySetsEqual(new Set(packages), existingPackages)) {
+    return true;
+  }
+
+  return !arePackageEntrySetsEqual(manualPackages, existingManualPackages);
+}
+
 async function main() {
   try {
     const { filePath: outputFilePath, packagesToAdd, fetchFromAPI } = parseArguments();
@@ -40,12 +70,16 @@ async function main() {
     logDependencyStateSource(projectDependencyState);
     console.log(`📦 Project dependency scope includes ${projectDependencyState.packageNames.size} package name(s)`);
 
-    const existingEntries = parseExistingPackages(outputFilePath);
+    const existingFileState = parseCompromisedPackageFile(outputFilePath, { allowMissing: true });
+    const existingEntries = new Set(existingFileState.packageEntries);
     const {
       confirmedPackages: existingPackages,
       removedNonExact,
       removedOutOfScope,
     } = partitionProjectScopedPackageEntries(existingEntries, projectDependencyState.packageNames);
+    const existingManualPackages = new Set(
+      [...existingFileState.manualPackages].filter((packageEntry) => existingPackages.has(packageEntry)),
+    );
     const initialCount = existingPackages.size;
     console.log(`📋 Found ${initialCount} confirmed existing package(s) in file`);
     if (removedNonExact.length > 0) {
@@ -73,6 +107,7 @@ async function main() {
       existingPackages,
       advisories,
       fetchFromAPI,
+      existingManualPackages,
     );
     if (removedStaleConfirmed.length > 0) {
       console.log(
@@ -82,20 +117,22 @@ async function main() {
       );
     }
 
-    if (
-      newPackages.length === 0 &&
-      removedNonExact.length === 0 &&
-      removedOutOfScope.length === 0 &&
-      removedStaleConfirmed.length === 0
-    ) {
-      console.log('⚠️  No new packages to add');
+    const { packages, added, skipped } = mergePackages(packagesToPreserve, newPackages);
+    const manualPackages = new Set(
+      [...existingManualPackages, ...packagesToAdd].filter((packageEntry) => packages.includes(packageEntry)),
+    );
+    const removedCounts = [removedNonExact.length, removedOutOfScope.length, removedStaleConfirmed.length];
+    assertUpdatedPackagesDefined(outputFilePath, packages);
+    if (!shouldWriteUpdatedPackages(packages, existingPackages, manualPackages, existingManualPackages, removedCounts)) {
+      console.log('ℹ️  No semantic changes to compromised.txt');
       process.exit(0);
     }
 
-    const { packages, added, skipped } = mergePackages(packagesToPreserve, newPackages);
     const preservedCount = packages.filter((packageEntry) => existingPackages.has(packageEntry)).length;
 
-    writePackagesToFile(outputFilePath, packages);
+    writePackagesToFile(outputFilePath, packages, {
+      manualPackages,
+    });
     logUpdateSummary(
       outputFilePath,
       packages,
@@ -119,6 +156,9 @@ if (require.main === module) {
 }
 
 module.exports = {
+  arePackageEntrySetsEqual,
+  assertUpdatedPackagesDefined,
   logUpdateSummary,
   main,
+  shouldWriteUpdatedPackages,
 };

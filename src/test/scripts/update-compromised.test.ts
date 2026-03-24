@@ -28,6 +28,11 @@ import {
   normalizeExactVersionToken,
   versionSatisfiesRange,
 } from '../../../scripts/compromised/compromised-version-range.js';
+import {
+  arePackageEntrySetsEqual,
+  assertUpdatedPackagesDefined,
+  shouldWriteUpdatedPackages,
+} from '../../../scripts/update-compromised.js';
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -321,6 +326,25 @@ describe('update-compromised helpers', () => {
     });
   });
 
+  it('should preserve manual exact entries during advisory refreshes', () => {
+    const result = filterExistingPackagesForRefresh(
+      new Set(['@angular/ssr@19.0.0', 'lodash@4.17.21']),
+      [
+        {
+          package: { ecosystem: 'npm', name: 'lodash' },
+          vulnerable_versions: '4.17.21',
+        },
+      ],
+      true,
+      new Set(['@angular/ssr@19.0.0']),
+    );
+
+    expect(result).toEqual({
+      preservedPackages: new Set(['@angular/ssr@19.0.0', 'lodash@4.17.21']),
+      removedStaleConfirmed: [],
+    });
+  });
+
   it('should preserve existing exact entries when refresh is disabled', () => {
     const result = filterExistingPackagesForRefresh(new Set(['@angular/ssr@19.0.0']), null, false);
 
@@ -337,6 +361,30 @@ describe('update-compromised helpers', () => {
       preservedPackages: new Set(['@angular/ssr@19.0.0']),
       removedStaleConfirmed: [],
     });
+  });
+
+  it('should fail before writing an empty compromised package file', () => {
+    expect(() => assertUpdatedPackagesDefined('/repo/compromised.txt', [])).toThrow(
+      'Refusing to write an empty compromised.txt. Empty lists are treated as configuration errors.',
+    );
+  });
+
+  it('should compare package entry sets independent of insertion order', () => {
+    expect(arePackageEntrySetsEqual(new Set(['vite@8.0.2', 'lodash@4.17.21']), new Set(['lodash@4.17.21', 'vite@8.0.2']))).toBe(
+      true,
+    );
+    expect(arePackageEntrySetsEqual(new Set(['vite@8.0.2']), new Set(['vite@8.0.3']))).toBe(false);
+  });
+
+  it('should only rewrite compromised.txt when semantic blocklist content changes', () => {
+    expect(shouldWriteUpdatedPackages(['vite@8.0.2'], new Set(['vite@8.0.2']), new Set(), new Set(), [0, 0, 0])).toBe(false);
+    expect(
+      shouldWriteUpdatedPackages(['vite@8.0.2'], new Set(['vite@8.0.2']), new Set(['vite@8.0.2']), new Set(), [0, 0, 0]),
+    ).toBe(true);
+    expect(
+      shouldWriteUpdatedPackages(['vite@8.0.2', 'lodash@4.17.21'], new Set(['vite@8.0.2']), new Set(), new Set(), [0, 0, 0]),
+    ).toBe(true);
+    expect(shouldWriteUpdatedPackages(['vite@8.0.2'], new Set(['vite@8.0.2']), new Set(), new Set(), [1, 0, 0])).toBe(true);
   });
 
   it('should follow paginated GitHub advisory responses', async () => {

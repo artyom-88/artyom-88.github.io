@@ -16,17 +16,25 @@ export interface CompromisedEntry extends PackageEntry {
   original: string;
 }
 
+export interface CompromisedPackageFileState {
+  packageEntries: string[];
+  manualPackages: Set<string>;
+}
+
+export interface CompromisedRefreshState {
+  refreshedAt: string;
+  dependencyGraphFingerprint: string;
+}
+
 export interface ProjectDependencyStateInput {
   manifestDependencyNames?: Set<string>;
   manifestPackages?: ExactPackageEntry[];
   lockfilePackages?: ExactPackageEntry[];
-  installedPackages?: ExactPackageEntry[];
 }
 
 export interface ProjectDependencyState {
   packageNames: Set<string>;
   exactPackages: ProjectPackage[];
-  installedError?: unknown;
 }
 
 export type CompromisedLookup = Map<string, Map<string, string>>;

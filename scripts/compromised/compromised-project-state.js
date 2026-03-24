@@ -1,8 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { execSync } = require('node:child_process');
 
-const { DEFAULT_MAX_BUFFER_SIZE, MANIFEST_DEPENDENCY_FIELDS, ROOT_DIR } = require('./compromised-script-constants');
+const { MANIFEST_DEPENDENCY_FIELDS, ROOT_DIR } = require('./compromised-script-constants');
 const { isExactVersionSpecifier, parsePackageNameVersion, toPackageKey } = require('./compromised-package-entry');
 
 function readProjectManifest(filePath = path.join(ROOT_DIR, 'package.json')) {
@@ -110,7 +109,6 @@ function createProjectDependencyState({
   manifestDependencyNames = new Set(),
   manifestPackages = [],
   lockfilePackages = [],
-  installedPackages = [],
 } = {}) {
   const packageNames = new Set(manifestDependencyNames);
   const exactPackages = new Map();
@@ -136,7 +134,6 @@ function createProjectDependencyState({
 
   addPackages(manifestPackages, 'manifest');
   addPackages(lockfilePackages, 'lockfile');
-  addPackages(installedPackages, 'installed');
 
   return {
     packageNames,
@@ -144,80 +141,23 @@ function createProjectDependencyState({
   };
 }
 
-function extractAllPackages(packages) {
-  const allPackages = new Map();
-
-  function traverse(deps) {
-    if (!deps) return;
-
-    Object.entries(deps).forEach(([name, pkg]) => {
-      if (pkg.version) {
-        const key = `${name}@${pkg.version}`;
-        if (!allPackages.has(key)) {
-          allPackages.set(key, { name, version: pkg.version });
-        }
-      }
-      if (pkg.dependencies) {
-        traverse(pkg.dependencies);
-      }
-    });
-  }
-
-  packages.forEach((pkg) => {
-    if (pkg.dependencies) traverse(pkg.dependencies);
-    if (pkg.devDependencies) traverse(pkg.devDependencies);
-  });
-
-  return Array.from(allPackages.values());
-}
-
-function getInstalledPackages(options = {}) {
-  const { maxBuffer = DEFAULT_MAX_BUFFER_SIZE } = options;
-
-  const output = execSync('pnpm list --recursive --depth=Infinity --json', {
-    encoding: 'utf8',
-    cwd: ROOT_DIR,
-    stdio: 'pipe',
-    maxBuffer,
-  });
-
-  const packages = JSON.parse(output);
-  return extractAllPackages(packages);
-}
-
 function getProjectDependencyState(options = {}) {
-  const { manifestPath, lockfilePath, includeInstalled = true } = options;
+  const { manifestPath, lockfilePath } = options;
   const manifest = readProjectManifest(manifestPath);
   const manifestDependencyNames = getManifestDependencyNames(manifest);
   const manifestPackages = getExactManifestPackages(manifest);
   const lockfilePackages = getPackagesFromPnpmLockfile(lockfilePath);
 
-  let installedPackages = [];
-  let installedError = null;
-  if (includeInstalled) {
-    try {
-      installedPackages = getInstalledPackages();
-    } catch (error) {
-      installedError = error;
-    }
-  }
-
-  return {
-    ...createProjectDependencyState({
-      manifestDependencyNames,
-      manifestPackages,
-      lockfilePackages,
-      installedPackages,
-    }),
-    installedError,
-  };
+  return createProjectDependencyState({
+    manifestDependencyNames,
+    manifestPackages,
+    lockfilePackages,
+  });
 }
 
 module.exports = {
   createProjectDependencyState,
-  extractAllPackages,
   getExactManifestPackages,
-  getInstalledPackages,
   getManifestDependencyNames,
   getManifestOverrideEntries,
   getOverridePackageName,

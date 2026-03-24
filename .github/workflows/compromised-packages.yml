@@ -1,0 +1,31 @@
+name: Compromised Packages
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        name: Install NodeJS
+        with:
+          node-version-file: '.nvmrc'
+      - name: Refresh compromised packages
+        run: node scripts/update-compromised.js compromised.txt
+      - name: Check for compromised packages
+        run: node scripts/check-compromised.js compromised.txt
+      - name: Verify compromised.txt is up to date
+        run: git diff --exit-code -- compromised.txt
+      - uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: compromised-packages-report
+          path: compromised.txt
+          retention-days: 10

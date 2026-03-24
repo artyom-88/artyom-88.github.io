@@ -4,12 +4,13 @@
 
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
   buildCompromisedLookup,
   createProjectDependencyState,
   findCompromisedMatch,
+  getCompromisedFilePath,
   getExactManifestPackages,
   getManifestDependencyNames,
   getPackagesFromPnpmLockfileContent,
@@ -72,6 +73,36 @@ describe('compromised-utils', () => {
     it('should handle empty string', () => {
       const result = parsePackageNameVersion('');
       expect(result).toEqual({ name: '', version: null });
+    });
+  });
+
+  describe('getCompromisedFilePath', () => {
+    it('should resolve the default compromised file inside the repo root', () => {
+      expect(getCompromisedFilePath([])).toBe(resolve(process.cwd(), 'compromised.txt'));
+    });
+
+    it('should allow repo-internal relative paths', () => {
+      expect(getCompromisedFilePath(['security/compromised.txt'])).toBe(resolve(process.cwd(), 'security/compromised.txt'));
+    });
+
+    it('should allow absolute paths inside the repo root', () => {
+      const internalPath = resolve(process.cwd(), 'security/compromised.txt');
+
+      expect(getCompromisedFilePath([internalPath])).toBe(internalPath);
+    });
+
+    it('should reject parent traversal that escapes the repo root', () => {
+      expect(() => getCompromisedFilePath(['../compromised.txt'])).toThrow(
+        'Compromised file path must be inside the project root/workspace',
+      );
+    });
+
+    it('should reject sibling paths outside the repo root', () => {
+      const siblingPath = resolve(process.cwd(), '../artyom-88.github.io-backup/compromised.txt');
+
+      expect(() => getCompromisedFilePath([siblingPath])).toThrow(
+        'Compromised file path must be inside the project root/workspace',
+      );
     });
   });
 

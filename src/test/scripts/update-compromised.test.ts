@@ -8,6 +8,7 @@ import {
   parseArguments,
   partitionProjectScopedPackageEntries,
   validateManualPackages,
+  versionSatisfiesRange,
 } from '../../../scripts/update-compromised.js';
 
 afterEach(() => {
@@ -103,6 +104,54 @@ describe('update-compromised helpers', () => {
       skippedOutOfScope: 0,
     });
     expect(warnSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should support caret npm ranges when matching project versions', () => {
+    expect(versionSatisfiesRange('1.2.4', '^1.2.3')).toBe(true);
+    expect(versionSatisfiesRange('2.0.0', '^1.2.3')).toBe(false);
+    expect(versionSatisfiesRange('0.2.4', '^0.2.3')).toBe(true);
+    expect(versionSatisfiesRange('0.3.0', '^0.2.3')).toBe(false);
+    expect(versionSatisfiesRange('0.0.4', '^0.0.3')).toBe(false);
+  });
+
+  it('should support tilde npm ranges when matching project versions', () => {
+    expect(versionSatisfiesRange('1.2.4', '~1.2.3')).toBe(true);
+    expect(versionSatisfiesRange('1.3.0', '~1.2.3')).toBe(false);
+    expect(versionSatisfiesRange('0.2.9', '~0.2.3')).toBe(true);
+    expect(versionSatisfiesRange('0.3.0', '~0.2.3')).toBe(false);
+  });
+
+  it('should materialize exact versions from caret and tilde advisory ranges', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    const result = collectPackagesFromAdvisories(
+      [
+        {
+          package: { ecosystem: 'npm', name: 'react-router-dom' },
+          vulnerable_version_range: '^7.13.0',
+        },
+        {
+          package: { ecosystem: 'npm', name: 'vite' },
+          vulnerable_version_range: '~8.0.0',
+        },
+      ],
+      {
+        packageNames: new Set(['react-router-dom', 'vite']),
+        exactPackages: [
+          { name: 'react-router-dom', version: '7.13.2' },
+          { name: 'vite', version: '8.0.2' },
+          { name: 'vite', version: '8.1.0' },
+        ],
+      },
+    );
+
+    expect(result).toEqual({
+      packages: ['react-router-dom@7.13.2', 'vite@8.0.2'],
+      count: 2,
+      skippedNonExact: 0,
+      skippedOutOfScope: 0,
+    });
+    expect(warnSpy).not.toHaveBeenCalled();
   });
 
   it('should ignore withdrawn advisories', () => {

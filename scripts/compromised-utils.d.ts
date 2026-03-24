@@ -84,6 +84,12 @@ export function createProjectDependencyState(input?: ProjectDependencyStateInput
 export function findCompromisedMatch(pkg: ProjectPackage, compromisedLookup: CompromisedLookup): string | null;
 
 /**
+ * Resolves the compromised file path and rejects values that escape the repo
+ * root.
+ */
+export function getCompromisedFilePath(args?: string[], defaultFile?: string): string;
+
+/**
  * Extracts exact package versions from `package.json`.
  */
 export function getExactManifestPackages(manifest?: Record<string, unknown>): ExactPackageEntry[];

@@ -32,13 +32,12 @@ function getCompromisedFilePath(args = process.argv.slice(2), defaultFile = DEFA
   } else {
     outPath = path.join(ROOT_DIR, defaultFile);
   }
-  if (outPath.includes('..')) {
-    throw new Error('Parent directory traversal is not allowed in compromised file path');
-  }
-  // Normalize and prevent from escaping the workspace
-  if (!outPath.startsWith(ROOT_DIR)) {
+
+  const relativeToRoot = path.relative(ROOT_DIR, outPath);
+  if (path.isAbsolute(relativeToRoot) || relativeToRoot.startsWith('..')) {
     throw new Error('Compromised file path must be inside the project root/workspace');
   }
+
   return outPath;
 }
 

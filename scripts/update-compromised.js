@@ -371,6 +371,55 @@ function compareComparableVersions(leftVersion, rightVersion) {
   return 0;
 }
 
+function getCaretRangeUpperBound(version) {
+  const parsedVersion = parseComparableVersion(version);
+  if (!parsedVersion) {
+    return null;
+  }
+
+  if (parsedVersion.major > 0) {
+    return `${parsedVersion.major + 1}.0.0`;
+  }
+
+  if (parsedVersion.minor > 0) {
+    return `0.${parsedVersion.minor + 1}.0`;
+  }
+
+  return `0.0.${parsedVersion.patch + 1}`;
+}
+
+function getTildeRangeUpperBound(version) {
+  const parsedVersion = parseComparableVersion(version);
+  if (!parsedVersion) {
+    return null;
+  }
+
+  return `${parsedVersion.major}.${parsedVersion.minor + 1}.0`;
+}
+
+function expandNpmOperatorToken(token) {
+  if (!token || token === '*') {
+    return [token];
+  }
+
+  const operator = token[0];
+  if (operator !== '^' && operator !== '~') {
+    return [token];
+  }
+
+  const version = token.slice(1).trim();
+  if (!version) {
+    return [];
+  }
+
+  const upperBound = operator === '^' ? getCaretRangeUpperBound(version) : getTildeRangeUpperBound(version);
+  if (!upperBound) {
+    return [token];
+  }
+
+  return [`>=${version}`, `<${upperBound}`];
+}
+
 function parseRangeComparators(rangeClause) {
   const normalizedClause = rangeClause.trim();
   if (!normalizedClause) {
@@ -382,12 +431,19 @@ function parseRangeComparators(rangeClause) {
   }
 
   const expandedHyphenRanges = normalizedClause.replace(/([0-9A-Za-z.+-]+)\s+-\s+([0-9A-Za-z.+-]+)/g, '>=$1 <=$2');
+  const normalizedTokens = expandedHyphenRanges.replace(/(<=|>=|<|>|=|\^|~)\s+/g, '$1');
   const comparatorPattern = /(<=|>=|<|>|=)?\s*([0-9A-Za-z][0-9A-Za-z.+-]*)/g;
 
-  return [...expandedHyphenRanges.matchAll(comparatorPattern)].map((match) => ({
-    operator: match[1] || '=',
-    version: match[2],
-  }));
+  return normalizedTokens
+    .split(/\s+/)
+    .filter(Boolean)
+    .flatMap(expandNpmOperatorToken)
+    .flatMap((token) =>
+      [...token.matchAll(comparatorPattern)].map((match) => ({
+        operator: match[1] || '=',
+        version: match[2],
+      })),
+    );
 }
 
 function matchesComparator(version, comparator) {

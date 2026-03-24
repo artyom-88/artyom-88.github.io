@@ -122,3 +122,8 @@ export function partitionProjectScopedPackageEntries(
  * the compromised package file.
  */
 export function validateManualPackages(packagesToAdd: string[], projectPackageNames: Set<string>): void;
+
+/**
+ * Returns `true` when an exact version satisfies the supplied advisory range.
+ */
+export function versionSatisfiesRange(version: string, range: string): boolean;

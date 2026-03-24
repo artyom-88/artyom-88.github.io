@@ -1,5 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
-import { runPreinstall, shouldSkipPreinstallSecurity } from '../../../scripts/preinstall.js';
+import {
+  DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS,
+  getCompromisedRefreshMaxAgeMs,
+  runPreinstall,
+  shouldRefreshCompromisedPackages,
+  shouldSkipPreinstallSecurity,
+} from '../../../scripts/preinstall.js';
 
 describe('preinstall hook helpers', () => {
   it('should skip security checks in CI', () => {
@@ -7,6 +13,17 @@ describe('preinstall hook helpers', () => {
     expect(shouldSkipPreinstallSecurity({ SKIP_PREINSTALL_SECURITY: '1' } as NodeJS.ProcessEnv)).toBe(true);
     expect(shouldSkipPreinstallSecurity({ SKIP_PREINSTALL_SECURITY: 'true' } as NodeJS.ProcessEnv)).toBe(true);
     expect(shouldSkipPreinstallSecurity({} as NodeJS.ProcessEnv)).toBe(false);
+  });
+
+  it('should use the default compromised refresh max age when env is unset or invalid', () => {
+    expect(getCompromisedRefreshMaxAgeMs({} as NodeJS.ProcessEnv)).toBe(DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS);
+    expect(getCompromisedRefreshMaxAgeMs({ COMPROMISED_REFRESH_MAX_AGE_MS: 'invalid' } as NodeJS.ProcessEnv)).toBe(
+      DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS,
+    );
+  });
+
+  it('should allow overriding the compromised refresh max age in milliseconds', () => {
+    expect(getCompromisedRefreshMaxAgeMs({ COMPROMISED_REFRESH_MAX_AGE_MS: '60000' } as NodeJS.ProcessEnv)).toBe(60000);
   });
 
   it('should not run commands when CI skip is active', () => {
@@ -20,12 +37,40 @@ describe('preinstall hook helpers', () => {
     expect(exec).not.toHaveBeenCalled();
   });
 
-  it('should run only-allow and compromised checks locally', () => {
+  it('should refresh compromised packages locally when the file is stale', () => {
+    const staleStat = vi.fn().mockReturnValue({
+      mtimeMs: Date.now() - DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS - 1,
+    });
+
+    expect(
+      shouldRefreshCompromisedPackages({
+        stat: staleStat,
+      }),
+    ).toBe(true);
+  });
+
+  it('should skip the compromised refresh locally when the file is recent', () => {
+    const recentStat = vi.fn().mockReturnValue({
+      mtimeMs: Date.now(),
+    });
+
+    expect(
+      shouldRefreshCompromisedPackages({
+        stat: recentStat,
+      }),
+    ).toBe(false);
+  });
+
+  it('should run only-allow, refresh, and compromised check locally when the file is stale', () => {
     const exec = vi.fn();
 
     runPreinstall({
       env: {} as NodeJS.ProcessEnv,
       exec,
+      stat: () =>
+        ({
+          mtimeMs: Date.now() - DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS - 1,
+        }) as import('node:fs').Stats,
     });
 
     expect(exec.mock.calls.map(([command]) => command)).toEqual([
@@ -33,5 +78,20 @@ describe('preinstall hook helpers', () => {
       'pnpm compromised:update',
       'pnpm compromised:check',
     ]);
+  });
+
+  it('should skip the refresh but still run the check locally when the file is recent', () => {
+    const exec = vi.fn();
+
+    runPreinstall({
+      env: {} as NodeJS.ProcessEnv,
+      exec,
+      stat: () =>
+        ({
+          mtimeMs: Date.now(),
+        }) as import('node:fs').Stats,
+    });
+
+    expect(exec.mock.calls.map(([command]) => command)).toEqual(['npx --yes only-allow@1.2.2 pnpm', 'pnpm compromised:check']);
   });
 });

@@ -76,7 +76,7 @@ The blocklist lives in `compromised.txt`. The normal format is one exact `packag
 
 This protection is enforced in several places:
 
-- `preinstall` refreshes the compromised list and checks it before dependency installation continues for local installs.
+- `preinstall` refreshes the compromised list for local installs only when `compromised.txt` is stale, and always runs the check before installation continues.
 - `pre-commit` runs `pnpm compromised:check` so known bad versions are blocked before code is committed.
 - `.github/workflows/nodejs.yml` skips the live refresh in pull request CI so build and e2e jobs stay fast.
 - `.github/workflows/compromised-packages.yml` runs the live refresh and check after merges to `develop`, and fails if `compromised.txt` would need to change.

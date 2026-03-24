@@ -1,9 +1,39 @@
+const fs = require('node:fs');
 const { execSync } = require('node:child_process');
+const path = require('node:path');
 
 const { ROOT_DIR } = require('./compromised/compromised-script-constants');
 
+const DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+
 function shouldSkipPreinstallSecurity(env = process.env) {
   return env.CI === 'true' || env.SKIP_PREINSTALL_SECURITY === '1' || env.SKIP_PREINSTALL_SECURITY === 'true';
+}
+
+function getCompromisedRefreshMaxAgeMs(env = process.env) {
+  const configuredValue = env.COMPROMISED_REFRESH_MAX_AGE_MS;
+  const parsedValue = Number(configuredValue);
+
+  if (!Number.isFinite(parsedValue) || parsedValue < 0) {
+    return DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS;
+  }
+
+  return parsedValue;
+}
+
+function shouldRefreshCompromisedPackages(options = {}) {
+  const { env = process.env, now = Date.now(), stat = fs.statSync } = options;
+  const compromisedFilePath = path.join(ROOT_DIR, 'compromised.txt');
+
+  try {
+    const fileStats = stat(compromisedFilePath);
+    const maxAgeMs = getCompromisedRefreshMaxAgeMs(env);
+    const fileAgeMs = now - fileStats.mtimeMs;
+
+    return fileAgeMs > maxAgeMs;
+  } catch {
+    return true;
+  }
 }
 
 function runCommand(command, options = {}) {
@@ -24,7 +54,14 @@ function runPreinstall(options = {}) {
   }
 
   runCommand('npx --yes only-allow@1.2.2 pnpm', options);
-  runCommand('pnpm compromised:update', options);
+
+  if (shouldRefreshCompromisedPackages(options)) {
+    console.log('🔄 Refreshing compromised package data before install');
+    runCommand('pnpm compromised:update', options);
+  } else {
+    console.log('ℹ️  Skipping compromised package refresh: compromised.txt was updated recently');
+  }
+
   runCommand('pnpm compromised:check', options);
 }
 
@@ -45,8 +82,11 @@ if (require.main === module) {
 }
 
 module.exports = {
+  DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS,
+  getCompromisedRefreshMaxAgeMs,
   main,
   runCommand,
   runPreinstall,
+  shouldRefreshCompromisedPackages,
   shouldSkipPreinstallSecurity,
 };

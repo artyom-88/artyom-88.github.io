@@ -1,6 +1,7 @@
 /**
  * Pre-commit hook helpers.
- * Runs dependency security refreshes only when package metadata changed in the staged set.
+ * Runs dependency security refreshes only when package metadata changed in the staged set,
+ * but always executes the compromised package check.
  */
 
 export const DEPENDENCY_TRIGGER_FILES: ReadonlySet<string>;

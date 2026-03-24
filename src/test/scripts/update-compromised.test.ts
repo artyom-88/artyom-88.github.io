@@ -28,7 +28,7 @@ import {
   normalizeExactVersionToken,
   versionSatisfiesRange,
 } from '../../../scripts/compromised/compromised-version-range.js';
-import { assertUpdatedPackagesDefined } from '../../../scripts/update-compromised.js';
+import { assertUpdatedPackagesDefined, shouldWriteUpdatedPackages } from '../../../scripts/update-compromised.js';
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -363,6 +363,13 @@ describe('update-compromised helpers', () => {
     expect(() => assertUpdatedPackagesDefined('/repo/compromised.txt', [])).toThrow(
       'Refusing to write an empty compromised.txt. Empty lists are treated as configuration errors.',
     );
+  });
+
+  it('should keep writing compromised.txt metadata after a successful live refresh even when packages are unchanged', () => {
+    expect(shouldWriteUpdatedPackages(true, [], [0, 0, 0])).toBe(true);
+    expect(shouldWriteUpdatedPackages(false, [], [0, 0, 0])).toBe(false);
+    expect(shouldWriteUpdatedPackages(false, ['vite@8.0.2'], [0, 0, 0])).toBe(true);
+    expect(shouldWriteUpdatedPackages(false, [], [1, 0, 0])).toBe(true);
   });
 
   it('should follow paginated GitHub advisory responses', async () => {

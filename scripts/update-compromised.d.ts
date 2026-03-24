@@ -1,4 +1,5 @@
 export function assertUpdatedPackagesDefined(outputFilePath: string, packages: string[]): void;
+export function shouldWriteUpdatedPackages(fetchFromAPI: boolean, newPackages: string[], removedCounts: number[]): boolean;
 
 export function logUpdateSummary(
   outputFilePath: string,

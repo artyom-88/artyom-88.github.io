@@ -42,6 +42,14 @@ function assertUpdatedPackagesDefined(outputFilePath, packages) {
   }
 }
 
+function shouldWriteUpdatedPackages(fetchFromAPI, newPackages, removedCounts) {
+  if (fetchFromAPI) {
+    return true;
+  }
+
+  return newPackages.length > 0 || removedCounts.some((count) => count > 0);
+}
+
 async function main() {
   try {
     const { filePath: outputFilePath, packagesToAdd, fetchFromAPI } = parseArguments();
@@ -98,10 +106,11 @@ async function main() {
     }
 
     if (
-      newPackages.length === 0 &&
-      removedNonExact.length === 0 &&
-      removedOutOfScope.length === 0 &&
-      removedStaleConfirmed.length === 0
+      !shouldWriteUpdatedPackages(fetchFromAPI, newPackages, [
+        removedNonExact.length,
+        removedOutOfScope.length,
+        removedStaleConfirmed.length,
+      ])
     ) {
       console.log('⚠️  No new packages to add');
       process.exit(0);
@@ -143,4 +152,5 @@ module.exports = {
   assertUpdatedPackagesDefined,
   logUpdateSummary,
   main,
+  shouldWriteUpdatedPackages,
 };

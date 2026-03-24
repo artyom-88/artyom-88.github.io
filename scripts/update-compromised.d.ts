@@ -92,6 +92,15 @@ export function collectPackagesFromAdvisories(
 export function fetchGitHubAdvisories(): Promise<object[]>;
 
 /**
+ * Extracts exact `package@version` entries from a comma-separated advisory
+ * field and rejects range-like tokens.
+ */
+export function getExplicitVersionEntries(
+  packageName: string,
+  vulnerableVersions: string,
+): { exactEntries: string[]; skippedNonExact: number };
+
+/**
  * Returns `true` only for exact `package@version` entries.
  */
 export function isConfirmedPackageEntry(packageEntry: string): boolean;

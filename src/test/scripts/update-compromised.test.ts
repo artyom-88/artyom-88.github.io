@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   collectPackagesFromAdvisories,
   fetchGitHubAdvisories,
+  getExplicitVersionEntries,
   isConfirmedPackageEntry,
   mergePackages,
   parseArguments,
@@ -152,6 +153,18 @@ describe('update-compromised helpers', () => {
       skippedOutOfScope: 0,
     });
     expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  it('should reject range-like vulnerable_versions tokens when collecting explicit entries', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    const result = getExplicitVersionEntries('vite', '8.0.2, ^8.0.0, ~8.0.0, 8.0.0 - 8.0.4');
+
+    expect(result).toEqual({
+      exactEntries: ['vite@8.0.2'],
+      skippedNonExact: 3,
+    });
+    expect(warnSpy).toHaveBeenCalledTimes(3);
   });
 
   it('should ignore withdrawn advisories', () => {

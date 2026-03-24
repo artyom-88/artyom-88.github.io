@@ -35,7 +35,6 @@ By default the app runs at `https://localhost:8080`. `VITE_DOMAIN` and `VITE_POR
 - `pnpm test:coverage`: run Vitest with coverage output.
 - `pnpm test:e2e`: run Playwright end-to-end tests.
 - `pnpm compromised:check`: verify the compromised-package allowlist.
-- `pnpm analyze`: build with the bundle visualizer.
 
 ## Project Structure
 

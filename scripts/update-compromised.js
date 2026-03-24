@@ -490,7 +490,20 @@ function versionSatisfiesRange(version, range) {
  * @returns {boolean} True when the version is an exact version rather than a range or wildcard
  */
 function isSpecificVersion(version) {
-  return Boolean(version) && version !== '*' && !version.includes('<') && !version.includes('>');
+  if (typeof version !== 'string') {
+    return false;
+  }
+
+  const normalizedVersion = version.trim();
+  if (!normalizedVersion || normalizedVersion === '*') {
+    return false;
+  }
+
+  if (/[<>=^~|]/.test(normalizedVersion) || normalizedVersion.includes(',') || normalizedVersion.includes(' - ')) {
+    return false;
+  }
+
+  return parseComparableVersion(normalizedVersion) !== null;
 }
 
 /**

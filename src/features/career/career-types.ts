@@ -1,8 +1,7 @@
-import { Dayjs } from 'dayjs';
+import type { BaseModel } from 'common/common-types';
+import type { Dayjs } from 'dayjs';
 
-import { BaseModel } from 'common/common-types';
-
-export interface CareerBase extends BaseModel {
+interface CareerBase extends BaseModel {
   description: string | null;
   post: string;
   site?: string;

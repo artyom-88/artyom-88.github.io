@@ -1,0 +1,124 @@
+#!/usr/bin/env node
+
+/**
+ * Script to update the list of compromised packages.
+ * The implementation is split across scripts/compromised/ modules so this file
+ * stays focused on CLI orchestration and backward-compatible exports.
+ */
+
+const { parseExistingPackages, writePackagesToFile } = require('./compromised/compromised-package-file');
+const { getProjectDependencyState } = require('./compromised/compromised-project-state');
+const {
+  logDependencyStateSource,
+  parseArguments,
+  partitionProjectScopedPackageEntries,
+  validateManualPackages,
+} = require('./compromised/compromised-update-cli');
+const {
+  collectNewPackages,
+  filterExistingPackagesForRefresh,
+  mergePackages,
+} = require('./compromised/compromised-refresh-policy');
+
+function logUpdateSummary(outputFilePath, packages, preservedCount, added, skipped, removedCount = 0) {
+  console.log('\n✅ Update complete!');
+  console.log(`   📦 Total packages: ${packages.length}`);
+  console.log(`   🔒 Preserved (existing): ${preservedCount}`);
+  if (removedCount > 0) {
+    console.log(`   🧹 Removed (filtered existing): ${removedCount}`);
+  }
+  console.log(`   ➕ Added (new): ${added}`);
+  console.log(`   ⏭️  Skipped (duplicates): ${skipped}`);
+  console.log(`   📄 Updated file: ${outputFilePath}`);
+}
+
+async function main() {
+  try {
+    const { filePath: outputFilePath, packagesToAdd, fetchFromAPI } = parseArguments();
+    console.log(`📝 Output file: ${outputFilePath}`);
+    const projectDependencyState = getProjectDependencyState();
+    logDependencyStateSource(projectDependencyState);
+    console.log(`📦 Project dependency scope includes ${projectDependencyState.packageNames.size} package name(s)`);
+
+    const existingEntries = parseExistingPackages(outputFilePath);
+    const {
+      confirmedPackages: existingPackages,
+      removedNonExact,
+      removedOutOfScope,
+    } = partitionProjectScopedPackageEntries(existingEntries, projectDependencyState.packageNames);
+    const initialCount = existingPackages.size;
+    console.log(`📋 Found ${initialCount} confirmed existing package(s) in file`);
+    if (removedNonExact.length > 0) {
+      console.log(
+        `🧹 Will remove ${removedNonExact.length} non-exact existing entr${
+          removedNonExact.length === 1 ? 'y' : 'ies'
+        } from compromised.txt`,
+      );
+    }
+    if (removedOutOfScope.length > 0) {
+      console.log(
+        `🧹 Will remove ${removedOutOfScope.length} out-of-scope existing entr${
+          removedOutOfScope.length === 1 ? 'y' : 'ies'
+        } from compromised.txt`,
+      );
+    }
+
+    const { newPackages, advisories } = await collectNewPackages(
+      packagesToAdd,
+      fetchFromAPI,
+      projectDependencyState,
+      validateManualPackages,
+    );
+    const { preservedPackages: packagesToPreserve, removedStaleConfirmed } = filterExistingPackagesForRefresh(
+      existingPackages,
+      advisories,
+      fetchFromAPI,
+    );
+    if (removedStaleConfirmed.length > 0) {
+      console.log(
+        `🧹 Will remove ${removedStaleConfirmed.length} stale existing entr${
+          removedStaleConfirmed.length === 1 ? 'y' : 'ies'
+        } that are no longer confirmed by the latest advisory refresh`,
+      );
+    }
+
+    if (
+      newPackages.length === 0 &&
+      removedNonExact.length === 0 &&
+      removedOutOfScope.length === 0 &&
+      removedStaleConfirmed.length === 0
+    ) {
+      console.log('⚠️  No new packages to add');
+      process.exit(0);
+    }
+
+    const { packages, added, skipped } = mergePackages(packagesToPreserve, newPackages);
+    const preservedCount = packages.filter((packageEntry) => existingPackages.has(packageEntry)).length;
+
+    writePackagesToFile(outputFilePath, packages);
+    logUpdateSummary(
+      outputFilePath,
+      packages,
+      preservedCount,
+      added,
+      skipped,
+      removedNonExact.length + removedOutOfScope.length + removedStaleConfirmed.length,
+    );
+    process.exit(0);
+  } catch (error) {
+    console.error('❌ Error updating compromised packages:', error.message);
+    if (error.stack) {
+      console.error(error.stack);
+    }
+    process.exit(1);
+  }
+}
+
+if (require.main === module) {
+  main();
+}
+
+module.exports = {
+  logUpdateSummary,
+  main,
+};

@@ -1,9 +1,8 @@
-import { JSX } from 'react';
-
 import PageContainer from 'common/components/PageContainer';
 import { BLOG_PAGE_PROPS } from 'common/constants/pages-constants';
 import BlogItem from 'features/blog/BlogItem';
 import { useBlogListQuery } from 'features/blog/hooks/use-blog-list-query';
+import type { JSX } from 'react';
 
 const Blog = (): JSX.Element => {
   const { data: list = [], isLoading } = useBlogListQuery();

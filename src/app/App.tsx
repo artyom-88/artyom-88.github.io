@@ -1,14 +1,11 @@
-import type { JSX } from 'react';
-import { StrictMode } from 'react';
-import { HelmetProvider } from 'react-helmet-async';
-import { HashRouter } from 'react-router-dom';
-
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AntdApp from 'antd/es/app';
-
 import ErrorBoundary from 'common/components/ErrorBoundary';
 import PageLayout from 'common/components/PageLayout';
 import Routes from 'common/routes/Routes';
+import type { JSX } from 'react';
+import { StrictMode } from 'react';
+import { HashRouter } from 'react-router-dom';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,17 +21,15 @@ const queryClient = new QueryClient({
 const App = (): JSX.Element => (
   <StrictMode>
     <ErrorBoundary>
-      <HelmetProvider>
-        <QueryClientProvider client={queryClient}>
-          <HashRouter>
-            <AntdApp>
-              <PageLayout>
-                <Routes />
-              </PageLayout>
-            </AntdApp>
-          </HashRouter>
-        </QueryClientProvider>
-      </HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <HashRouter>
+          <AntdApp>
+            <PageLayout>
+              <Routes />
+            </PageLayout>
+          </AntdApp>
+        </HashRouter>
+      </QueryClientProvider>
     </ErrorBoundary>
   </StrictMode>
 );

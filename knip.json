@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/knip/schema.json",
+  "entry": ["src/app/main.tsx", "scripts/**/*.js"],
+  "project": ["src/**/*.{ts,tsx}", "scripts/**/*.js"],
+  "paths": {
+    "app": ["./src/app"],
+    "assets": ["./src/assets"],
+    "common": ["./src/common"],
+    "features": ["./src/features"],
+    "test": ["./src/test"]
+  },
+  "biome": true,
+  "husky": true,
+  "lint-staged": true,
+  "playwright": true,
+  "postcss": true,
+  "tailwind": true,
+  "vite": true,
+  "vitest": true
+}

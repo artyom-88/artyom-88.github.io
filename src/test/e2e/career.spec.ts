@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { CareerDTO } from 'features/career/career-types';
+import type { CareerDTO } from 'features/career/career-types';
 
 test.describe('career page', () => {
   test('has default content', async ({ page }) => {

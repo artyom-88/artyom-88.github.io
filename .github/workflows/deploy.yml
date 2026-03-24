@@ -3,18 +3,18 @@ on:
   push:
     branches:
       - master
-env:
-  GITHUB_SHA: ${{ secrets.GITHUB_SHA }}
 jobs:
   deployment:
     runs-on: ubuntu-latest
     environment: production
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         name: Install NodeJS
         with:
-          node-version: '22'
+          node-version-file: '.nvmrc'
       - uses: pnpm/action-setup@v4
         name: Install PNPM
         with:
@@ -35,13 +35,12 @@ jobs:
       - name: Build
         run: |
           pnpm build
-          echo $GITHUB_SHA > ./dist/version
+          echo "${{ github.sha }}" > ./dist/version
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
       - name: Deploy app
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/artyom-88/artyom-88.github.io.git
-          pnpm gh-pages -d dist -u "Artёm <artem_ganev@epam.com>" -m ${GITHUB_SHA}
+          pnpm gh-pages -d dist -u "Artёm <artem_ganev@epam.com>" -m "${{ github.sha }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_SHA: ${{ secrets.GITHUB_SHA }}

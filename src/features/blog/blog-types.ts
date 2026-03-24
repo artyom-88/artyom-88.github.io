@@ -1,8 +1,7 @@
-import { Dayjs } from 'dayjs';
+import type { BaseModel } from 'common/common-types';
+import type { Dayjs } from 'dayjs';
 
-import { BaseModel } from 'common/common-types';
-
-export interface BlogBase extends BaseModel {
+interface BlogBase extends BaseModel {
   link: string;
   linkCaption: string;
 }

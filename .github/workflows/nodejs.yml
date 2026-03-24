@@ -7,12 +7,14 @@ on:
 jobs:
   install:
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         name: Install NodeJS
         with:
-          node-version: '22'
+          node-version-file: '.nvmrc'
       - uses: pnpm/action-setup@v4
         name: Install PNPM
         with:
@@ -34,12 +36,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: install
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         name: Install NodeJS
         with:
-          node-version: '22'
+          node-version-file: '.nvmrc'
       - uses: pnpm/action-setup@v4
         name: Install PNPM
         with:
@@ -60,6 +64,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Lint
         run: pnpm lint
+      - name: Check for compromised packages
+        run: pnpm compromised:check
       - name: Test
         run: pnpm test:coverage
       - name: Build
@@ -69,11 +75,14 @@ jobs:
     needs: install
     timeout-minutes: 5
     env:
+      GH_TOKEN: ${{ github.token }}
       VITE_API_URL: ${{ secrets.VITE_API_URL }}
     steps:
       - uses: actions/checkout@v4
-      - name: Ping API
-        run: curl "${{ env.VITE_API_URL }}/api/health"
+      - uses: actions/setup-node@v4
+        name: Install NodeJS
+        with:
+          node-version-file: '.nvmrc'
       - uses: pnpm/action-setup@v4
         name: Install PNPM
         with:

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { BlogDTO } from 'features/blog/blog-types';
+import type { BlogDTO } from 'features/blog/blog-types';
 
 test.describe('blog page', () => {
   test('has default content', async ({ page }) => {

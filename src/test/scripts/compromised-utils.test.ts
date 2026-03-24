@@ -204,7 +204,7 @@ snapshots:
       ]);
     });
 
-    it('should merge manifest, lockfile, and installed state into one project dependency model', () => {
+    it('should merge manifest and lockfile state into one project dependency model', () => {
       const state = createProjectDependencyState({
         manifestDependencyNames: new Set(['react', 'vite']),
         manifestPackages: [{ name: 'react', version: '19.2.0' }],
@@ -212,18 +212,13 @@ snapshots:
           { name: 'react', version: '19.2.0' },
           { name: 'vite', version: '7.1.4' },
         ],
-        installedPackages: [
-          { name: 'vite', version: '7.1.4' },
-          { name: '@types/node', version: '22.13.10' },
-        ],
       });
 
-      expect(state.packageNames).toEqual(new Set(['react', 'vite', '@types/node']));
+      expect(state.packageNames).toEqual(new Set(['react', 'vite']));
       expect(state.exactPackages).toEqual(
         expect.arrayContaining([
           { name: 'react', version: '19.2.0', sources: ['manifest', 'lockfile'] },
-          { name: 'vite', version: '7.1.4', sources: ['lockfile', 'installed'] },
-          { name: '@types/node', version: '22.13.10', sources: ['installed'] },
+          { name: 'vite', version: '7.1.4', sources: ['lockfile'] },
         ]),
       );
     });

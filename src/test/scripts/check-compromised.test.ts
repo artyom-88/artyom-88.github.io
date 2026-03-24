@@ -17,7 +17,7 @@ describe('check-compromised helpers', () => {
 
     const foundPackages = findCompromisedPackages(
       [
-        { name: '@angular/ssr', version: '19.0.0', sources: ['manifest', 'installed'] },
+        { name: '@angular/ssr', version: '19.0.0', sources: ['manifest', 'lockfile'] },
         { name: 'lodash', version: '4.17.21' },
         { name: 'react', version: '19.2.0' },
       ],
@@ -28,7 +28,7 @@ describe('check-compromised helpers', () => {
       {
         package: '@angular/ssr@19.0.0',
         compromised: '@angular/ssr@19.0.0',
-        sources: ['manifest', 'installed'],
+        sources: ['manifest', 'lockfile'],
       },
       {
         package: 'lodash@4.17.21',

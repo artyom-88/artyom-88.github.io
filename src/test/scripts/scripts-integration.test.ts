@@ -66,7 +66,7 @@ describe('scripts CLI integration', () => {
     expect(result.stdout).toContain('✅ Update complete!');
   });
 
-  it('should fail through the check-compromised CLI when manifest state matches a compromised package', () => {
+  it('should fail through the check-compromised CLI when manifest or lockfile state matches a compromised package', () => {
     const fixtureDir = createFixtureRepo();
 
     writeJson(join(fixtureDir, 'package.json'), {

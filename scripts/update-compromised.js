@@ -6,6 +6,8 @@
  * stays focused on CLI orchestration and backward-compatible exports.
  */
 
+const path = require('node:path');
+
 const { parseExistingPackages, writePackagesToFile } = require('./compromised/compromised-package-file');
 const { getProjectDependencyState } = require('./compromised/compromised-project-state');
 const {
@@ -30,6 +32,14 @@ function logUpdateSummary(outputFilePath, packages, preservedCount, added, skipp
   console.log(`   ➕ Added (new): ${added}`);
   console.log(`   ⏭️  Skipped (duplicates): ${skipped}`);
   console.log(`   📄 Updated file: ${outputFilePath}`);
+}
+
+function assertUpdatedPackagesDefined(outputFilePath, packages) {
+  if (packages.length === 0) {
+    throw new Error(
+      `Refusing to write an empty ${path.basename(outputFilePath)}. Empty lists are treated as configuration errors.`,
+    );
+  }
 }
 
 async function main() {
@@ -93,6 +103,7 @@ async function main() {
     }
 
     const { packages, added, skipped } = mergePackages(packagesToPreserve, newPackages);
+    assertUpdatedPackagesDefined(outputFilePath, packages);
     const preservedCount = packages.filter((packageEntry) => existingPackages.has(packageEntry)).length;
 
     writePackagesToFile(outputFilePath, packages);
@@ -119,6 +130,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+  assertUpdatedPackagesDefined,
   logUpdateSummary,
   main,
 };

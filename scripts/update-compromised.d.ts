@@ -1,3 +1,5 @@
+export function assertUpdatedPackagesDefined(outputFilePath: string, packages: string[]): void;
+
 export function logUpdateSummary(
   outputFilePath: string,
   packages: string[],

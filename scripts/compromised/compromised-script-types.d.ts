@@ -20,13 +20,11 @@ export interface ProjectDependencyStateInput {
   manifestDependencyNames?: Set<string>;
   manifestPackages?: ExactPackageEntry[];
   lockfilePackages?: ExactPackageEntry[];
-  installedPackages?: ExactPackageEntry[];
 }
 
 export interface ProjectDependencyState {
   packageNames: Set<string>;
   exactPackages: ProjectPackage[];
-  installedError?: unknown;
 }
 
 export type CompromisedLookup = Map<string, Map<string, string>>;

@@ -28,6 +28,7 @@ import {
   normalizeExactVersionToken,
   versionSatisfiesRange,
 } from '../../../scripts/compromised/compromised-version-range.js';
+import { assertUpdatedPackagesDefined } from '../../../scripts/update-compromised.js';
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -337,6 +338,12 @@ describe('update-compromised helpers', () => {
       preservedPackages: new Set(['@angular/ssr@19.0.0']),
       removedStaleConfirmed: [],
     });
+  });
+
+  it('should fail before writing an empty compromised package file', () => {
+    expect(() => assertUpdatedPackagesDefined('/repo/compromised.txt', [])).toThrow(
+      'Refusing to write an empty compromised.txt. Empty lists are treated as configuration errors.',
+    );
   });
 
   it('should follow paginated GitHub advisory responses', async () => {

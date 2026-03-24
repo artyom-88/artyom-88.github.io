@@ -52,7 +52,7 @@ const PageContainer = ({
       {isLoading ? (
         <LoadingPage />
       ) : (
-        <Space className='flex flex-col grow' direction='vertical' size='large'>
+        <Space className='flex flex-col grow' orientation='vertical' size='large'>
           {children}
         </Space>
       )}

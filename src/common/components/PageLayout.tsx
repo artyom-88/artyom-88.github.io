@@ -25,7 +25,7 @@ const PageLayout = ({ children }: PropsWithChildren): JSX.Element => {
           onOpenChange={toggleOpen}
           open={open}
           content={
-            <Space direction='vertical' data-testid='nav-menu-content'>
+            <Space orientation='vertical' data-testid='nav-menu-content'>
               {PAGES_PROPS_LIST.map(({ id, url, handlePreload }: PageProps) => (
                 <Typography.Text key={id} strong>
                   <NavLink

@@ -1,28 +1,35 @@
 import { resolve } from 'node:path';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
-import { visualizer } from 'rollup-plugin-visualizer';
-import { defineConfig, loadEnv, type PluginOption, type UserConfig } from 'vite';
-import svg from 'vite-plugin-svgo';
+import { loadEnv, type PluginOption } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 const DEFAULT_DOMAIN = 'artyom-88.github.io';
+
 const DEFAULT_PORT = 8080;
+
 const PROD = 'production';
+
 const DEV = 'development';
+
+// react chunk packages: react, react-dom, react-router, react-router-dom
+const REACT_CHUNK_RE = /node_modules[\\/](?:react|react-dom|react-router|react-router-dom)(?:[\\/]|$)/;
+
+// antd chunk packages: antd, @ant-design/*, @rc-component/*, rc-*
+const ANTD_CHUNK_RE = /node_modules[\\/](?:antd|@ant-design\/[^\\/]+|@rc-component\/[^\\/]+|rc-[^\\/]+)(?:[\\/]|$)/;
+
+// vendor chunk packages: @tanstack/react-query, @tanstack/query-core, dayjs, ky
+const VENDORS_CHUNK_RE = /node_modules[\\/](?:@tanstack\/react-query|@tanstack\/query-core|dayjs|ky)(?:[\\/]|$)/;
 
 const getIsDevelopment = (mode: string): boolean => mode !== PROD;
 
-const defaultPlugins = [react(), svg()];
+const defaultPlugins = [react()];
 
 const getPlugins = (mode: string): PluginOption[] => {
-  return mode === 'analyze'
-    ? [...defaultPlugins, visualizer({ filename: './dist/report.html', gzipSize: true, open: true })]
-    : getIsDevelopment(mode)
-      ? [...defaultPlugins, basicSsl()]
-      : defaultPlugins;
+  return getIsDevelopment(mode) ? [...defaultPlugins, basicSsl()] : defaultPlugins;
 };
 
-export default defineConfig(({ mode }): UserConfig => {
+export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
   const isDevelopment = getIsDevelopment(mode);
   const host = `${env.VITE_DOMAIN || DEFAULT_DOMAIN}`;
@@ -44,11 +51,26 @@ export default defineConfig(({ mode }): UserConfig => {
       port: port,
     },
     build: {
-      rollupOptions: {
+      rolldownOptions: {
         output: {
-          manualChunks: {
-            react: ['react', 'react-dom', 'react-dom/client', 'react-router-dom'],
-            vendors: ['@ant-design/icons', 'dayjs', '@tanstack/react-query', 'ky'],
+          codeSplitting: {
+            groups: [
+              {
+                name: 'react',
+                priority: 3,
+                test: REACT_CHUNK_RE,
+              },
+              {
+                name: 'antd',
+                priority: 2,
+                test: ANTD_CHUNK_RE,
+              },
+              {
+                name: 'vendors',
+                priority: 1,
+                test: VENDORS_CHUNK_RE,
+              },
+            ],
           },
         },
       },

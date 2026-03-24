@@ -8,7 +8,7 @@ const About = (): ReactElement => {
   const { data = [], isLoading } = useAboutQuery();
   return (
     <PageContainer isLoading={isLoading} icon={ABOUT_PAGE_PROPS.icon} title='Hi! My name is Artёm.'>
-      <Space direction='vertical' size='middle'>
+      <Space orientation='vertical' size='middle'>
         {data.map((value: string) => (
           <span key={value}>{value}</span>
         ))}

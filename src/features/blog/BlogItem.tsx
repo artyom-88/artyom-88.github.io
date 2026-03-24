@@ -26,13 +26,13 @@ const BlogItem = ({ item }: BlogItemProps): JSX.Element => {
         {dateRender}
       </Col>
       <Col span={18} xs={0} sm={16} md={17} lg={20}>
-        <Space direction='vertical' wrap>
+        <Space orientation='vertical' wrap>
           {titleRender}
           {linkRender}
         </Space>
       </Col>
       <Col span={0} xs={24} sm={0}>
-        <Space direction='vertical' wrap>
+        <Space orientation='vertical' wrap>
           {dateRender}
           {titleRender}
           {linkRender}

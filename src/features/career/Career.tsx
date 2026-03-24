@@ -11,15 +11,15 @@ const Career = (): ReactElement => {
   const timelineItems = useMemo<TimelineItemProps[]>(
     () =>
       list.map((item, index) => ({
-        children: <CareerItem item={item} />,
+        content: <CareerItem item={item} />,
         color: index ? 'blue' : 'green',
-        label: <CareerItemTitle item={item} />,
+        title: <CareerItemTitle item={item} />,
       })),
     [list],
   );
   return (
     <PageContainer isLoading={isLoading} title={CAREER_PAGE_PROPS.id} icon={CAREER_PAGE_PROPS.icon}>
-      <Timeline items={timelineItems} mode='left' />
+      <Timeline items={timelineItems} mode='start' />
     </PageContainer>
   );
 };

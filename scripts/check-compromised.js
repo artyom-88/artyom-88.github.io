@@ -78,6 +78,14 @@ function reportResults(foundPackages) {
   return 1;
 }
 
+function assertCompromisedPackagesDefined(compromisedPackages, compromisedFilePath) {
+  if (compromisedPackages.length === 0) {
+    throw new Error(
+      `No compromised packages defined in ${path.basename(compromisedFilePath)}. Empty lists are treated as configuration errors.`,
+    );
+  }
+}
+
 /**
  * Main function
  */
@@ -85,11 +93,7 @@ function main() {
   try {
     const compromisedFilePath = getCompromisedFilePath();
     const compromisedPackages = parseCompromisedPackages(compromisedFilePath);
-
-    if (compromisedPackages.length === 0) {
-      console.log(`⚠️  Warning: No compromised packages defined in ${path.basename(compromisedFilePath)}`);
-      process.exit(0);
-    }
+    assertCompromisedPackagesDefined(compromisedPackages, compromisedFilePath);
 
     console.log(`📋 Using compromised packages list: ${compromisedFilePath}`);
     console.log('🔍 Scanning project dependency state for compromised packages...');
@@ -113,6 +117,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+  assertCompromisedPackagesDefined,
   findCompromisedPackages,
   main,
   reportResults,

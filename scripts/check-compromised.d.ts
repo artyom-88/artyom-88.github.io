@@ -10,6 +10,14 @@ export interface CompromisedPackageMatch {
 }
 
 /**
+ * Throws when the compromised-package list is empty.
+ */
+export function assertCompromisedPackagesDefined(
+  compromisedPackages: Array<{ name: string; version: string | null; original: string }>,
+  compromisedFilePath: string,
+): void;
+
+/**
  * Finds exact project packages that match the compromised-package lookup.
  */
 export function findCompromisedPackages(

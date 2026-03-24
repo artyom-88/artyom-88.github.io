@@ -31,8 +31,10 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const { execSync } = require('node:child_process');
 const {
   DEFAULT_COMPROMISED_FILE,
+  ROOT_DIR,
   getProjectDependencyState,
   getCompromisedFilePath,
   isPackageDuplicate,
@@ -46,12 +48,41 @@ const DEFAULT_MAX_RETRIES = 3;
 const DEFAULT_RETRY_DELAY_MS = 1000;
 const GITHUB_API_PER_PAGE = 100;
 const RATE_LIMIT_ERROR = 'RATE_LIMIT';
-const GITHUB_ADVISORIES_URL = `https://api.github.com/advisories?per_page=${GITHUB_API_PER_PAGE}&ecosystem=npm`;
-const GITHUB_API_HEADERS = {
+const GITHUB_ADVISORY_TYPES = ['reviewed', 'malware'];
+const BASE_GITHUB_API_HEADERS = {
   Accept: 'application/vnd.github+json',
   'X-GitHub-Api-Version': '2022-11-28',
   'User-Agent': 'compromised-packages-updater',
 };
+
+function buildGitHubAdvisoriesUrl(type) {
+  return `https://api.github.com/advisories?per_page=${GITHUB_API_PER_PAGE}&ecosystem=npm&type=${type}`;
+}
+
+function getGitHubAuthToken(options = {}) {
+  const { env = process.env, exec = execSync } = options;
+
+  const envToken = env.GH_TOKEN || env.GITHUB_TOKEN;
+  if (typeof envToken === 'string' && envToken.trim()) {
+    return envToken.trim();
+  }
+
+  try {
+    const ghToken = exec('gh auth token', {
+      encoding: 'utf8',
+      cwd: ROOT_DIR,
+      stdio: ['ignore', 'pipe', 'ignore'],
+    });
+    return typeof ghToken === 'string' && ghToken.trim() ? ghToken.trim() : null;
+  } catch {
+    return null;
+  }
+}
+
+function getGitHubApiHeaders(options = {}) {
+  const token = getGitHubAuthToken(options);
+  return token ? { ...BASE_GITHUB_API_HEADERS, Authorization: `Bearer ${token}` } : BASE_GITHUB_API_HEADERS;
+}
 
 function isScopedPackageSpecifier(arg) {
   if (typeof arg !== 'string' || !arg.startsWith('@') || arg.includes('\\')) {
@@ -484,26 +515,30 @@ function versionSatisfiesRange(version, range) {
     .some((comparators) => comparators.every((comparator) => matchesComparator(version, comparator)));
 }
 
+function normalizeExactVersionToken(version) {
+  if (typeof version !== 'string') {
+    return null;
+  }
+
+  const normalizedVersion = version.trim().replace(/^=\s*/, '');
+  if (!normalizedVersion || normalizedVersion === '*') {
+    return null;
+  }
+
+  if (/[<>^~|]/.test(normalizedVersion) || normalizedVersion.includes(',') || normalizedVersion.includes(' - ')) {
+    return null;
+  }
+
+  return parseComparableVersion(normalizedVersion) ? normalizedVersion : null;
+}
+
 /**
  * Determine whether a version string is specific enough to store as package@version.
  * @param {string} version - Vulnerable version entry from GitHub
  * @returns {boolean} True when the version is an exact version rather than a range or wildcard
  */
 function isSpecificVersion(version) {
-  if (typeof version !== 'string') {
-    return false;
-  }
-
-  const normalizedVersion = version.trim();
-  if (!normalizedVersion || normalizedVersion === '*') {
-    return false;
-  }
-
-  if (/[<>=^~|]/.test(normalizedVersion) || normalizedVersion.includes(',') || normalizedVersion.includes(' - ')) {
-    return false;
-  }
-
-  return parseComparableVersion(normalizedVersion) !== null;
+  return normalizeExactVersionToken(version) !== null;
 }
 
 /**
@@ -531,8 +566,9 @@ function getExplicitVersionEntries(packageName, vulnerableVersions) {
     .split(',')
     .map((version) => version.trim())
     .forEach((version) => {
-      if (isSpecificVersion(version)) {
-        exactEntries.push(`${packageName}@${version}`);
+      const normalizedVersion = normalizeExactVersionToken(version);
+      if (normalizedVersion) {
+        exactEntries.push(`${packageName}@${normalizedVersion}`);
       } else {
         warnSkippedNonExactAdvisory(packageName, version || '(empty version)');
         skippedNonExact++;
@@ -540,6 +576,17 @@ function getExplicitVersionEntries(packageName, vulnerableVersions) {
     });
 
   return { exactEntries, skippedNonExact };
+}
+
+function getNormalizedExactVersions(vulnerableVersions) {
+  if (typeof vulnerableVersions !== 'string') {
+    return [];
+  }
+
+  return vulnerableVersions
+    .split(',')
+    .map((version) => normalizeExactVersionToken(version))
+    .filter(Boolean);
 }
 
 function getMatchingProjectEntriesForRange(packageName, vulnerableVersionRange, projectDependencyState) {
@@ -666,18 +713,15 @@ function getNextGitHubPageUrl(linkHeader) {
   return match ? match[1] : null;
 }
 
-/**
- * Fetch raw advisories from the GitHub Security Advisories API.
- * @returns {Promise<object[]>} Advisories returned by the API
- */
-async function fetchGitHubAdvisories() {
+async function fetchGitHubAdvisoryType(type) {
   const advisories = [];
-  let pageUrl = GITHUB_ADVISORIES_URL;
+  let pageUrl = buildGitHubAdvisoriesUrl(type);
+  const headers = getGitHubApiHeaders();
 
   while (pageUrl) {
     const response = await retryWithBackoff(
       async () => {
-        const res = await fetch(pageUrl, { headers: GITHUB_API_HEADERS });
+        const res = await fetch(pageUrl, { headers });
 
         if (!res.ok) {
           if (res.status === 403) {
@@ -704,6 +748,54 @@ async function fetchGitHubAdvisories() {
 }
 
 /**
+ * Fetch raw advisories from the GitHub Security Advisories API.
+ * @returns {Promise<object[]>} Advisories returned by the API
+ */
+async function fetchGitHubAdvisories() {
+  const advisories = new Map();
+
+  for (const type of GITHUB_ADVISORY_TYPES) {
+    const typeAdvisories = await fetchGitHubAdvisoryType(type);
+    typeAdvisories.forEach((advisory) => {
+      const advisoryKey = advisory.ghsa_id ?? advisory.id ?? `${type}:${advisories.size}`;
+      advisories.set(advisoryKey, advisory);
+    });
+  }
+
+  return Array.from(advisories.values());
+}
+
+async function fetchAdvisoryRefreshData(projectDependencyState) {
+  const advisories = await fetchGitHubAdvisories();
+  if (!Array.isArray(advisories) || advisories.length === 0) {
+    console.warn('⚠️  No advisories found from GitHub.');
+    return {
+      advisories: null,
+      packages: await getFallbackPackagesOrThrow('no GitHub advisories returned'),
+    };
+  }
+
+  const { packages, count, skippedNonExact, skippedOutOfScope } = collectPackagesFromAdvisories(
+    advisories,
+    projectDependencyState,
+  );
+  console.log(`✅ Found ${count} confirmed compromised package version(s) from GitHub for current project dependencies`);
+  if (skippedNonExact > 0) {
+    console.log(`ℹ️  Skipped ${skippedNonExact} non-exact advisory entr${skippedNonExact === 1 ? 'y' : 'ies'} from file output`);
+  }
+  if (skippedOutOfScope > 0) {
+    console.log(
+      `ℹ️  Skipped ${skippedOutOfScope} advisory version entr${skippedOutOfScope === 1 ? 'y' : 'ies'} for packages outside the current project dependency graph`,
+    );
+  }
+
+  return {
+    advisories,
+    packages,
+  };
+}
+
+/**
  * Fetch vulnerable npm packages from GitHub Security Advisories API
  *
  * Retrieves npm security advisories from GitHub's public API. Handles:
@@ -725,33 +817,13 @@ async function fetchVulnerablePackages(projectDependencyState) {
   console.log('🔍 Fetching vulnerable packages from GitHub Security Advisories...');
 
   try {
-    const advisories = await fetchGitHubAdvisories();
-    if (!Array.isArray(advisories) || advisories.length === 0) {
-      console.warn('⚠️  No advisories found. Using fallback method...');
-      return await fetchFromKnownVulnerabilities();
-    }
-
-    const { packages, count, skippedNonExact, skippedOutOfScope } = collectPackagesFromAdvisories(
-      advisories,
-      projectDependencyState,
-    );
-    console.log(`✅ Found ${count} confirmed compromised package version(s) from GitHub for current project dependencies`);
-    if (skippedNonExact > 0) {
-      console.log(`ℹ️  Skipped ${skippedNonExact} non-exact advisory entr${skippedNonExact === 1 ? 'y' : 'ies'} from file output`);
-    }
-    if (skippedOutOfScope > 0) {
-      console.log(
-        `ℹ️  Skipped ${skippedOutOfScope} advisory version entr${skippedOutOfScope === 1 ? 'y' : 'ies'} for packages outside the current project dependency graph`,
-      );
-    }
-    return packages;
+    return (await fetchAdvisoryRefreshData(projectDependencyState)).packages;
   } catch (error) {
     if (error.message === RATE_LIMIT_ERROR) {
-      return await fetchFromKnownVulnerabilities();
+      return await getFallbackPackagesOrThrow('GitHub rate limit reached');
     }
     console.error('❌ Error fetching from GitHub API:', error.message);
-    console.log('🔄 Using fallback method...');
-    return await fetchFromKnownVulnerabilities();
+    return await getFallbackPackagesOrThrow('GitHub advisory request failed');
   }
 }
 
@@ -776,6 +848,17 @@ async function fetchFromKnownVulnerabilities() {
 
   console.log(`✅ Found ${knownVulnerable.length} packages from curated list`);
   return knownVulnerable;
+}
+
+async function getFallbackPackagesOrThrow(reason) {
+  console.log(`🔄 Using fallback method${reason ? `: ${reason}` : ''}`);
+  const fallbackPackages = await fetchFromKnownVulnerabilities();
+
+  if (fallbackPackages.length === 0) {
+    throw new Error('GitHub advisory refresh failed and the curated fallback list is empty');
+  }
+
+  return fallbackPackages;
 }
 
 /**
@@ -828,6 +911,56 @@ function mergePackages(existing, newPackages) {
   };
 }
 
+function isPackageEntryConfirmedByAdvisories(packageEntry, advisories) {
+  const { name, version } = parsePackageNameVersion(packageEntry);
+  if (!name || !version || !Array.isArray(advisories)) {
+    return false;
+  }
+
+  return advisories.some((advisory) => {
+    if (isWithdrawnAdvisory(advisory)) {
+      return false;
+    }
+
+    return extractNpmPackageEntries(advisory).some(({ packageName, vulnerableVersionRange, vulnerableVersions }) => {
+      if (packageName !== name) {
+        return false;
+      }
+
+      if (vulnerableVersionRange && versionSatisfiesRange(version, vulnerableVersionRange)) {
+        return true;
+      }
+
+      return getNormalizedExactVersions(vulnerableVersions).includes(version);
+    });
+  });
+}
+
+function filterExistingPackagesForRefresh(existingPackages, advisories, fetchFromAPI) {
+  if (!fetchFromAPI || !Array.isArray(advisories)) {
+    return {
+      preservedPackages: new Set(existingPackages),
+      removedStaleConfirmed: [],
+    };
+  }
+  const removedStaleConfirmed = [];
+  const preservedPackages = new Set();
+
+  existingPackages.forEach((packageEntry) => {
+    if (isPackageEntryConfirmedByAdvisories(packageEntry, advisories)) {
+      preservedPackages.add(packageEntry);
+      return;
+    }
+
+    removedStaleConfirmed.push(packageEntry);
+  });
+
+  return {
+    preservedPackages,
+    removedStaleConfirmed,
+  };
+}
+
 function collectNewPackages(packagesToAdd, fetchFromAPI, projectDependencyState) {
   validateManualPackages(packagesToAdd, projectDependencyState.packageNames);
   const newPackages = [...packagesToAdd];
@@ -837,31 +970,21 @@ function collectNewPackages(packagesToAdd, fetchFromAPI, projectDependencyState)
   }
 
   if (!fetchFromAPI) {
-    return Promise.resolve(newPackages);
+    return Promise.resolve({ newPackages, advisories: null });
   }
 
-  return fetchVulnerablePackages(projectDependencyState)
-    .then((fetchedPackages) => {
-      newPackages.push(...fetchedPackages);
-      return newPackages;
+  return fetchAdvisoryRefreshData(projectDependencyState)
+    .then(({ advisories, packages }) => {
+      newPackages.push(...packages);
+      return { newPackages, advisories };
     })
     .catch((error) => {
-      console.warn(`⚠️  Failed to fetch from API: ${error.message}`);
+      console.error(`❌ Failed to fetch from API: ${error.message}`);
       if (packagesToAdd.length === 0) {
         throw new Error('No packages to add and API fetch failed');
       }
-      return newPackages;
+      return { newPackages, advisories: null };
     });
-}
-
-function assertPackagesPreserved(initialCount, finalCount, added) {
-  const preservedCount = finalCount - added;
-  if (preservedCount < initialCount) {
-    throw new Error(
-      `Expected ${initialCount} existing packages to be preserved, but only ${preservedCount} remained after merge.`,
-    );
-  }
-  return preservedCount;
 }
 
 function logUpdateSummary(outputFilePath, packages, preservedCount, added, skipped, removedCount = 0) {
@@ -910,20 +1033,44 @@ async function main() {
       );
     }
 
-    const newPackages = await collectNewPackages(packagesToAdd, fetchFromAPI, projectDependencyState);
+    const { newPackages, advisories } = await collectNewPackages(packagesToAdd, fetchFromAPI, projectDependencyState);
+    const { preservedPackages: packagesToPreserve, removedStaleConfirmed } = filterExistingPackagesForRefresh(
+      existingPackages,
+      advisories,
+      fetchFromAPI,
+    );
+    if (removedStaleConfirmed.length > 0) {
+      console.log(
+        `🧹 Will remove ${removedStaleConfirmed.length} stale existing entr${
+          removedStaleConfirmed.length === 1 ? 'y' : 'ies'
+        } that are no longer confirmed by the latest advisory refresh`,
+      );
+    }
 
-    if (newPackages.length === 0 && removedNonExact.length === 0 && removedOutOfScope.length === 0) {
+    if (
+      newPackages.length === 0 &&
+      removedNonExact.length === 0 &&
+      removedOutOfScope.length === 0 &&
+      removedStaleConfirmed.length === 0
+    ) {
       console.log('⚠️  No new packages to add');
       process.exit(0);
     }
 
-    const { packages, added, skipped } = mergePackages(existingPackages, newPackages);
+    const { packages, added, skipped } = mergePackages(packagesToPreserve, newPackages);
 
-    const preservedCount = assertPackagesPreserved(initialCount, packages.length, added);
+    const preservedCount = packages.filter((packageEntry) => existingPackages.has(packageEntry)).length;
 
     writePackagesToFile(outputFilePath, packages);
 
-    logUpdateSummary(outputFilePath, packages, preservedCount, added, skipped, removedNonExact.length + removedOutOfScope.length);
+    logUpdateSummary(
+      outputFilePath,
+      packages,
+      preservedCount,
+      added,
+      skipped,
+      removedNonExact.length + removedOutOfScope.length + removedStaleConfirmed.length,
+    );
     process.exit(0);
   } catch (error) {
     console.error('❌ Error updating compromised packages:', error.message);
@@ -939,17 +1086,24 @@ if (require.main === module) {
 }
 
 module.exports = {
-  assertPackagesPreserved,
   collectNewPackages,
   collectPackagesFromAdvisories,
   extractNpmPackageEntries,
+  filterExistingPackagesForRefresh,
   fetchGitHubAdvisories,
+  fetchGitHubAdvisoryType,
+  fetchAdvisoryRefreshData,
+  getFallbackPackagesOrThrow,
+  getGitHubApiHeaders,
+  getGitHubAuthToken,
   fetchVulnerablePackages,
   getMatchingProjectEntriesForRange,
   getNextGitHubPageUrl,
   getExplicitVersionEntries,
+  getNormalizedExactVersions,
   isConfirmedPackageEntry,
   isFilePath,
+  isPackageEntryConfirmedByAdvisories,
   isPackageName,
   isScopedPackageSpecifier,
   isSpecificVersion,
@@ -957,6 +1111,7 @@ module.exports = {
   logUpdateSummary,
   main,
   mergePackages,
+  normalizeExactVersionToken,
   parseArguments,
   partitionProjectScopedPackageEntries,
   resolveOutputFilePath,

@@ -2,10 +2,19 @@ import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   collectPackagesFromAdvisories,
+  fetchAdvisoryRefreshData,
   fetchGitHubAdvisories,
+  fetchGitHubAdvisoryType,
+  fetchVulnerablePackages,
+  filterExistingPackagesForRefresh,
   getExplicitVersionEntries,
+  getGitHubApiHeaders,
+  getGitHubAuthToken,
+  getNormalizedExactVersions,
   isConfirmedPackageEntry,
+  isPackageEntryConfirmedByAdvisories,
   mergePackages,
+  normalizeExactVersionToken,
   parseArguments,
   partitionProjectScopedPackageEntries,
   validateManualPackages,
@@ -158,13 +167,46 @@ describe('update-compromised helpers', () => {
   it('should reject range-like vulnerable_versions tokens when collecting explicit entries', () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-    const result = getExplicitVersionEntries('vite', '8.0.2, ^8.0.0, ~8.0.0, 8.0.0 - 8.0.4');
+    const result = getExplicitVersionEntries('vite', '8.0.2, = 8.0.3, ^8.0.0, ~8.0.0, 8.0.0 - 8.0.4');
 
     expect(result).toEqual({
-      exactEntries: ['vite@8.0.2'],
+      exactEntries: ['vite@8.0.2', 'vite@8.0.3'],
       skippedNonExact: 3,
     });
     expect(warnSpy).toHaveBeenCalledTimes(3);
+  });
+
+  it('should normalize exact version tokens with a leading equals sign', () => {
+    expect(normalizeExactVersionToken('= 3.1.1')).toBe('3.1.1');
+    expect(normalizeExactVersionToken('3.1.1')).toBe('3.1.1');
+    expect(normalizeExactVersionToken('^3.1.1')).toBeNull();
+  });
+
+  it('should normalize exact versions from comma-separated advisory values', () => {
+    expect(getNormalizedExactVersions('= 3.1.1, 3.1.2, ^3.1.0')).toEqual(['3.1.1', '3.1.2']);
+  });
+
+  it('should prefer GH_TOKEN and GITHUB_TOKEN over gh auth token', () => {
+    expect(getGitHubAuthToken({ env: { GH_TOKEN: 'gh-token', GITHUB_TOKEN: 'github-token' } })).toBe('gh-token');
+    expect(getGitHubAuthToken({ env: { GITHUB_TOKEN: 'github-token' } })).toBe('github-token');
+  });
+
+  it('should fall back to gh auth token when no env token is available', () => {
+    const exec = vi.fn().mockReturnValue('gh-cli-token\n');
+
+    expect(getGitHubAuthToken({ env: {}, exec })).toBe('gh-cli-token');
+    expect(exec).toHaveBeenCalledWith('gh auth token', {
+      encoding: 'utf8',
+      cwd: process.cwd(),
+      stdio: ['ignore', 'pipe', 'ignore'],
+    });
+  });
+
+  it('should build authenticated GitHub API headers when a token is available', () => {
+    expect(getGitHubApiHeaders({ env: { GH_TOKEN: 'token-123' } })).toMatchObject({
+      Authorization: 'Bearer token-123',
+      Accept: 'application/vnd.github+json',
+    });
   });
 
   it('should ignore withdrawn advisories', () => {
@@ -231,6 +273,64 @@ describe('update-compromised helpers', () => {
     });
   });
 
+  it('should keep existing exact entries when current advisories still cover them via a range', () => {
+    expect(
+      isPackageEntryConfirmedByAdvisories('vite@7.0.0', [
+        {
+          package: { ecosystem: 'npm', name: 'vite' },
+          vulnerable_version_range: '>= 7.0.0, <= 7.0.7',
+        },
+      ]),
+    ).toBe(true);
+  });
+
+  it('should keep existing exact entries when advisories list exact versions with a leading equals sign', () => {
+    expect(
+      isPackageEntryConfirmedByAdvisories('color-convert@3.1.1', [
+        {
+          package: { ecosystem: 'npm', name: 'color-convert' },
+          vulnerable_versions: '= 3.1.1',
+        },
+      ]),
+    ).toBe(true);
+  });
+
+  it('should remove stale exact entries during advisory refreshes', () => {
+    const result = filterExistingPackagesForRefresh(
+      new Set(['@angular/ssr@19.0.0', 'lodash@4.17.21']),
+      [
+        {
+          package: { ecosystem: 'npm', name: 'lodash' },
+          vulnerable_versions: '4.17.21',
+        },
+      ],
+      true,
+    );
+
+    expect(result).toEqual({
+      preservedPackages: new Set(['lodash@4.17.21']),
+      removedStaleConfirmed: ['@angular/ssr@19.0.0'],
+    });
+  });
+
+  it('should preserve existing exact entries when refresh is disabled', () => {
+    const result = filterExistingPackagesForRefresh(new Set(['@angular/ssr@19.0.0']), null, false);
+
+    expect(result).toEqual({
+      preservedPackages: new Set(['@angular/ssr@19.0.0']),
+      removedStaleConfirmed: [],
+    });
+  });
+
+  it('should preserve existing exact entries when using fallback data without live advisories', () => {
+    const result = filterExistingPackagesForRefresh(new Set(['@angular/ssr@19.0.0']), null, true);
+
+    expect(result).toEqual({
+      preservedPackages: new Set(['@angular/ssr@19.0.0']),
+      removedStaleConfirmed: [],
+    });
+  });
+
   it('should follow paginated GitHub advisory responses', async () => {
     const fetchMock = vi
       .fn()
@@ -238,7 +338,7 @@ describe('update-compromised helpers', () => {
         new Response(JSON.stringify([{ ghsa_id: 'GHSA-first' }]), {
           status: 200,
           headers: {
-            link: '<https://api.github.com/advisories?per_page=100&ecosystem=npm&page=2>; rel="next"',
+            link: '<https://api.github.com/advisories?per_page=100&ecosystem=npm&type=reviewed&page=2>; rel="next"',
           },
         }),
       )
@@ -246,11 +346,106 @@ describe('update-compromised helpers', () => {
         new Response(JSON.stringify([{ ghsa_id: 'GHSA-second' }]), {
           status: 200,
         }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify([{ ghsa_id: 'GHSA-malware' }]), {
+          status: 200,
+        }),
       );
 
     vi.stubGlobal('fetch', fetchMock);
 
-    await expect(fetchGitHubAdvisories()).resolves.toEqual([{ ghsa_id: 'GHSA-first' }, { ghsa_id: 'GHSA-second' }]);
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    await expect(fetchGitHubAdvisories()).resolves.toEqual([
+      { ghsa_id: 'GHSA-first' },
+      { ghsa_id: 'GHSA-second' },
+      { ghsa_id: 'GHSA-malware' },
+    ]);
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+    expect(fetchMock.mock.calls.map(([url]) => String(url))).toEqual([
+      'https://api.github.com/advisories?per_page=100&ecosystem=npm&type=reviewed',
+      'https://api.github.com/advisories?per_page=100&ecosystem=npm&type=reviewed&page=2',
+      'https://api.github.com/advisories?per_page=100&ecosystem=npm&type=malware',
+    ]);
+  });
+
+  it('should fetch all pages for a single advisory type', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify([{ ghsa_id: 'GHSA-type-first' }]), {
+          status: 200,
+          headers: {
+            link: '<https://api.github.com/advisories?per_page=100&ecosystem=npm&type=malware&page=2>; rel="next"',
+          },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify([{ ghsa_id: 'GHSA-type-second' }]), {
+          status: 200,
+        }),
+      );
+
+    vi.stubGlobal('fetch', fetchMock);
+
+    await expect(fetchGitHubAdvisoryType('malware')).resolves.toEqual([
+      { ghsa_id: 'GHSA-type-first' },
+      { ghsa_id: 'GHSA-type-second' },
+    ]);
+  });
+
+  it('should return both advisories and materialized packages for a live refresh', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(
+          JSON.stringify([
+            {
+              ghsa_id: 'GHSA-reviewed',
+              package: { ecosystem: 'npm', name: 'color-convert' },
+              vulnerable_versions: '= 3.1.1',
+            },
+          ]),
+          { status: 200 },
+        ),
+      )
+      .mockResolvedValueOnce(new Response(JSON.stringify([]), { status: 200 }));
+
+    vi.stubGlobal('fetch', fetchMock);
+
+    await expect(
+      fetchAdvisoryRefreshData({
+        packageNames: new Set(['color-convert']),
+        exactPackages: [{ name: 'color-convert', version: '3.1.1' }],
+      }),
+    ).resolves.toEqual({
+      advisories: [
+        {
+          ghsa_id: 'GHSA-reviewed',
+          package: { ecosystem: 'npm', name: 'color-convert' },
+          vulnerable_versions: '= 3.1.1',
+        },
+      ],
+      packages: ['color-convert@3.1.1'],
+    });
+  });
+
+  it('should fail closed when GitHub advisories are unavailable and fallback is empty', async () => {
+    vi.useFakeTimers();
+    const fetchMock = vi.fn().mockResolvedValue(new Response(null, { status: 403, statusText: 'Forbidden' }));
+    vi.stubGlobal('fetch', fetchMock);
+
+    try {
+      const rejection = expect(
+        fetchVulnerablePackages({
+          packageNames: new Set(['vite']),
+          exactPackages: [{ name: 'vite', version: '8.0.2' }],
+        }),
+      ).rejects.toThrow('GitHub advisory refresh failed and the curated fallback list is empty');
+
+      await vi.runAllTimersAsync();
+      await rejection;
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

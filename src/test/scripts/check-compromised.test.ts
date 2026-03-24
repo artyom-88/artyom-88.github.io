@@ -1,8 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { findCompromisedPackages } from '../../../scripts/check-compromised.js';
+import { assertCompromisedPackagesDefined, findCompromisedPackages } from '../../../scripts/check-compromised.js';
 import { buildCompromisedLookup } from '../../../scripts/compromised-utils.js';
 
 describe('check-compromised helpers', () => {
+  it('should fail when compromised.txt contains no defined packages', () => {
+    expect(() => assertCompromisedPackagesDefined([], '/repo/compromised.txt')).toThrow(
+      'No compromised packages defined in compromised.txt. Empty lists are treated as configuration errors.',
+    );
+  });
+
   it('should report exact and wildcard compromised matches', () => {
     const compromisedLookup = buildCompromisedLookup([
       { name: '@angular/ssr', version: '19.0.0', original: '@angular/ssr@19.0.0' },

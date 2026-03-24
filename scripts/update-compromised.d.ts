@@ -69,6 +69,23 @@ export interface MergePackagesResult {
 }
 
 /**
+ * Result of deciding which existing entries survive a refreshed advisory sync.
+ */
+export interface RefreshedExistingPackagesResult {
+  preservedPackages: Set<string>;
+  removedStaleConfirmed: string[];
+}
+
+/**
+ * Result of a live advisory refresh: raw advisories when available plus the
+ * exact package entries materialized from them.
+ */
+export interface AdvisoryRefreshData {
+  advisories: object[] | null;
+  packages: string[];
+}
+
+/**
  * Result of filtering existing file entries to exact, project-scoped entries.
  */
 export interface PartitionedProjectEntries {
@@ -92,6 +109,42 @@ export function collectPackagesFromAdvisories(
 export function fetchGitHubAdvisories(): Promise<object[]>;
 
 /**
+ * Fetches all pages for a single advisory type from the GitHub advisories API.
+ */
+export function fetchGitHubAdvisoryType(type: string): Promise<object[]>;
+
+/**
+ * Fetches advisories and the exact package entries materialized from them.
+ */
+export function fetchAdvisoryRefreshData(projectDependencyState: ProjectDependencyStateLike): Promise<AdvisoryRefreshData>;
+
+/**
+ * Fetches exact compromised packages for the current project dependency state.
+ */
+export function fetchVulnerablePackages(projectDependencyState: ProjectDependencyStateLike): Promise<string[]>;
+
+/**
+ * Resolves the GitHub token from env vars or the local gh CLI.
+ */
+export function getGitHubAuthToken(options?: {
+  env?: Record<string, string | undefined>;
+  exec?: typeof import('node:child_process').execSync;
+}): string | null;
+
+/**
+ * Builds the headers used for advisory API requests.
+ */
+export function getGitHubApiHeaders(options?: {
+  env?: Record<string, string | undefined>;
+  exec?: typeof import('node:child_process').execSync;
+}): Record<string, string>;
+
+/**
+ * Returns the curated fallback list or throws when the fallback is empty.
+ */
+export function getFallbackPackagesOrThrow(reason?: string): Promise<string[]>;
+
+/**
  * Extracts exact `package@version` entries from a comma-separated advisory
  * field and rejects range-like tokens.
  */
@@ -99,6 +152,11 @@ export function getExplicitVersionEntries(
   packageName: string,
   vulnerableVersions: string,
 ): { exactEntries: string[]; skippedNonExact: number };
+
+/**
+ * Normalizes exact advisory tokens from a comma-separated version field.
+ */
+export function getNormalizedExactVersions(vulnerableVersions?: string): string[];
 
 /**
  * Returns `true` only for exact `package@version` entries.
@@ -110,6 +168,11 @@ export function isConfirmedPackageEntry(packageEntry: string): boolean;
  * output and duplicate counts.
  */
 export function mergePackages(existingPackages: Set<string>, packagesToAdd: string[]): MergePackagesResult;
+
+/**
+ * Normalizes an exact advisory token, stripping a leading `=` when present.
+ */
+export function normalizeExactVersionToken(version: string): string | null;
 
 /**
  * Parses updater CLI arguments into file path, manual package entries, and the
@@ -125,6 +188,21 @@ export function partitionProjectScopedPackageEntries(
   packageEntries: Iterable<string>,
   projectPackageNames: Set<string>,
 ): PartitionedProjectEntries;
+
+/**
+ * Selects which existing exact entries survive a refreshed advisory fetch.
+ */
+export function filterExistingPackagesForRefresh(
+  existingPackages: Set<string>,
+  advisories: object[] | null,
+  fetchFromAPI: boolean,
+): RefreshedExistingPackagesResult;
+
+/**
+ * Returns `true` when an existing exact package entry is still confirmed by
+ * the current live advisories.
+ */
+export function isPackageEntryConfirmedByAdvisories(packageEntry: string, advisories: object[] | null): boolean;
 
 /**
  * Validates manually supplied exact package entries before they are written to

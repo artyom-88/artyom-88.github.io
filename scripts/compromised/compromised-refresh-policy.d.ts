@@ -6,6 +6,7 @@ export function filterExistingPackagesForRefresh(
   existingPackages: Set<string>,
   advisories: object[] | null,
   fetchFromAPI: boolean,
+  manualPackages?: Set<string>,
 ): RefreshedExistingPackagesResult;
 export function collectNewPackages(
   packagesToAdd: string[],

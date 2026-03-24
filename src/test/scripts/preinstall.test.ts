@@ -38,27 +38,39 @@ describe('preinstall hook helpers', () => {
   });
 
   it('should refresh compromised packages locally when the file is stale', () => {
-    const staleStat = vi.fn().mockReturnValue({
-      mtimeMs: Date.now() - DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS - 1,
+    const staleReadFileState = vi.fn().mockReturnValue({
+      refreshedAt: new Date(Date.now() - DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS - 1).toISOString(),
     });
 
     expect(
       shouldRefreshCompromisedPackages({
-        stat: staleStat,
+        readFileState: staleReadFileState,
       }),
     ).toBe(true);
   });
 
   it('should skip the compromised refresh locally when the file is recent', () => {
-    const recentStat = vi.fn().mockReturnValue({
-      mtimeMs: Date.now(),
+    const recentReadFileState = vi.fn().mockReturnValue({
+      refreshedAt: new Date().toISOString(),
     });
 
     expect(
       shouldRefreshCompromisedPackages({
-        stat: recentStat,
+        readFileState: recentReadFileState,
       }),
     ).toBe(false);
+  });
+
+  it('should refresh compromised packages locally when the file has no refresh metadata', () => {
+    const readFileState = vi.fn().mockReturnValue({
+      refreshedAt: null,
+    });
+
+    expect(
+      shouldRefreshCompromisedPackages({
+        readFileState,
+      }),
+    ).toBe(true);
   });
 
   it('should run only-allow, refresh, and compromised check locally when the file is stale', () => {
@@ -67,10 +79,9 @@ describe('preinstall hook helpers', () => {
     runPreinstall({
       env: {} as NodeJS.ProcessEnv,
       exec,
-      stat: () =>
-        ({
-          mtimeMs: Date.now() - DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS - 1,
-        }) as import('node:fs').Stats,
+      readFileState: () => ({
+        refreshedAt: new Date(Date.now() - DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS - 1).toISOString(),
+      }),
     });
 
     expect(exec.mock.calls.map(([command]) => command)).toEqual([
@@ -86,10 +97,9 @@ describe('preinstall hook helpers', () => {
     runPreinstall({
       env: {} as NodeJS.ProcessEnv,
       exec,
-      stat: () =>
-        ({
-          mtimeMs: Date.now(),
-        }) as import('node:fs').Stats,
+      readFileState: () => ({
+        refreshedAt: new Date().toISOString(),
+      }),
     });
 
     expect(exec.mock.calls.map(([command]) => command)).toEqual(['npx --yes only-allow@1.2.2 pnpm', 'pnpm compromised:check']);

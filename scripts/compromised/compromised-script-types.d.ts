@@ -16,6 +16,12 @@ export interface CompromisedEntry extends PackageEntry {
   original: string;
 }
 
+export interface CompromisedPackageFileState {
+  packageEntries: string[];
+  refreshedAt: string | null;
+  manualPackages: Set<string>;
+}
+
 export interface ProjectDependencyStateInput {
   manifestDependencyNames?: Set<string>;
   manifestPackages?: ExactPackageEntry[];

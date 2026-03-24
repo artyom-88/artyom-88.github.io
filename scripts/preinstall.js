@@ -1,8 +1,8 @@
-const fs = require('node:fs');
 const { execSync } = require('node:child_process');
 const path = require('node:path');
 
 const { ROOT_DIR } = require('./compromised/compromised-script-constants');
+const { parseCompromisedPackageFile } = require('./compromised/compromised-package-file');
 
 const DEFAULT_COMPROMISED_REFRESH_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 
@@ -22,13 +22,18 @@ function getCompromisedRefreshMaxAgeMs(env = process.env) {
 }
 
 function shouldRefreshCompromisedPackages(options = {}) {
-  const { env = process.env, now = Date.now(), stat = fs.statSync } = options;
+  const { env = process.env, now = Date.now(), readFileState = parseCompromisedPackageFile } = options;
   const compromisedFilePath = path.join(ROOT_DIR, 'compromised.txt');
 
   try {
-    const fileStats = stat(compromisedFilePath);
+    const { refreshedAt } = readFileState(compromisedFilePath, { allowMissing: true });
+    const refreshedAtMs = refreshedAt ? Date.parse(refreshedAt) : Number.NaN;
     const maxAgeMs = getCompromisedRefreshMaxAgeMs(env);
-    const fileAgeMs = now - fileStats.mtimeMs;
+    const fileAgeMs = now - refreshedAtMs;
+
+    if (!Number.isFinite(refreshedAtMs) || fileAgeMs < 0) {
+      return true;
+    }
 
     return fileAgeMs > maxAgeMs;
   } catch {

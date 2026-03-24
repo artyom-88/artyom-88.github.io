@@ -61,7 +61,7 @@ function isPackageEntryConfirmedByAdvisories(packageEntry, advisories) {
   });
 }
 
-function filterExistingPackagesForRefresh(existingPackages, advisories, fetchFromAPI) {
+function filterExistingPackagesForRefresh(existingPackages, advisories, fetchFromAPI, manualPackages = new Set()) {
   if (!fetchFromAPI || !Array.isArray(advisories)) {
     return {
       preservedPackages: new Set(existingPackages),
@@ -72,6 +72,11 @@ function filterExistingPackagesForRefresh(existingPackages, advisories, fetchFro
   const preservedPackages = new Set();
 
   existingPackages.forEach((packageEntry) => {
+    if (manualPackages.has(packageEntry)) {
+      preservedPackages.add(packageEntry);
+      return;
+    }
+
     if (isPackageEntryConfirmedByAdvisories(packageEntry, advisories)) {
       preservedPackages.add(packageEntry);
       return;

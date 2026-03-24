@@ -8,7 +8,7 @@
 
 const path = require('node:path');
 
-const { parseExistingPackages, writePackagesToFile } = require('./compromised/compromised-package-file');
+const { parseCompromisedPackageFile, writePackagesToFile } = require('./compromised/compromised-package-file');
 const { getProjectDependencyState } = require('./compromised/compromised-project-state');
 const {
   logDependencyStateSource,
@@ -50,12 +50,16 @@ async function main() {
     logDependencyStateSource(projectDependencyState);
     console.log(`📦 Project dependency scope includes ${projectDependencyState.packageNames.size} package name(s)`);
 
-    const existingEntries = parseExistingPackages(outputFilePath);
+    const existingFileState = parseCompromisedPackageFile(outputFilePath, { allowMissing: true });
+    const existingEntries = new Set(existingFileState.packageEntries);
     const {
       confirmedPackages: existingPackages,
       removedNonExact,
       removedOutOfScope,
     } = partitionProjectScopedPackageEntries(existingEntries, projectDependencyState.packageNames);
+    const existingManualPackages = new Set(
+      [...existingFileState.manualPackages].filter((packageEntry) => existingPackages.has(packageEntry)),
+    );
     const initialCount = existingPackages.size;
     console.log(`📋 Found ${initialCount} confirmed existing package(s) in file`);
     if (removedNonExact.length > 0) {
@@ -83,6 +87,7 @@ async function main() {
       existingPackages,
       advisories,
       fetchFromAPI,
+      existingManualPackages,
     );
     if (removedStaleConfirmed.length > 0) {
       console.log(
@@ -105,8 +110,13 @@ async function main() {
     const { packages, added, skipped } = mergePackages(packagesToPreserve, newPackages);
     assertUpdatedPackagesDefined(outputFilePath, packages);
     const preservedCount = packages.filter((packageEntry) => existingPackages.has(packageEntry)).length;
+    const manualPackages = new Set(
+      [...existingManualPackages, ...packagesToAdd].filter((packageEntry) => packages.includes(packageEntry)),
+    );
 
-    writePackagesToFile(outputFilePath, packages);
+    writePackagesToFile(outputFilePath, packages, {
+      manualPackages,
+    });
     logUpdateSummary(
       outputFilePath,
       packages,

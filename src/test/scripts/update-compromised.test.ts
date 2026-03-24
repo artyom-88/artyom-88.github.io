@@ -322,6 +322,25 @@ describe('update-compromised helpers', () => {
     });
   });
 
+  it('should preserve manual exact entries during advisory refreshes', () => {
+    const result = filterExistingPackagesForRefresh(
+      new Set(['@angular/ssr@19.0.0', 'lodash@4.17.21']),
+      [
+        {
+          package: { ecosystem: 'npm', name: 'lodash' },
+          vulnerable_versions: '4.17.21',
+        },
+      ],
+      true,
+      new Set(['@angular/ssr@19.0.0']),
+    );
+
+    expect(result).toEqual({
+      preservedPackages: new Set(['@angular/ssr@19.0.0', 'lodash@4.17.21']),
+      removedStaleConfirmed: [],
+    });
+  });
+
   it('should preserve existing exact entries when refresh is disabled', () => {
     const result = filterExistingPackagesForRefresh(new Set(['@angular/ssr@19.0.0']), null, false);
 

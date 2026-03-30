@@ -51,7 +51,7 @@
     "react-router-dom": "7.13.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.8",
+    "@biomejs/biome": "2.4.9",
     "@playwright/test": "1.58.2",
     "@tailwindcss/postcss": "4.2.2",
     "@testing-library/jest-dom": "6.9.1",
